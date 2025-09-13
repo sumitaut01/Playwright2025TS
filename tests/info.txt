@@ -1,0 +1,20 @@
+npx playwright show-report
+npx playwright test
+
+
+threads number based on your cpu--
+
+npx playwright test test1.spec.ts test2.spec.ts
+npx playwright test test1.spec.ts 
+npx playwright test testsubdirectory
+
+npx playwright test test
+
+npx playwright test -g  "testmethodname"
+
+npx playwright test project=chromium
+
+npx playwright test --headed
+
+npx playwright test --grep "@smoke"
+npx playwright test --ui  //superb
