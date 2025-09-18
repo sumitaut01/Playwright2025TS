@@ -4,7 +4,7 @@ function sum(a:number,b:number): number{
 }
 
 
-const result:number = sum(3,5)
+var result:number = sum(3,5)
 console.log(result);
 
 // tsc sum.ts   # compiles to sum.js  tsc tests\tspractice\01sum.ts

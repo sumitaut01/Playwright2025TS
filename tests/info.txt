@@ -1,4 +1,22 @@
+npm install -g typescript  //typescript compiler global installation
+
+
 npx playwright show-report
+
+1. Kill the existing process
+
+If a previous report window is still running in the background, kill it.
+On Windows PowerShell:
+netstat -ano | findstr :9323
+(note the PID), then:
+taskkill /PID <pid> /F
+
+
+On Linux/Mac:
+lsof -i :9323
+kill -9 <pid>
+
+npx playwright show-report --port=9333
 npx playwright test
 
 
@@ -18,3 +36,10 @@ npx playwright test --headed
 
 npx playwright test --grep "@smoke"
 npx playwright test --ui  //superb
+
+expects unique locator.. unlike selenium wont selct first.
+
+#10. Playwright Locator - getByRole | ARIA Role | Aria Attribute | Accessible Name | Basic Usage |
+
+tsc filename.ts
+ts-node D:\SeleniumFrameWorks\GitHubSumitraut01\Playright2025TS\tests\tspractice\02typesafety.ts

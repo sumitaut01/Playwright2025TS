@@ -8,8 +8,7 @@ test("getbyrole", async ({page}) => {
   // example: check title contains "Facebook"
   await expect(page).toHaveTitle(/google/i);
 
-await page.getByRole("textbox", { name: "Search" }).fill("test");
-
+await page.getByRole("textbox", { name: "Search"}).fill("test");
 
 
 });
