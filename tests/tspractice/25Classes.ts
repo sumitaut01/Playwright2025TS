@@ -1,5 +1,5 @@
 
-
+export{}
 class test{}//empty class
 
 

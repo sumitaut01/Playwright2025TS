@@ -13,6 +13,7 @@ function getUser(id: number): Promise<string> {
   });
 }
 
+//promise chaining
 // Using .then() / .catch()
 getUser(1)
   .then(user => console.log(user))       // ✅ User with id 1 found

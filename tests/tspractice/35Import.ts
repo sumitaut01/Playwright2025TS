@@ -7,3 +7,5 @@ import { test } from "./34exportimport";
 test();//export
 
 //we can even import variables
+
+

@@ -1,4 +1,6 @@
 
+//avoid var..
+// go with let or const
 var user={
 
     firstname: "Sumit",

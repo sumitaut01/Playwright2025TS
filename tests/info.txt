@@ -1,6 +1,7 @@
 npm install -g typescript  //typescript compiler global installation
 
 
+//node package executor
 npx playwright show-report
 
 1. Kill the existing process
@@ -17,7 +18,7 @@ lsof -i :9323
 kill -9 <pid>
 
 npx playwright show-report --port=9333
-npx playwright test
+npx playwright test file1.spec.ts --project=chromium
 
 
 threads number based on your cpu--
