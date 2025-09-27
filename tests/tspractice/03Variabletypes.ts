@@ -6,7 +6,7 @@ let y:String="sumit";//use string
 
 let z:null=null;
 
-let a:undefined=undefined;
+export let a:undefined=undefined;
 
 let b:any=20;
 b="String";

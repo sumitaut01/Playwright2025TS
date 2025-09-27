@@ -1,5 +1,13 @@
 
 
+let a=[1,2,3,4,5];
+console.log(a[0]);
+
+//a.push('sumitra');//Argument of type 'string' is not assignable to parameter of type 'number'
+let b=['sumitra','sachin',1];
+b.push(2);//allowed
+
+
 let arr:number[]=[];
 arr.push(1);
 
@@ -184,3 +192,4 @@ console.log(arr);
 
 
 /*
+
