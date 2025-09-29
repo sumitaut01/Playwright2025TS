@@ -57,3 +57,6 @@ ts-node D:\SeleniumFrameWorks\GitHubSumitraut01\Playright2025TS\tests\tspractice
 
 Lint your tests
 We recommend TypeScript and linting with ESLint for your tests to catch errors early. Use @typescript-eslint/no-floating-promises ESLint rule to make sure there are no missing awaits before the asynchronous calls to the Playwright API. On your CI you can run tsc --noEmit to ensure that functions are called with the right signature.
+
+tsc --watch
+tsc init
