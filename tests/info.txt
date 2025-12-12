@@ -60,3 +60,7 @@ We recommend TypeScript and linting with ESLint for your tests to catch errors e
 
 tsc --watch
 tsc init
+
+
+// tsc sum.ts   # compiles to sum.js  tsc tests\tspractice\01sum.ts
+// node sum.js  # runs the JavaScript output node tests\tspractice\01sum.ts        v==>8

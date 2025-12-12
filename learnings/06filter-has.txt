@@ -1,0 +1,93 @@
+has
+
+Filters the element if it contains another locator.
+
+Example
+locator.filter({ has: page.locator('[aria-expanded="false"]') })
+
+
+Meaning:
+
+"Keep only elements that have a child matching this selector."
+
+✅ 2️⃣ hasNot
+
+Opposite of has.
+
+Example
+locator.filter({ hasNot: page.locator('[disabled]') })
+
+
+Meaning:
+
+"Keep only elements that do NOT contain a disabled element."
+
+✅ 3️⃣ hasText
+
+Filters based on inner text.
+
+Example
+locator.filter({ hasText: 'Total Price' })
+
+
+Meaning:
+
+"Keep the elements that contain this text anywhere inside them."
+
+Useful when a modal or flyout contains a label.
+
+✅ 4️⃣ hasNotText
+
+Opposite of hasText.
+
+Example
+locator.filter({ hasNotText: 'Loading' })
+
+
+Meaning:
+
+"Keep elements that don’t contain the word 'Loading'."
+
+🧩 Table Summary
+Option	Purpose	Example
+has	Element contains another element	has: page.locator('.icon')
+hasNot	Element does NOT contain	hasNot: page.locator('.spinner')
+hasText	Element has specific text	hasText: "Login"
+hasNotText	Element does NOT have text	hasNotText: "Error"
+💡 Bonus: Other Useful Locator Filters
+nth(index)
+
+Manually pick item by index.
+
+locator.nth(1)
+
+:visible
+
+CSS visibility filter.
+
+locator.filter({ has: page.locator(':visible') })
+
+first() / last()
+locator.first().click();
+locator.last().click();
+
+⭐ Putting it together for your case
+
+Example:
+
+await page.getByRole('button', { name: 'Shop by Category' })
+  .filter({ has: page.locator('[aria-expanded="false"]') })
+  .filter({ has: page.locator(':visible') })
+  .first()
+  .click();
+
+
+This means:
+
+Find all “Shop by Category” buttons
+
+Keep only the collapsed ones
+
+Keep only the visible one
+
+Click the first match

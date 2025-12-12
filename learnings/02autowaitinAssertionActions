@@ -1,0 +1,4 @@
+Assetion ,Actions have customizable autowaits.
+We can force them to by pass that check.
+
+Ex. fill("some") check if textbox is ready,editable etc.  {force:true} will bypasseses this checks

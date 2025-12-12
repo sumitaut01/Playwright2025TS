@@ -1,0 +1,142 @@
+1. async allows use of await inside the test
+
+Playwright actions are asynchronous:
+
+page.goto()
+
+page.click()
+
+page.fill()
+
+expect()
+
+All return Promises.
+
+Without async, this would fail:
+
+await page.goto('https://google.com'); 
+
+
+Therefore:
+
+async () => {}
+
+
+Allows you to use:
+
+await ...
+await ...
+await ...
+
+
+inside the test.
+
+✅ 2. ({ page }) is Dependency Injection
+
+Playwright TEST framework injects fixtures automatically.
+
+Fixtures include:
+
+page
+
+context
+
+browser
+
+request
+
+browserName
+
+and any custom fixture you added
+
+So:
+
+({ page })
+
+
+Means:
+“Give me the page object that Playwright creates for each test.”
+
+Example:
+
+test('login', async ({ page }) => {
+  await page.goto('/login');
+});
+
+
+This page object is automatically:
+
+launched
+
+isolated
+
+cleaned up
+
+You don’t create it manually.
+
+✅ 3. ({ page }) => {} is just a JavaScript arrow function with destructuring
+
+It’s equivalent to:
+
+async function testFunction(obj) {
+    const page = obj.page;
+}
+
+
+But shorter:
+
+async ({ page }) => {}
+
+
+Destructuring pulls out the page property from the given object.
+
+🎯 In short:
+async → allows await
+({ page }) → Playwright gives you a page
+()=>{} → this is the test function
+⭐ Full Meaning in Plain English
+
+“Run a test called Google Search.
+Playwright will provide me a page browser tab.
+The test is async so I can await actions.”
+
+This:
+
+test('Google search', async ({ page }) => {
+  await page.goto('https://google.com');
+});
+
+
+Translated to English:
+
+“Start a browser page, navigate to Google, and wait for the page to load.”
+
+🧠 BONUS: What if the test is not async?
+
+If you write:
+
+test('demo', ({ page }) => {
+  page.goto('https://example.com'); // ❌ No await
+});
+
+
+It will:
+
+NOT wait for navigation
+
+Fail automatically
+
+Give warnings
+
+So Playwright expects async/await.
+
+❤️ Summary (Easy to Remember)
+Async → allows Await
+Destructuring → gets the Dependencies (page)
+Function → your Flow/test
+
+A-D-F → Async + Destructuring + Function
+
+This is all you need to remember.
+
+If you want, I can explain how fixtures actually inject page, with a diagram.

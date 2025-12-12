@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:debug": "npx playwright test --debug",
+    "codegen": "npx playwright codegen",
+    "install-deps": "npx playwright install-deps",
+    "install-browsers": "npx playwright install"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -12,6 +19,7 @@
     "@types/node": "^24.3.3"
   },
   "dependencies": {
-    "dotenv": "^17.2.2"
+    "csv-parse": "^6.1.0",
+    "dotenv": "^17.2.3"
   }
 }

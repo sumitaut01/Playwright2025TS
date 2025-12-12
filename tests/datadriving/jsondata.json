@@ -1,0 +1,21 @@
+[
+
+{
+    "username":"sumit",
+    "password":"sumitpwd",
+    "active":true
+},
+{
+    "username":"amit",
+    "password":"amitpwd",
+    "active":false
+},
+
+{
+    "username":"neha",
+    "password":"nehapwd",
+    "active":true
+}
+
+
+]

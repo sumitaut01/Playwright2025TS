@@ -1,0 +1,9 @@
+===
+dynamic locators  // like proddcu xpah but different prodducts
+locator.all
+
+page.once
+
+pagea.on  for dialog
+
+if pom methods returns array, should ibe promise of array or list

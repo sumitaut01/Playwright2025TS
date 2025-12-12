@@ -1,0 +1,7 @@
+npx playwright test --project=chromium --workers=4
+
+npx playwright test test.spec.ts
+
+npx playwright test test.spec.ts --headed
+
+npx playwright test test.spec.ts --

@@ -1,0 +1,1 @@
+//npx playwright  codegen -o  mycodege.spec.ts  --devices "iPhone 13 Pro"

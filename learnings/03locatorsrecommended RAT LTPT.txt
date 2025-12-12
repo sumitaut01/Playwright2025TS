@@ -1,0 +1,34 @@
+Breakdown of RAT-LTPT
+Letter	Refers To	Locator
+R	Role	getByRole()
+A	AltText	getByAltText()
+T	Text	getByText()
+L	Label	getByLabel()
+T	Title	getByTitle()
+P	Placeholder	getByPlaceholder()
+T	TestId	getByTestId()
+
+
+
+
+Full Locator Map with Acronym
+R → getByRole()
+page.getByRole('button', { name: 'Login' })
+
+A → getByAltText()
+page.getByAltText('User avatar')
+
+T → getByText()
+page.getByText('Welcome')
+
+L → getByLabel()
+page.getByLabel('Password')
+
+A → getByTitle()
+page.getByTitle('Close')
+
+P → getByPlaceholder()
+page.getByPlaceholder('Enter email')
+
+I → getByTestId()
+page.getByTestId('submit-btn')

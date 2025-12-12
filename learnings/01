@@ -1,0 +1,113 @@
+Bundles vs Branded browsers in Playwright:
+
+Great question — this is an important Playwright concept and often asked in interviews.
+
+Let’s keep it very clear and simple.
+
+✅ Bundled vs Unbundled Browsers in Playwright
+
+Playwright can run two types of browsers:
+
+🟢 1. Bundled Browsers (Default)
+
+These are the Playwright-packaged versions of:
+
+Chromium
+
+Firefox
+
+WebKit
+
+When you run:
+
+npx playwright install
+
+
+Playwright downloads its own custom-built browsers.
+
+Why?
+
+Because:
+
+They are optimized for automation
+
+Have stable APIs
+
+Have deterministic behavior
+
+Support special features (protocol patches, tracing, HAR recording)
+
+These are not the Chrome/Firefox you have installed on your machine.
+They are separate, isolated, and used only by Playwright.
+
+Example usage:
+npx playwright test --project=chromium
+
+
+Runs on Playwright's Chromium, not your system Chrome.
+
+🔵 2. Unbundled (Branded System Browsers)
+
+These are your actual installed browsers, like:
+
+Google Chrome
+
+Microsoft Edge
+
+Chrome Canary
+
+WebKit system browser (macOS only)
+
+Playwright can run tests on these too.
+
+How?
+
+By specifying the browser channel:
+
+projects: [
+  {
+    name: 'Google Chrome',
+    use: { channel: 'chrome' }
+  },
+  {
+    name: 'Microsoft Edge',
+    use: { channel: 'msedge' }
+  }
+]
+
+Why use unbundled?
+
+To test exactly what end-users use
+
+For compatibility testing
+
+For testing Chrome-specific features (extensions, enterprise policies)
+
+Example command:
+npx playwright test --project="Google Chrome"
+
+
+This will use your system-installed Chrome, not the Playwright-packaged one.
+
+🔥 Bundled vs Unbundled — Summary Table
+Feature	Bundled Browsers	Unbundled (System Browsers)
+Installed via npx playwright install	✔ Yes	❌ No
+Location	Inside Playwright folder	Installed by user
+Stability	Very stable, controlled	Depends on user's version
+Automation patches	✔ Yes	❌ No
+Supports record, trace, HAR, advanced features	✔ Full support	Partial
+Used by default	✔ Yes	❌ No
+Examples	chromium, firefox, webkit	chrome, msedge, chrome-beta
+🧠 Simple Analogy
+
+Think of bundled browsers like a controlled testing lab
+→ stable, predictable, identical for everyone.
+
+Think of unbundled browsers like real-world environment testing
+→ messy, different versions, but real.
+
+🧩 Best Practice
+
+Use bundled browsers for CI, automation suites (stable & fast).
+Use unbundled browsers occasionally for real-browser validation.
+
