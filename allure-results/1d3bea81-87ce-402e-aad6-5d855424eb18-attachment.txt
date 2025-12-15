@@ -1,0 +1,3 @@
+[AsyncFunction: count]
+------Separator
+[AsyncFunction: allTextContents]

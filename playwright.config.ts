@@ -13,7 +13,9 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
 
-    globalSetup: "./global-setup.ts",
+    // globalSetup: "./global-setup.ts",
+	  // globalTeardown: './global-teardown.ts',
+	
   //testDir: './tests/testing',
     testDir: './tests',
 
@@ -32,13 +34,16 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [['allure-playwright'],[ 'html',{open:'always'}] ,['list'] ,['line'] ,['json',{outputfile:'result.json'}], ['junit',{outoutputfileputfile:'result.json'}],['dot']],
+
+
+//outputfolder is also there         ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
 
-     baseURL: process.env.BASE_URL,   // using dotenv
+     //baseURL: process.env.BASE_URL,   // using dotenv
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',

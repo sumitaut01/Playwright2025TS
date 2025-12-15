@@ -1,0 +1,3 @@
+innertext is Home and textContent is Home
+prinnting inputValue
+innertext is sumit

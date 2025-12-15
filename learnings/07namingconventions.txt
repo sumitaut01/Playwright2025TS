@@ -1,0 +1,7 @@
+Item	Correct	Wrong
+String type	string	String
+Number type	number	Number
+Boolean type	boolean	Boolean
+Class	UserService	userService
+Variable	userName	UserName
+Constant	MAX_COUNT	maxCount

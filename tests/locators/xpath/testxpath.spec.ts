@@ -6,6 +6,8 @@ page.goto("https://demo.nopcommerce.com/register?returnUrl=%2F");
 
     const loc:Locator=page.locator("//a");//
 
+    
+
  console.log(  await loc.count);
 
 //loc.nth(i)

@@ -1,0 +1,1 @@
+Hard Assertion passed: Search box is visible.

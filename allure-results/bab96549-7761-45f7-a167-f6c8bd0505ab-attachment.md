@@ -1,0 +1,108 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e16]:
+  - banner [ref=e17]:
+    - generic [ref=e23]:
+      - heading "Automation Testing Practice" [level=1] [ref=e25]
+      - paragraph [ref=e27]:
+        - generic [ref=e28]: For Selenium, Cypress & Playwright
+  - list [ref=e35]:
+    - listitem [ref=e36]:
+      - link "Home" [ref=e37] [cursor=pointer]:
+        - /url: http://testautomationpractice.blogspot.com/
+    - listitem [ref=e38]:
+      - link "Udemy Courses" [ref=e39] [cursor=pointer]:
+        - /url: https://www.pavanonlinetrainings.com/p/udemy-courses.html
+    - listitem [ref=e40]:
+      - link "Online Trainings" [ref=e41] [cursor=pointer]:
+        - /url: https://www.pavanonlinetrainings.com/
+    - listitem [ref=e42]:
+      - link "Blog" [ref=e43] [cursor=pointer]:
+        - /url: https://www.pavantestingtools.com/
+    - listitem [ref=e44]:
+      - link "PlaywrightPractice" [ref=e45] [cursor=pointer]:
+        - /url: https://testautomationpractice.blogspot.com/p/playwrightpractice.html
+  - generic [ref=e65]:
+    - heading "GUI Elements" [level=3] [ref=e66]:
+      - link "GUI Elements" [ref=e67] [cursor=pointer]:
+        - /url: https://testautomationpractice.blogspot.com/2018/09/automation-form.html
+    - generic [ref=e68]:
+      - generic [ref=e69]:
+        - generic [ref=e70]: "Name:"
+        - textbox "Enter Name" [ref=e71]
+        - generic [ref=e72]: "Email:"
+        - textbox "Enter EMail" [ref=e73]
+        - generic [ref=e74]: "Phone:"
+        - textbox "Enter Phone" [ref=e75]
+      - generic [ref=e76]:
+        - generic [ref=e77]: "Address:"
+        - textbox "Address:" [ref=e78]
+      - generic [ref=e79]:
+        - generic [ref=e80]: "Gender:"
+        - generic [ref=e81]:
+          - radio "Male" [ref=e82]
+          - generic [ref=e83]: Male
+        - generic [ref=e84]:
+          - radio "Female" [ref=e85]
+          - generic [ref=e86]: Female
+      - generic [ref=e87]:
+        - generic [ref=e88]: "Days:"
+        - generic [ref=e89]:
+          - checkbox "Sunday" [ref=e90]
+          - generic [ref=e91]: Sunday
+        - generic [ref=e92]:
+          - checkbox "Monday" [ref=e93]
+          - generic [ref=e94]: Monday
+        - generic [ref=e95]:
+          - checkbox "Tuesday" [ref=e96]
+          - generic [ref=e97]: Tuesday
+        - generic [ref=e98]:
+          - checkbox "Wednesday" [ref=e99]
+          - generic [ref=e100]: Wednesday
+        - generic [ref=e101]:
+          - checkbox "Thursday" [ref=e102]
+          - generic [ref=e103]: Thursday
+        - generic [ref=e104]:
+          - checkbox "Friday" [ref=e105]
+          - generic [ref=e106]: Friday
+        - generic [ref=e107]:
+          - checkbox "Saturday" [ref=e108]
+          - generic [ref=e109]: Saturday
+      - generic [ref=e110]:
+        - generic [ref=e111]: "Country:"
+        - combobox "Country:" [ref=e112]:
+          - option "United States" [selected]
+          - option "Canada"
+          - option "United Kingdom"
+          - option "Germany"
+          - option "France"
+          - option "Australia"
+          - option "Japan"
+          - option "China"
+          - option "Brazil"
+          - option "India"
+      - generic [ref=e113]:
+        - generic [ref=e114]: "Colors:"
+        - listbox "Colors:" [ref=e115]:
+          - option "Red" [ref=e116]
+          - option "Blue" [ref=e117]
+          - option "Green" [ref=e118]
+          - option "Yellow" [ref=e119]
+          - option "Red" [ref=e120]
+          - option "White" [ref=e121]
+          - option "Green" [ref=e122]
+      - generic [ref=e123]:
+        - generic [ref=e124]: "Sorted List:"
+        - listbox "Sorted List:" [ref=e125]:
+          - option "Cat" [ref=e126]
+          - option "Cheetah" [ref=e127]
+          - option "Deer" [ref=e128]
+          - option "Dog" [ref=e129]
+          - option "Elephant" [ref=e130]
+          - option "Fox" [ref=e131]
+          - option "Giraffe" [ref=e132]
+          - option "Lion" [ref=e133]
+          - option "Rabbit" [ref=e134]
+          - option "Zebra" [ref=e135]
+```

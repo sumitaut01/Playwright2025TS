@@ -1,0 +1,1510 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link "logo" [ref=e6] [cursor=pointer]:
+      - /url: https://www.rediff.com
+      - img "logo" [ref=e7] [cursor=pointer]
+    - generic [ref=e8]:
+      - link "Rediffmail" [ref=e9] [cursor=pointer]:
+        - /url: https://mail.rediff.com/cgi-bin/login.cgi
+      - link "Money" [ref=e10] [cursor=pointer]:
+        - /url: https://money.rediff.com/index.html
+      - link "Bill Payments New" [ref=e11] [cursor=pointer]:
+        - /url: https://pay.rediff.com/webapp?utm_source=rediff_home_icon&utm_medium=pc&utm_campaign=rediffpay&utm_content=rediffpay_rediff_home_icon_pc
+      - link "Business Email" [ref=e12] [cursor=pointer]:
+        - /url: https://businessemail.rediff.com/?sc_cid=inhome
+      - link "rediffGURUS" [ref=e13] [cursor=pointer]:
+        - /url: https://gurus.rediff.com/
+      - link "rediff-TV New" [ref=e14] [cursor=pointer]:
+        - /url: https://tv.rediff.com?utm_source=rediff_home_icon&utm_medium=pc&utm_campaign=redifftv&utm_content=redifftv_rediff_home_icon_pc
+    - generic [ref=e15]:
+      - paragraph
+      - paragraph [ref=e16]:
+        - link "Sign in" [ref=e17] [cursor=pointer]:
+          - /url: https://mail.rediff.com/cgi-bin/login.cgi
+        - link "Create Account" [ref=e18] [cursor=pointer]:
+          - /url: https://register.rediff.com/register/register.php?FormName=user_details
+  - iframe [ref=e20]:
+    - generic [ref=f1e3]:
+      - generic [ref=f1e4]:
+        - generic [ref=f1e5]: "LIVE:"
+        - link "BSE 85,267.66" [ref=f1e6] [cursor=pointer]:
+          - /url: https://track.rediff.com/click?url=___https://money.rediff.com/bse___&position=blurb&label=bse&c_type=money&property=hp_in_pc
+          - generic [ref=f1e7] [cursor=pointer]: BSE
+          - generic [ref=f1e8] [cursor=pointer]: 85,267.66
+        - generic [ref=f1e10]: "+449.53"
+      - generic [ref=f1e11]:
+        - link "NSE 26,046.95" [ref=f1e12] [cursor=pointer]:
+          - /url: https://track.rediff.com/click?url=___https://money.rediff.com/nse___&position=blurb&label=nse&c_type=money&property=hp_in_pc
+          - generic [ref=f1e13] [cursor=pointer]: NSE
+          - generic [ref=f1e14] [cursor=pointer]: 26,046.95
+        - generic [ref=f1e16]: "+148.40"
+      - generic [ref=f1e18]:
+        - textbox "Enter company or MF" [ref=f1e19]
+        - button "Submit" [ref=f1e20] [cursor=pointer]
+  - generic [ref=e21]:
+    - generic [ref=e22]: Advertisement
+    - iframe [ref=e26]:
+      - generic [ref=f2e1]:
+        - link [ref=f2e2] [cursor=pointer]:
+          - /url: https://googleads.g.doubleclick.net/pcs/click?xai=AKAOjstvAaCUm7V36t5i94tHnSpDePyEC9penB6Ve1CaucSJT__DdujW--EalFGXd0b7tlcee-HorH6uIEV7JsIi4l9LQEHshZDZPL16fjU2B_ZDdOcF-6UD7iR9PbL0UgePwXhw5JINAOdUgbELtEsmFGRMMBlbjb650wT_Ej-BHtzlFuBrmsY1RFSEsUCoRZVPaPbvyOS7CkllvKZNJI7TS-N3e96TK9MFjE2sJp9_-cqHMffwpLH_8W4mRkpfSawcBmIWIPV5awOJ7so8jTqYUC7yA0jyK3iwa8JMf8Qm0KEJRRkEsmxC24xcxrzYs6257zw5PHfYv_JqSBmskMBXkKbcFAIQUsjwb8e1AFSPfe6S-TmNp5bzQ5xp8tl50cRL9X5oyg-1Fy7c4v-vQ-qlinYuy_GWia5XNUCzsg0vJ8Xjd_I&sai=AMfl-YRuNpHKNnr-AO0LvGh_hrpEm-sN9mSjRXLQuDc2DAKtUpNrOpNHoe-7TNMZ4cYDpozk0U8_iSLTAPfddBqRsk4asRnwZIldg3MHjnExVVm2hwujha1X62jPEBskhMY0t-OPSut0TLEAGOh7Dz02YwPiBSGk36HlraGV7TpQFdLDb396mv3dAiVMtVtgClWZqeDImqxTFgDVOFBc5VzB1AslGVNcXDXaj-P1NXJZJ_etcJEhBlgeV8CCFoth8PlKz6NEM3O9C6f8gkrDEG6vd2SR6Sam_DQ&sig=Cg0ArKJSzDK8Vk0N4jm5&fbs_aeid=%5Bgw_fbsaeid%5D&adurl=https://tv.rediff.com%3Futm_source%3Dredifftv%26utm_medium%3Dbanner_970x250%26utm_campaign%3Dredifftv_launch%26utm_content%3Dredifftv_launch_banner_970x250&nm=1
+        - img [ref=f2e6] [cursor=pointer]
+        - button [ref=f2e8] [cursor=pointer]:
+          - img [ref=f2e9] [cursor=pointer]
+  - generic [ref=e27]:
+    - generic [ref=e28]:
+      - generic [ref=e29]: HOME
+      - link "MOBILE RECHARGE New" [ref=e31] [cursor=pointer]:
+        - /url: https://pay.rediff.com/webapp/recharge/25a140b3-52a9-42c4-a914-3e4bc088d547?utm_source=rediff_home_nav&utm_medium=pc&utm_campaign=rediffpay&utm_content=rediffpay_rediff_home_nav_pc
+      - link "NEWS" [ref=e33] [cursor=pointer]:
+        - /url: https://www.rediff.com/news
+      - link "BUSINESS" [ref=e35] [cursor=pointer]:
+        - /url: https://www.rediff.com/business
+      - link "MOVIES" [ref=e37] [cursor=pointer]:
+        - /url: https://www.rediff.com/movies
+      - link "CRICKET" [ref=e39] [cursor=pointer]:
+        - /url: https://www.rediff.com/cricket
+      - link "AI-WEBSITE BUILDER New" [ref=e41] [cursor=pointer]:
+        - /url: https://apps.rediff.com
+      - link "SPORTS" [ref=e43] [cursor=pointer]:
+        - /url: https://www.rediff.com/sports
+      - link "GET AHEAD" [ref=e45] [cursor=pointer]:
+        - /url: https://www.rediff.com/getahead
+    - generic [ref=e46]:
+      - generic [ref=e47]: "Follow Rediff on:"
+      - link [ref=e48] [cursor=pointer]:
+        - /url: https://x.com/RediffNews
+      - link [ref=e50] [cursor=pointer]:
+        - /url: https://www.instagram.com/rediffnews/
+      - link [ref=e52] [cursor=pointer]:
+        - /url: https://www.facebook.com/people/Rediff-News/61566156876578/
+      - link [ref=e54] [cursor=pointer]:
+        - /url: https://whatsapp.com/channel/0029Va5OV1pLtOjB8oWyne1F
+  - heading "TOP STORIES" [level=1] [ref=e57]
+  - generic [ref=e58]:
+    - generic [ref=e59]:
+      - 'link "''Vote chori'': Charges filed against former BJP MLA, son ''Vote chori'': Charges filed against former BJP MLA, son 2:20 min" [ref=e60] [cursor=pointer]':
+        - /url: https://tv.rediff.com/news/vote-chori-charges-filed-against-former-bjp-mla-son/364425
+        - 'img "''Vote chori'': Charges filed against former BJP MLA, son" [ref=e62] [cursor=pointer]'
+        - 'heading "''Vote chori'': Charges filed against former BJP MLA, son" [level=2] [ref=e63] [cursor=pointer]'
+        - paragraph [ref=e65] [cursor=pointer]: 2:20 min
+      - generic [ref=e67]:
+        - link "'Cancelled our honeymoon to see Messi'" [ref=e69] [cursor=pointer]:
+          - /url: https://www.rediff.com/sports/report/cancelled-our-honeymoon-to-see-lionel-messi/20251213.htm
+          - img "'Cancelled our honeymoon to see Messi'" [ref=e70] [cursor=pointer]
+        - generic [ref=e71]:
+          - paragraph [ref=e72]:
+            - link "Sports" [ref=e73] [cursor=pointer]:
+              - /url: https://www.rediff.com/sports
+          - link "'Cancelled our honeymoon to see Messi'" [ref=e74] [cursor=pointer]:
+            - /url: https://www.rediff.com/sports/report/cancelled-our-honeymoon-to-see-lionel-messi/20251213.htm
+    - generic [ref=e75]:
+      - paragraph [ref=e76]: Dec 13, 2025 IST 13:49:37
+      - heading "LIVE! Mamata apologises to Messi, fans; orders probe" [level=2] [ref=e77]:
+        - link "LIVE! Mamata apologises to Messi, fans; orders probe" [ref=e78] [cursor=pointer]:
+          - /url: https://m.rediff.com/news/commentary/2025/dec/13/liveupdates.htm
+          - generic [ref=e79] [cursor=pointer]: LIVE!
+          - text: Mamata apologises to Messi, fans; orders probe
+        - paragraph [ref=e80]
+      - 'heading "''Royal Mess'': Messi''s Kolkata Tour Sparks Fan Fury 2 min read" [level=2] [ref=e81]':
+        - 'link "''Royal Mess'': Messi''s Kolkata Tour Sparks Fan Fury" [ref=e82] [cursor=pointer]':
+          - /url: https://www.rediff.com/sports/report/royal-mess-lionel-messi-kolkata-tour-sparks-fan-fury/20251213.htm
+        - paragraph [ref=e83]: 2 min read
+      - heading "19 US states sue Trump admin over new fee on H-1B visas 4 min read" [level=2] [ref=e84]:
+        - link "19 US states sue Trump admin over new fee on H-1B visas" [ref=e85] [cursor=pointer]:
+          - /url: https://www.rediff.com/news/report/us-states-sue-trump-admin-over-new-fee-on-h-1b-visas/20251213.htm
+        - paragraph [ref=e86]: 4 min read
+      - heading "US lawmakers move resolution to end Trump tariffs on India 3 min read" [level=2] [ref=e87]:
+        - link "US lawmakers move resolution to end Trump tariffs on India" [ref=e88] [cursor=pointer]:
+          - /url: https://www.rediff.com/news/report/us-lawmakers-move-resolution-to-end-trump-tariffs-on-india/20251213.htm
+        - paragraph [ref=e89]: 3 min read
+      - 'heading "''Vote chori'': Charges filed against former BJP MLA, son 2 min read" [level=2] [ref=e90]':
+        - 'link "''Vote chori'': Charges filed against former BJP MLA, son" [ref=e91] [cursor=pointer]':
+          - /url: https://www.rediff.com/news/report/vote-chori-charges-filed-against-former-bjp-mla-son/20251213.htm
+        - paragraph [ref=e92]: 2 min read
+      - 'heading "IndiGo Crisis: What Was Its Board Doing? 6 min read" [level=2] [ref=e93]':
+        - 'link "IndiGo Crisis: What Was Its Board Doing?" [ref=e94] [cursor=pointer]':
+          - /url: https://www.rediff.com/news/column/indigo-crisis-what-was-its-board-doing/20251213.htm
+        - paragraph [ref=e95]: 6 min read
+      - heading "Nuclear Power Opened to Private Players 4 min read" [level=2] [ref=e96]:
+        - link "Nuclear Power Opened to Private Players" [ref=e97] [cursor=pointer]:
+          - /url: https://www.rediff.com/news/report/cabinet-oks-private-entry-into-nuclear-power/20251213.htm
+        - paragraph [ref=e98]: 4 min read
+      - heading "Sharif trolled after gatecrashing Putin-Erdogan meeting 4 min read" [level=2] [ref=e99]:
+        - link "Sharif trolled after gatecrashing Putin-Erdogan meeting" [ref=e100] [cursor=pointer]:
+          - /url: https://www.rediff.com/news/report/pak-pm-sharif-trolled-after-gatecrashing-putin-erdogan-meeting/20251213.htm
+        - paragraph [ref=e101]: 4 min read
+      - heading "Gambhir-Hardik's Intense Chat Sparks Buzz! 1 min read" [level=2] [ref=e102]:
+        - link "Gambhir-Hardik's Intense Chat Sparks Buzz!" [ref=e103] [cursor=pointer]:
+          - /url: https://www.rediff.com/cricket/report/gambhir-hardiks-intense-chat-sparks-buzz-india-south-africa/20251213.htm
+        - paragraph [ref=e104]: 1 min read
+      - paragraph [ref=e105]:
+        - link "See More >" [ref=e106] [cursor=pointer]:
+          - /url: https://www.rediff.com/news
+    - generic [ref=e107]:
+      - generic [ref=e108]:
+        - generic [ref=e109]: Advertisement
+        - iframe [ref=e114]:
+          - generic [ref=f3e1]:
+            - link [ref=f3e2] [cursor=pointer]:
+              - /url: https://googleads.g.doubleclick.net/pcs/click?xai=AKAOjsuGJi25O56V1DaTSLrFi-6KqZ7DVF-hNhfNBz260YPa423Xjpf1DGQEp8fP2Z_qA7svO-XDZT0FBIYCstiqOoyTnQTnfaq3IoJkboeGn5qmMltuPP_fUDbRHol2f9z7Osi7lTnviqaO7_JIE0rnu5bAZX_Z2kT2f67E4-37KP2VRU0JrIm0G3yazFizNRmFgirikbserTWnH60yORoz82e7AfH7jYqrlzq08YRWigoBgISGzrYaDjoDAg5PFGVJkyQTiYriaPlj3tPtySJNPzuLha2_arNf-iKBEanO76q4schUE84kOeEhCaRajZavctKm4X-uvUMw_7QYUyRBsinRgD0EpPfqeDD3RHl1RaTAKyP3oxW7chbGQv7SUyqVyPcRDodNLSi2hwe8IEfDeWoHzBVsfiCObwnoM-a1kz2AR7VMJg&sai=AMfl-YTgGEQoVUD46oEUiEpyANQjiKQPlppPKyvw5VUjDtRJWDFa2TIyBi_qG13KWupVLj7ytVLFvGYYROPutrfL1FgOik72X7CWdetA7LSBWRfaUW3W5D75moVbqyhucNnf2BXgTZF_QJvWAHL100Gtnd2BKitixBdcFkkveQDOkEhERhileiBTfHwIk8RQEt3NJv9VkqvOWfA5YIm8QsWVS7EAkCIN4kKSBpvC3n-ORXcRDSD6RZwwAUZ-SgHETC38hK0d_4AMqGmoXXoNhXih8UKUO1IHuMs&sig=Cg0ArKJSzKJZjUz6lIJj&fbs_aeid=%5Bgw_fbsaeid%5D&adurl=https://im.rediff.com/ajaxprism/freemailAd/index.html%3Futm_source%3DrediffInhouse%26utm_medium%3D300x250%26utm_campaign%3Drediffapp_download_upicomingsoon_yb%26utm_content%3Drediffapp_download_upicomingsoon_yb_300x250
+            - img [ref=f3e6] [cursor=pointer]
+            - button [ref=f3e8] [cursor=pointer]:
+              - img [ref=f3e9] [cursor=pointer]
+      - iframe [ref=e118]:
+        - generic [active] [ref=f4e1]:
+          - img [ref=f4e6]
+          - iframe [ref=f4e9]:
+            - img "Pay" [ref=f5e8] [cursor=pointer]
+  - generic [ref=e120]:
+    - generic [ref=e121]:
+      - link "LIVE":
+        - /url: https://m.rediff.com/news/commentary/2025/dec/13/liveupdates.htm
+        - generic [ref=e122] [cursor=pointer]: LIVE
+      - generic [ref=e123]:
+        - generic [ref=e124]:
+          - text: 13:49
+          - link "IndiGo flight suffers tail strike while landing at Ranchi airport" [ref=e126] [cursor=pointer]:
+            - /url: https://m.rediff.com/news/commentary/2025/dec/13/indigo-flight-suffers-tail-strike-while-landing-at-ranchi-airport/d214d6a980d90de21dceac521753f9db
+            - img [ref=e128] [cursor=pointer]
+            - generic [ref=e129] [cursor=pointer]: IndiGo flight suffers tail strike while landing at Ranchi airport
+        - generic [ref=e130]:
+          - text: 13:48
+          - link "Rajasthan infant dies after ambulance runs out of oxygen" [ref=e132] [cursor=pointer]:
+            - /url: https://m.rediff.com/news/commentary/2025/dec/13/rajasthan-infant-dies-after-ambulance-runs-out-of-oxygen/a3f3b7255e9564532c944507871632f7
+            - img [ref=e134] [cursor=pointer]
+            - generic [ref=e135] [cursor=pointer]: Rajasthan infant dies after ambulance runs out of oxygen
+        - generic [ref=e136]:
+          - text: 13:30
+          - link "Mamata apologises to Messi, fans; orders probe" [ref=e138] [cursor=pointer]:
+            - /url: https://m.rediff.com/news/commentary/2025/dec/13/mamata-apologises-to-messi-fans-orders-probe/7cecbf7d0191dd963356ca55ff65ee61
+            - img [ref=e140] [cursor=pointer]
+            - generic [ref=e141] [cursor=pointer]: Mamata apologises to Messi, fans; orders probe
+        - generic [ref=e142]:
+          - text: 12:50
+          - link "Kolkata fans protest after failing to see Messi" [ref=e144] [cursor=pointer]:
+            - /url: https://m.rediff.com/news/commentary/2025/dec/13/kolkata-fans-protest-after-failing-to-see-messi/71f174858e3874bfc29b975f223b3c1d
+            - img [ref=e146] [cursor=pointer]
+            - generic [ref=e147] [cursor=pointer]: Kolkata fans protest after failing to see Messi
+        - generic [ref=e148]:
+          - text: 12:08
+          - link "YouTuber 'Savukku' Shankar arrested" [ref=e150] [cursor=pointer]:
+            - /url: https://m.rediff.com/news/commentary/2025/dec/13/youtuber-savukku-shankar-arrested/5210b4a3b133edeb5407d0dc73c8bcf4
+            - img [ref=e152] [cursor=pointer]
+            - generic [ref=e153] [cursor=pointer]: YouTuber 'Savukku' Shankar arrested
+        - generic [ref=e154]:
+          - text: 11:53
+          - 'link "''No big deal'': Trump plays down Epstein photos" [ref=e156] [cursor=pointer]':
+            - /url: https://m.rediff.com/news/commentary/2025/dec/13/no-big-deal-trump-plays-down-epstein-photos/5bce181e1b5c0b9eb975b8e3be5e4c55
+            - img [ref=e158] [cursor=pointer]
+            - generic [ref=e159] [cursor=pointer]: "'No big deal': Trump plays down Epstein photos"
+        - generic [ref=e160]:
+          - text: 11:14
+          - 'link "Releasing goats in forest to curb leopard attacks laughable: Ajit" [ref=e162] [cursor=pointer]':
+            - /url: https://m.rediff.com/news/commentary/2025/dec/13/releasing-goats-in-forest-to-curb-leopard-attacks-laughable-ajit/216f63d2fdffa37183174e0a032d0e7f
+            - img [ref=e164] [cursor=pointer]
+            - generic [ref=e165] [cursor=pointer]: "Releasing goats in forest to curb leopard attacks laughable: Ajit"
+        - generic [ref=e166]:
+          - text: 11:11
+          - link "Cong takes swipe at Modi over India not being part of US-led 'Pax Silica' grouping" [ref=e168] [cursor=pointer]:
+            - /url: https://m.rediff.com/news/commentary/2025/dec/13/cong-takes-swipe-at-modi-over-india-not-being-part-of-usled-pax-silica-grouping/43a96c81233f3e229104e803a12446a1
+            - img [ref=e170] [cursor=pointer]
+            - generic [ref=e171] [cursor=pointer]: Cong takes swipe at Modi over India not being part of US-led 'Pax Silica' grouping
+        - generic [ref=e172]:
+          - text: 10:53
+          - link "Rahul to attend friendly football match between Messi, Telangana CM" [ref=e174] [cursor=pointer]:
+            - /url: https://m.rediff.com/news/commentary/2025/dec/13/rahul-to-attend-friendly-football-match-between-messi-telangana-cm/89072fb8b41148b3b1a9de8c6dc3fe70
+            - img [ref=e176] [cursor=pointer]
+            - generic [ref=e177] [cursor=pointer]: Rahul to attend friendly football match between Messi, Telangana CM
+        - generic [ref=e178]:
+          - text: 10:52
+          - link "Pak, 7 other Muslim nations back UNRWA; say its role in Gaza 'irreplaceable'" [ref=e180] [cursor=pointer]:
+            - /url: https://m.rediff.com/news/commentary/2025/dec/13/pak-7-other-muslim-nations-back-unrwa-say-its-role-in-gaza-irreplaceable/174eca077a163215df54e2c21b0eb66c
+            - img [ref=e182] [cursor=pointer]
+            - generic [ref=e183] [cursor=pointer]: Pak, 7 other Muslim nations back UNRWA; say its role in Gaza 'irreplaceable'
+        - generic [ref=e184]:
+          - text: 10:49
+          - link "US lawmakers move resolution to end Trump tariffs" [ref=e186] [cursor=pointer]:
+            - /url: https://m.rediff.com/news/commentary/2025/dec/13/us-lawmakers-move-resolution-to-end-trump-tariffs/505384d623602c1c8a350f8805bee18b
+            - img [ref=e188] [cursor=pointer]
+            - generic [ref=e189] [cursor=pointer]: US lawmakers move resolution to end Trump tariffs
+        - generic [ref=e190]:
+          - text: 10:22
+          - link "Heavy smog blankets Delhi as AQI nears 'severe' level" [ref=e192] [cursor=pointer]:
+            - /url: https://m.rediff.com/news/commentary/2025/dec/13/heavy-smog-blankets-delhi-as-aqi-nears-severe-level/dbcca89a2a4803ab78a0baf75f9ee753
+            - img [ref=e194] [cursor=pointer]
+            - generic [ref=e195] [cursor=pointer]: Heavy smog blankets Delhi as AQI nears 'severe' level
+    - generic [ref=e196]:
+      - generic [ref=e197]: Showing 1/3
+      - button ">" [ref=e198] [cursor=pointer]
+      - button "<" [disabled] [ref=e199] [cursor=pointer]
+      - link "See More >" [ref=e201] [cursor=pointer]:
+        - /url: https://m.rediff.com/news/commentary/2025/dec/13/liveupdates.htm
+  - heading "MORE NEWS" [level=2] [ref=e202]:
+    - link "MORE NEWS" [ref=e203] [cursor=pointer]:
+      - /url: https://www.rediff.com/news
+      - text: MORE NEWS
+  - generic [ref=e205]:
+    - generic [ref=e206]:
+      - link "Priyanka's Look Is The Love Child Of..." [ref=e208] [cursor=pointer]:
+        - /url: https://www.rediff.com/getahead/report/priyanka-chopras-look-is-the-love-child-of/20251212.htm
+        - img "Priyanka's Look Is The Love Child Of..." [ref=e209] [cursor=pointer]
+      - heading "Priyanka's Look Is The Love Child Of..." [level=2] [ref=e212]:
+        - link "Priyanka's Look Is The Love Child Of..." [ref=e213] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/report/priyanka-chopras-look-is-the-love-child-of/20251212.htm
+      - generic [ref=e214]:
+        - paragraph [ref=e215]: 1 min read
+        - paragraph [ref=e216]: 1 day ago
+    - generic [ref=e217]:
+      - generic [ref=e218]:
+        - link "Kis Kisko Pyaar Karoon 2 Review" [ref=e220] [cursor=pointer]:
+          - /url: https://www.rediff.com/movies/review/kis-kisko-pyaar-karoon-2-review/20251212.htm
+          - img "Kis Kisko Pyaar Karoon 2 Review" [ref=e221] [cursor=pointer]
+        - generic [ref=e224]:
+          - heading "Kis Kisko Pyaar Karoon 2 Review" [level=3] [ref=e225]:
+            - link "Kis Kisko Pyaar Karoon 2 Review" [ref=e226] [cursor=pointer]:
+              - /url: https://www.rediff.com/movies/review/kis-kisko-pyaar-karoon-2-review/20251212.htm
+          - generic [ref=e227]:
+            - paragraph [ref=e228]: 5 min read
+            - paragraph [ref=e229]: 1 day ago
+      - generic [ref=e230]:
+        - link "Suhana, Triptii Rock The Dainty Maang Tikka" [ref=e232] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/report/suhana-triptii-rock-the-dainty-maang-tikka/20251212.htm
+          - img "Suhana, Triptii Rock The Dainty Maang Tikka" [ref=e233] [cursor=pointer]
+        - generic [ref=e236]:
+          - heading "Suhana, Triptii Rock The Dainty Maang Tikka" [level=3] [ref=e237]:
+            - link "Suhana, Triptii Rock The Dainty Maang Tikka" [ref=e238] [cursor=pointer]:
+              - /url: https://www.rediff.com/getahead/report/suhana-triptii-rock-the-dainty-maang-tikka/20251212.htm
+          - generic [ref=e239]:
+            - paragraph [ref=e240]: 2 min read
+            - paragraph [ref=e241]: 1 day ago
+    - generic [ref=e242]:
+      - generic [ref=e243]:
+        - heading "The Ultimate Rajinikanth Playlist" [level=3] [ref=e244]:
+          - link "The Ultimate Rajinikanth Playlist" [ref=e245] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/special/the-ultimate-rajinikanth-playlist/20251213.htm
+        - paragraph [ref=e246]: 5 min read
+      - generic [ref=e247]:
+        - heading "'We don't want Gill to justify his place in team'" [level=3] [ref=e248]:
+          - link "'We don't want Gill to justify his place in team'" [ref=e249] [cursor=pointer]:
+            - /url: https://www.rediff.com/cricket/report/we-dont-want-shubman-gill-to-justify-his-place-in-team-india-south-africa/20251212.htm
+        - paragraph [ref=e250]: 4 min read
+      - generic [ref=e251]:
+        - heading "Salman's Day Out With Johnny Depp" [level=3] [ref=e252]:
+          - link "Salman's Day Out With Johnny Depp" [ref=e253] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/report/salmans-day-out-with-johnny-depp/20251212.htm
+        - paragraph [ref=e254]: 1 min read
+      - generic [ref=e255]:
+        - heading "The Great Shamsuddin Family Review" [level=3] [ref=e256]:
+          - link "The Great Shamsuddin Family Review" [ref=e257] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/review/the-great-shamsuddin-family-review/20251212.htm
+        - paragraph [ref=e258]: 3 min read
+      - generic [ref=e259]:
+        - heading "Amritsari Kulcha Among World's Best..." [level=3] [ref=e260]:
+          - link "Amritsari Kulcha Among World's Best..." [ref=e261] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/report/amritsari-kulcha-among-worlds-best-dishes/20251212.htm
+        - paragraph [ref=e262]: 4 min read
+      - paragraph [ref=e263]:
+        - link "See More >" [ref=e264] [cursor=pointer]:
+          - /url: https://www.rediff.com/news
+  - generic [ref=e266]:
+    - generic [ref=e267]: Advertisement
+    - generic:
+      - insertion
+  - generic [ref=e268]:
+    - heading "NEWS" [level=2] [ref=e269]:
+      - link "NEWS" [ref=e271] [cursor=pointer]:
+        - /url: https://www.rediff.com/news
+    - generic [ref=e272]:
+      - generic [ref=e273]:
+        - link "Digital Scams Are Getting Smarter" [ref=e275] [cursor=pointer]:
+          - /url: https://www.rediff.com/news/column/digital-scams-are-getting-smarter/20251212.htm
+          - img "Digital Scams Are Getting Smarter" [ref=e276] [cursor=pointer]
+        - heading "Digital Scams Are Getting Smarter" [level=2] [ref=e277]:
+          - link "Digital Scams Are Getting Smarter" [ref=e278] [cursor=pointer]:
+            - /url: https://www.rediff.com/news/column/digital-scams-are-getting-smarter/20251212.htm
+        - paragraph [ref=e279]: 4 min read
+      - generic [ref=e280]:
+        - generic [ref=e281]:
+          - link "This Blind Army Officer Is An Inspiration For India" [ref=e283] [cursor=pointer]:
+            - /url: https://www.rediff.com/news/interview/this-blind-army-officer-is-an-inspiration-for-india/20251211.htm
+            - img "This Blind Army Officer Is An Inspiration For India" [ref=e284] [cursor=pointer]
+          - generic [ref=e285]:
+            - heading "This Blind Army Officer Is An Inspiration For India" [level=3] [ref=e286]:
+              - link "This Blind Army Officer Is An Inspiration For India" [ref=e287] [cursor=pointer]:
+                - /url: https://www.rediff.com/news/interview/this-blind-army-officer-is-an-inspiration-for-india/20251211.htm
+            - generic [ref=e288]:
+              - paragraph [ref=e289]: 9 min read
+              - paragraph [ref=e290]: 1 day ago
+        - generic [ref=e291]:
+          - link "'Thar Desert Will Reach Delhi Soon'" [ref=e293] [cursor=pointer]:
+            - /url: https://www.rediff.com/news/interview/thar-desert-will-reach-delhi-soon/20251211.htm
+            - img "'Thar Desert Will Reach Delhi Soon'" [ref=e294] [cursor=pointer]
+          - generic [ref=e295]:
+            - heading "'Thar Desert Will Reach Delhi Soon'" [level=3] [ref=e296]:
+              - link "'Thar Desert Will Reach Delhi Soon'" [ref=e297] [cursor=pointer]:
+                - /url: https://www.rediff.com/news/interview/thar-desert-will-reach-delhi-soon/20251211.htm
+            - generic [ref=e298]:
+              - paragraph [ref=e299]: 11 min read
+              - paragraph [ref=e300]: 2 days ago
+      - generic [ref=e301]:
+        - generic [ref=e302]:
+          - heading "'14+ Anti-Obesity Drugs In The Pipeline'" [level=3] [ref=e303]:
+            - link "'14+ Anti-Obesity Drugs In The Pipeline'" [ref=e304] [cursor=pointer]:
+              - /url: https://www.rediff.com/news/report/14-anti-obesity-drugs-in-the-pipeline/20251213.htm
+          - paragraph [ref=e305]: 5 min read
+        - generic [ref=e306]:
+          - heading "Govt to rename MGNREGA to 'Poojya Bapu...'" [level=3] [ref=e307]:
+            - link "Govt to rename MGNREGA to 'Poojya Bapu...'" [ref=e308] [cursor=pointer]:
+              - /url: https://www.rediff.com/news/report/govt-to-rename-mgnrega-to-poojya-bapu-grameen-rozgar-yojna/20251213.htm
+          - paragraph [ref=e309]: 1 min read
+        - generic [ref=e310]:
+          - heading "Delhi chokes as air quality nears 'severe' level" [level=3] [ref=e311]:
+            - link "Delhi chokes as air quality nears 'severe' level" [ref=e312] [cursor=pointer]:
+              - /url: https://www.rediff.com/news/report/delhi-chokes-as-air-quality-nears-severe-level/20251213.htm
+          - paragraph [ref=e313]: 2 min read
+        - generic [ref=e314]:
+          - heading "Amarinder Singh says BJP ignores him, rejects Cong return" [level=3] [ref=e315]:
+            - link "Amarinder Singh says BJP ignores him, rejects Cong return" [ref=e316] [cursor=pointer]:
+              - /url: https://www.rediff.com/news/report/amarinder-singh-says-bjp-ignores-him-but-rules-out-congress-return/20251212.htm
+          - paragraph [ref=e317]: 5 min read
+        - generic [ref=e318]:
+          - heading "Mamata's Bhabanipur sees high voter deletions" [level=3] [ref=e319]:
+            - link "Mamata's Bhabanipur sees high voter deletions" [ref=e320] [cursor=pointer]:
+              - /url: https://www.rediff.com/news/report/mamatas-bhabanipur-sees-high-voter-deletions-surpasses-nandigram/20251212.htm
+          - paragraph [ref=e321]: 4 min read
+        - paragraph [ref=e322]:
+          - link "See More >" [ref=e323] [cursor=pointer]:
+            - /url: https://www.rediff.com/news
+  - generic [ref=e325]:
+    - heading "NEWS" [level=2] [ref=e326]:
+      - link "NEWS" [ref=e328] [cursor=pointer]:
+        - /url: https://www.rediff.com/news
+    - generic [ref=e329]:
+      - generic [ref=e330]:
+        - link "Where the Mountains Teach Patience" [ref=e332] [cursor=pointer]:
+          - /url: https://www.rediff.com/news/special/where-the-mountains-teach-patience/20251209.htm
+          - img "Where the Mountains Teach Patience" [ref=e333] [cursor=pointer]
+        - heading "Where the Mountains Teach Patience" [level=2] [ref=e334]:
+          - link "Where the Mountains Teach Patience" [ref=e335] [cursor=pointer]:
+            - /url: https://www.rediff.com/news/special/where-the-mountains-teach-patience/20251209.htm
+        - paragraph [ref=e336]: 6 min read
+      - generic [ref=e337]:
+        - generic [ref=e338]:
+          - link "'IndiGo Must Be Broken Up Into 3 Or 4 Airlines'" [ref=e340] [cursor=pointer]:
+            - /url: https://www.rediff.com/news/interview/indigo-must-be-broken-up-into-3-or-4-airlines/20251209.htm
+            - img "'IndiGo Must Be Broken Up Into 3 Or 4 Airlines'" [ref=e341] [cursor=pointer]
+          - generic [ref=e342]:
+            - heading "'IndiGo Must Be Broken Up Into 3 Or 4 Airlines'" [level=3] [ref=e343]:
+              - link "'IndiGo Must Be Broken Up Into 3 Or 4 Airlines'" [ref=e344] [cursor=pointer]:
+                - /url: https://www.rediff.com/news/interview/indigo-must-be-broken-up-into-3-or-4-airlines/20251209.htm
+            - generic [ref=e345]:
+              - paragraph [ref=e346]: 8 min read
+              - paragraph [ref=e347]: 4 days ago
+        - generic [ref=e348]:
+          - link "The Police Constable Who Will Be An IAF Pilot" [ref=e350] [cursor=pointer]:
+            - /url: https://www.rediff.com/news/special/the-police-constable-who-will-be-an-iaf-pilot/20251208.htm
+            - img "The Police Constable Who Will Be An IAF Pilot" [ref=e351] [cursor=pointer]
+          - generic [ref=e352]:
+            - heading "The Police Constable Who Will Be An IAF Pilot" [level=3] [ref=e353]:
+              - link "The Police Constable Who Will Be An IAF Pilot" [ref=e354] [cursor=pointer]:
+                - /url: https://www.rediff.com/news/special/the-police-constable-who-will-be-an-iaf-pilot/20251208.htm
+            - generic [ref=e355]:
+              - paragraph [ref=e356]: 3 min read
+              - paragraph [ref=e357]: 1 day ago
+      - generic [ref=e358]:
+        - generic [ref=e359]:
+          - heading "Goa Fire Exposes EPFO Oversight Gaps" [level=3] [ref=e360]:
+            - link "Goa Fire Exposes EPFO Oversight Gaps" [ref=e361] [cursor=pointer]:
+              - /url: https://www.rediff.com/news/report/goa-fire-exposes-epfo-oversight-gaps/20251213.htm
+          - paragraph [ref=e362]: 3 min read
+        - generic [ref=e363]:
+          - heading "She Cleared NEET at 47!" [level=3] [ref=e364]:
+            - link "She Cleared NEET at 47!" [ref=e365] [cursor=pointer]:
+              - /url: https://www.rediff.com/news/special/she-cleared-neet-at-47/20251212.htm
+          - paragraph [ref=e366]: 9 min read
+        - generic [ref=e367]:
+          - heading "'Ministry Slept, DGCA Slept, IndiGo...'" [level=3] [ref=e368]:
+            - link "'Ministry Slept, DGCA Slept, IndiGo...'" [ref=e369] [cursor=pointer]:
+              - /url: https://www.rediff.com/news/interview/ministry-slept-dgca-slept-indigo/20251211.htm
+          - paragraph [ref=e370]: 8 min read
+        - generic [ref=e371]:
+          - heading "'Goa Nightclub Fire Was Murder!'" [level=3] [ref=e372]:
+            - link "'Goa Nightclub Fire Was Murder!'" [ref=e373] [cursor=pointer]:
+              - /url: https://www.rediff.com/news/interview/yuri-alemao-goa-nightclub-fire-was-murder/20251209.htm
+          - paragraph [ref=e374]: 11 min read
+        - generic [ref=e375]:
+          - heading "US H-1B Visa Chaos Hits India" [level=3] [ref=e376]:
+            - link "US H-1B Visa Chaos Hits India" [ref=e377] [cursor=pointer]:
+              - /url: https://www.rediff.com/news/special/us-h-1b-visa-chaos-hits-india/20251212.htm
+          - paragraph [ref=e378]: 6 min read
+        - paragraph [ref=e379]:
+          - link "See More >" [ref=e380] [cursor=pointer]:
+            - /url: https://www.rediff.com/news
+  - generic [ref=e382]: Advertisement
+  - generic [ref=e386]:
+    - heading "WEB STORIES" [level=2] [ref=e387]:
+      - link "WEB STORIES" [ref=e388] [cursor=pointer]:
+        - /url: https://www.rediff.com/getahead/web-stories
+        - text: WEB STORIES
+    - generic:
+      - button ">" [ref=e390] [cursor=pointer]
+      - button "<" [ref=e391] [cursor=pointer]
+    - generic [ref=e392]:
+      - generic [ref=e393]:
+        - link "webstory image 1 7 Veg Kebab Recipes" [ref=e394] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-7-vegetarian-kebab-recipe/20251128.htm
+          - generic [ref=e395] [cursor=pointer]:
+            - img "webstory image 1" [ref=e396] [cursor=pointer]
+            - heading "7 Veg Kebab Recipes" [level=3] [ref=e397] [cursor=pointer]
+        - paragraph [ref=e398]: 20 hours ago
+      - generic [ref=e399]:
+        - 'link "webstory image 2 Recipe: Chicken Kabssa" [ref=e400] [cursor=pointer]':
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-recipes-arabic-chicken-kabssa/20251212.htm
+          - generic [ref=e401] [cursor=pointer]:
+            - img "webstory image 2" [ref=e402] [cursor=pointer]
+            - 'heading "Recipe: Chicken Kabssa" [level=3] [ref=e403] [cursor=pointer]'
+        - paragraph [ref=e404]: 1 day ago
+      - generic [ref=e405]:
+        - link "webstory image 3 10 Fascinating Forts Of India" [ref=e406] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-10-fascinating-forts-of-india/20250609.htm
+          - generic [ref=e407] [cursor=pointer]:
+            - img "webstory image 3" [ref=e408] [cursor=pointer]
+            - heading "10 Fascinating Forts Of India" [level=3] [ref=e409] [cursor=pointer]
+        - paragraph [ref=e410]: 1 day ago
+      - generic [ref=e411]:
+        - 'link "webstory image 4 8 Raita Recipes: From Bowl to Soul" [ref=e412] [cursor=pointer]':
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-8-raita-recipes-from-bowl-to-soul/20250609.htm
+          - generic [ref=e413] [cursor=pointer]:
+            - img "webstory image 4" [ref=e414] [cursor=pointer]
+            - 'heading "8 Raita Recipes: From Bowl to Soul" [level=3] [ref=e415] [cursor=pointer]'
+        - paragraph [ref=e416]: 1 day ago
+      - generic [ref=e417]:
+        - 'link "webstory image 5 Recipe: Tandoori Jhinga" [ref=e418] [cursor=pointer]':
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-food-and-recipe-recipe-tandoori-jhinga/20251211.htm
+          - generic [ref=e419] [cursor=pointer]:
+            - img "webstory image 5" [ref=e420] [cursor=pointer]
+            - 'heading "Recipe: Tandoori Jhinga" [level=3] [ref=e421] [cursor=pointer]'
+        - paragraph [ref=e422]: 2 days ago
+      - generic [ref=e423]:
+        - 'link "webstory image 6 Recipe: Festive Carrot-Spinach Pulao" [ref=e424] [cursor=pointer]':
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-recipe-and-food-festive-carrot-spinach-pulao/20251210.htm
+          - generic [ref=e425] [cursor=pointer]:
+            - img "webstory image 6" [ref=e426] [cursor=pointer]
+            - 'heading "Recipe: Festive Carrot-Spinach Pulao" [level=3] [ref=e427] [cursor=pointer]'
+        - paragraph [ref=e428]: 2 days ago
+      - generic [ref=e429]:
+        - 'link "webstory image 7 International Museum Day: 11 Wonderful Indian Museums" [ref=e430] [cursor=pointer]':
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-international-museum-day-11-fascinating-indian-museums/20250518.htm
+          - generic [ref=e431] [cursor=pointer]:
+            - img "webstory image 7" [ref=e432] [cursor=pointer]
+            - 'heading "International Museum Day: 11 Wonderful Indian Museums" [level=3] [ref=e433] [cursor=pointer]'
+        - paragraph [ref=e434]: 1 week ago
+      - generic [ref=e435]:
+        - 'link "webstory image 8 Strawberry Honey Dessert: 5-Min Recipe" [ref=e436] [cursor=pointer]':
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-strawberry-honey-dessert-5-min-recipe/20251204.htm
+          - generic [ref=e437] [cursor=pointer]:
+            - img "webstory image 8" [ref=e438] [cursor=pointer]
+            - 'heading "Strawberry Honey Dessert: 5-Min Recipe" [level=3] [ref=e439] [cursor=pointer]'
+        - paragraph [ref=e440]: 1 week ago
+      - generic [ref=e441]:
+        - 'link "webstory image 9 Recipe: Chicken With Olives And Lemon" [ref=e442] [cursor=pointer]':
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-recipe-chicken-with-olives-and-lemon/20251201.htm
+          - generic [ref=e443] [cursor=pointer]:
+            - img "webstory image 9" [ref=e444] [cursor=pointer]
+            - 'heading "Recipe: Chicken With Olives And Lemon" [level=3] [ref=e445] [cursor=pointer]'
+        - paragraph [ref=e446]: 1 week ago
+      - generic [ref=e447]:
+        - 'link "webstory image 10 India Works Way Too Hard: 8 Overworked Countries" [ref=e448] [cursor=pointer]':
+          - /url: https://www.rediff.com/business/slide-show/slide-show-1-india-works-way-too-hard-8-overworked-countries/20250802.htm
+          - generic [ref=e449] [cursor=pointer]:
+            - img "webstory image 10" [ref=e450] [cursor=pointer]
+            - 'heading "India Works Way Too Hard: 8 Overworked Countries" [level=3] [ref=e451] [cursor=pointer]'
+        - paragraph [ref=e452]: 1 week ago
+      - generic [ref=e453]:
+        - 'link "webstory image 11 Recipe: Paya" [ref=e454] [cursor=pointer]':
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-recipe-paya/20251128.htm
+          - generic [ref=e455] [cursor=pointer]:
+            - img "webstory image 11" [ref=e456] [cursor=pointer]
+            - 'heading "Recipe: Paya" [level=3] [ref=e457] [cursor=pointer]'
+        - paragraph [ref=e458]: 2 weeks ago
+      - generic [ref=e459]:
+        - link "webstory image 12 11 Magical International Dark Sky Places" [ref=e460] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-11-magical-international-dark-sky-places/20250819.htm
+          - generic [ref=e461] [cursor=pointer]:
+            - img "webstory image 12" [ref=e462] [cursor=pointer]
+            - heading "11 Magical International Dark Sky Places" [level=3] [ref=e463] [cursor=pointer]
+        - paragraph [ref=e464]: 2 weeks ago
+      - generic [ref=e465]:
+        - link "webstory image 13 11 Fabulous Indian University Campuses" [ref=e466] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-11-fabulous-indian-university-campuses/20250614.htm
+          - generic [ref=e467] [cursor=pointer]:
+            - img "webstory image 13" [ref=e468] [cursor=pointer]
+            - heading "11 Fabulous Indian University Campuses" [level=3] [ref=e469] [cursor=pointer]
+        - paragraph [ref=e470]: 2 weeks ago
+      - generic [ref=e471]:
+        - 'link "webstory image 14 15-Min Recipe: Citrus Salad" [ref=e472] [cursor=pointer]':
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-food-citrus-salad-with-yoghurt-and-walnuts-15-min-recipe/20251127.htm
+          - generic [ref=e473] [cursor=pointer]:
+            - img "webstory image 14" [ref=e474] [cursor=pointer]
+            - 'heading "15-Min Recipe: Citrus Salad" [level=3] [ref=e475] [cursor=pointer]'
+        - paragraph [ref=e476]: 2 weeks ago
+      - generic [ref=e477]:
+        - link "webstory image 15 India's Biggest Tea And Coffee Drinkers" [ref=e478] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-indias-biggest-tea-and-coffee-drinkers/20250829.htm
+          - generic [ref=e479] [cursor=pointer]:
+            - img "webstory image 15" [ref=e480] [cursor=pointer]
+            - heading "India's Biggest Tea And Coffee Drinkers" [level=3] [ref=e481] [cursor=pointer]
+        - paragraph [ref=e482]: 2 weeks ago
+  - heading "REDIFF GURUS" [level=2] [ref=e484]:
+    - link "REDIFF GURUS" [ref=e485] [cursor=pointer]:
+      - /url: https://gurus.rediff.com?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+      - text: REDIFF GURUS
+  - generic [ref=e487]:
+    - generic [ref=e488]:
+      - generic [ref=e489]:
+        - link "image Health" [ref=e490] [cursor=pointer]:
+          - /url: https://gurus.rediff.com/question/qdtl/health/komal-instant-noodles-becoming-regular-part-many-teenagers-young-adults/5237114?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+          - img "image Health" [ref=e491] [cursor=pointer]
+        - heading "Dear Komal, with instant noodles becoming a regular..." [level=2] [ref=e492]:
+          - link "Dear Komal, with instant noodles becoming a regular..." [ref=e493] [cursor=pointer]:
+            - /url: https://gurus.rediff.com/question/qdtl/health/komal-instant-noodles-becoming-regular-part-many-teenagers-young-adults/5237114?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+      - generic [ref=e494]:
+        - link "image Relationship" [ref=e495] [cursor=pointer]:
+          - /url: https://gurus.rediff.com/question/qdtl/relationship/parents-celebrating-18-yrs-marriage-however-still-strains-remain-between/5246850?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+          - img "image Relationship" [ref=e496] [cursor=pointer]
+        - heading "Madam, my parents are celebrating 18 yrs of marriage..." [level=2] [ref=e497]:
+          - link "Madam, my parents are celebrating 18 yrs of marriage..." [ref=e498] [cursor=pointer]:
+            - /url: https://gurus.rediff.com/question/qdtl/relationship/parents-celebrating-18-yrs-marriage-however-still-strains-remain-between/5246850?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+      - generic [ref=e499]:
+        - link "image Relationship" [ref=e500] [cursor=pointer]:
+          - /url: https://gurus.rediff.com/question/qdtl/relationship/wife-argue-almost-every-week-sometimes-039-s-house-chores/5248083?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+          - img "image Relationship" [ref=e501] [cursor=pointer]
+        - heading "My wife and I argue almost every week. Sometimes..." [level=2] [ref=e502]:
+          - link "My wife and I argue almost every week. Sometimes..." [ref=e503] [cursor=pointer]:
+            - /url: https://gurus.rediff.com/question/qdtl/relationship/wife-argue-almost-every-week-sometimes-039-s-house-chores/5248083?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+      - generic [ref=e504]:
+        - link "image Relationship" [ref=e505] [cursor=pointer]:
+          - /url: https://gurus.rediff.com/question/qdtl/relationship/husband-doesn-039-appreciate-ours-love-marriage-arranged-friends-family/5247720?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+          - img "image Relationship" [ref=e506] [cursor=pointer]
+        - heading "My husband doesn't appreciate me. Ours was a love..." [level=2] [ref=e507]:
+          - link "My husband doesn't appreciate me. Ours was a love..." [ref=e508] [cursor=pointer]:
+            - /url: https://gurus.rediff.com/question/qdtl/relationship/husband-doesn-039-appreciate-ours-love-marriage-arranged-friends-family/5247720?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+    - generic [ref=e509]:
+      - heading "I am 61. I have a partial removable denture(upper). I also..." [level=3] [ref=e510]:
+        - link "I am 61. I have a partial removable denture(upper). I also..." [ref=e511] [cursor=pointer]:
+          - /url: https://gurus.rediff.com/question/qdtl/health/61-partial-removable-denture-upper-bridges-both-upper-lower-suggested/5239496?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+      - heading "I’m a 28-year-old software developer who works late nights..." [level=3] [ref=e512]:
+        - link "I’m a 28-year-old software developer who works late nights..." [ref=e513] [cursor=pointer]:
+          - /url: https://gurus.rediff.com/question/qdtl/health/rsquo-m-28-software-developer-who-works-late-nights-often/5247125?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+      - heading "Sir I passed 12th from Maharashtra board with PCB along with..." [level=3] [ref=e514]:
+        - link "Sir I passed 12th from Maharashtra board with PCB along with..." [ref=e515] [cursor=pointer]:
+          - /url: https://gurus.rediff.com/question/qdtl/career/passed-12th-maharashtra-board-pcb-along-english-hindi-however-aggregate/5247479?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+      - heading "Sir/Mam,My monthly income 140000 and my emis are around 121000..." [level=3] [ref=e516]:
+        - link "Sir/Mam,My monthly income 140000 and my emis are around 121000..." [ref=e517] [cursor=pointer]:
+          - /url: https://gurus.rediff.com/question/qdtl/money/monthly-income-140000-emis-around-121000-rent-25000-monthly-provisions/5242526?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+      - heading "I want to create a mutual fund SIP portfolio for a 27,000 P.M...." [level=3] [ref=e518]:
+        - link "I want to create a mutual fund SIP portfolio for a 27,000 P.M...." [ref=e519] [cursor=pointer]:
+          - /url: https://gurus.rediff.com/question/qdtl/money/create-mutual-fund-sip-portfolio-27-000-p-m-investment/5247289?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+      - heading "Sir, I've been trying very hard everyday. There is so much..." [level=3] [ref=e520]:
+        - link "Sir, I've been trying very hard everyday. There is so much..." [ref=e521] [cursor=pointer]:
+          - /url: https://gurus.rediff.com/question/qdtl/career/039-trying-hard-everyday-much-pressure-because-039-s-2nd/5248001?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+      - heading "Hello ,I'm in my 40s and I'm in the teaching field.How can I..." [level=3] [ref=e522]:
+        - link "Hello ,I'm in my 40s and I'm in the teaching field.How can I..." [ref=e523] [cursor=pointer]:
+          - /url: https://gurus.rediff.com/question/qdtl/career/hello-039-m-40s-039-m-teaching-field-how-progress/5246990?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+      - heading "I recently lost Rs 50 lakhs in stock trading. I'm 36 and this..." [level=3] [ref=e524]:
+        - link "I recently lost Rs 50 lakhs in stock trading. I'm 36 and this..." [ref=e525] [cursor=pointer]:
+          - /url: https://gurus.rediff.com/question/qdtl/money/lost-rs-50-lakhs-stock-trading-039-m-36-long/5247364?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+      - paragraph [ref=e526]:
+        - link "See More >" [ref=e527] [cursor=pointer]:
+          - /url: https://gurus.rediff.com?utm_source=rediff_home&utm_medium=pc&utm_campaign=rediffgurus&utm_content=rediffgurus_rediff_home_pc
+    - generic [ref=e529]: Advertisement
+  - generic [ref=e532]:
+    - heading "VIDEOS" [level=2] [ref=e533]:
+      - link "VIDEOS" [ref=e534] [cursor=pointer]:
+        - /url: https://ishare.rediff.com
+        - text: VIDEOS
+    - generic [ref=e536]:
+      - generic [ref=e537]:
+        - img "Pakistanis on 'Dhurandhar'" [ref=e539] [cursor=pointer]
+        - heading "Pakistanis on 'Dhurandhar'" [level=3] [ref=e540]:
+          - link "Pakistanis on 'Dhurandhar'" [ref=e541] [cursor=pointer]:
+            - /url: https://ishare.rediff.com/video/others/pakistanis-on-dhurandhar-/11369349
+        - generic [ref=e542]:
+          - paragraph [ref=e543]:
+            - text: 11:15
+            - generic [ref=e544]: min
+          - paragraph [ref=e545]: 8 hours ago
+      - generic [ref=e546]:
+        - img "'Cancelled our honeymoon for Messi'" [ref=e548] [cursor=pointer]
+        - heading "'Cancelled our honeymoon for Messi'" [level=3] [ref=e549]:
+          - link "'Cancelled our honeymoon for Messi'" [ref=e550] [cursor=pointer]:
+            - /url: https://ishare.rediff.com/video/others/-cancelled-our-honeymoon-for-messi-/11369351
+        - generic [ref=e551]:
+          - paragraph [ref=e552]:
+            - text: 0:56
+            - generic [ref=e553]: min
+          - paragraph [ref=e554]: 3 hours ago
+      - generic [ref=e555]:
+        - 'img "Video: Argentine footballer Lionel Messi arrives in Kolkata" [ref=e557] [cursor=pointer]'
+        - 'heading "Video: Argentine footballer Lionel Messi arrives in Kolkata" [level=3] [ref=e558]':
+          - 'link "Video: Argentine footballer Lionel Messi arrives in Kolkata" [ref=e559] [cursor=pointer]':
+            - /url: https://ishare.rediff.com/video/others/video-argentine-footballer-lionel-messi-arrives-in-kolkata/11369347
+        - generic [ref=e560]:
+          - paragraph [ref=e561]:
+            - text: 1:47
+            - generic [ref=e562]: min
+          - paragraph [ref=e563]: 8 hours ago
+      - generic [ref=e564]:
+        - img "Messi mania grips Kolkata as thousands welcome Argentine icon" [ref=e566] [cursor=pointer]
+        - heading "Messi mania grips Kolkata as thousands welcome Argentine icon" [level=3] [ref=e567]:
+          - link "Messi mania grips Kolkata as thousands welcome Argentine icon" [ref=e568] [cursor=pointer]:
+            - /url: https://ishare.rediff.com/video/others/messi-mania-grips-kolkata-as-thousands-welcome-argentine-icon/11369348
+        - generic [ref=e569]:
+          - paragraph [ref=e570]:
+            - text: 5:11
+            - generic [ref=e571]: min
+          - paragraph [ref=e572]: 8 hours ago
+    - generic [ref=e573]:
+      - generic [ref=e574]:
+        - 'img "Meet Gujarat''s ''Biker Dadis'': At 87 and 84, octogenarian sisters take Internet by storm" [ref=e576] [cursor=pointer]'
+        - 'heading "Meet Gujarat''s ''Biker Dadis'': At 87 and 84, octogenarian sisters take Internet by storm" [level=3] [ref=e577]':
+          - 'link "Meet Gujarat''s ''Biker Dadis'': At 87 and 84, octogenarian sisters take Internet by storm" [ref=e578] [cursor=pointer]':
+            - /url: https://ishare.rediff.com/video/others/meet-gujarat-s-biker-dadis-at-87-and-84-octogenarian-sisters-take-internet-by-storm/11369223
+        - generic [ref=e579]:
+          - paragraph [ref=e580]:
+            - text: 7:05
+            - generic [ref=e581]: min
+          - paragraph [ref=e582]: 1 day ago
+      - generic [ref=e583]:
+        - 'img "India''s Bullet Train Breakthrough: Mumbai-Ahmedabad Project Hits Major Milestones!" [ref=e585] [cursor=pointer]'
+        - 'heading "India''s Bullet Train Breakthrough: Mumbai-Ahmedabad Project Hits Major Milestones!" [level=3] [ref=e586]':
+          - 'link "India''s Bullet Train Breakthrough: Mumbai-Ahmedabad Project Hits Major Milestones!" [ref=e587] [cursor=pointer]':
+            - /url: https://ishare.rediff.com/video/others/india-s-bullet-train-breakthrough-mumbai-ahmedabad-project-hits-major-milestones-/11369311
+        - generic [ref=e588]:
+          - paragraph [ref=e589]:
+            - text: 1:29
+            - generic [ref=e590]: min
+          - paragraph [ref=e591]: 19 hours ago
+      - generic [ref=e592]:
+        - img "Anna Hazare announces fast unto death for Lokayukta implementation" [ref=e594] [cursor=pointer]
+        - heading "Anna Hazare announces fast unto death for Lokayukta implementation" [level=3] [ref=e595]:
+          - link "Anna Hazare announces fast unto death for Lokayukta implementation" [ref=e596] [cursor=pointer]:
+            - /url: https://ishare.rediff.com/video/others/anna-hazare-announces-fast-unto-death-for-lokayukta-implementation/11369290
+        - generic [ref=e597]:
+          - paragraph [ref=e598]:
+            - text: 4:14
+            - generic [ref=e599]: min
+          - paragraph [ref=e600]: 21 hours ago
+      - generic [ref=e601]:
+        - img "Rakul Singh rocks casual look at Mumbai airport" [ref=e603] [cursor=pointer]
+        - heading "Rakul Singh rocks casual look at Mumbai airport" [level=3] [ref=e604]:
+          - link "Rakul Singh rocks casual look at Mumbai airport" [ref=e605] [cursor=pointer]:
+            - /url: https://ishare.rediff.com/video/others/rakul-singh-rocks-casual-look-at-mumbai-airport/11369276
+        - generic [ref=e606]:
+          - paragraph [ref=e607]:
+            - text: 1:02
+            - generic [ref=e608]: min
+          - paragraph [ref=e609]: 1 day ago
+    - paragraph [ref=e610]:
+      - link "See More >" [ref=e611] [cursor=pointer]:
+        - /url: https://ishare.rediff.com
+  - generic [ref=e612]:
+    - heading "PHOTOS" [level=2] [ref=e613]:
+      - link "PHOTOS" [ref=e615] [cursor=pointer]:
+        - /url: https://www.rediff.com/photos
+    - generic [ref=e616]:
+      - generic [ref=e617]:
+        - link "Plan A Jungle Safari With Malavika" [ref=e619] [cursor=pointer]:
+          - /url: https://www.rediff.com/movies/report/plan-a-jungle-safari-with-malavika/20251213.htm
+          - img "Plan A Jungle Safari With Malavika" [ref=e620] [cursor=pointer]
+        - heading "Plan A Jungle Safari With Malavika" [level=3] [ref=e621]:
+          - link "Plan A Jungle Safari With Malavika" [ref=e622] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/report/plan-a-jungle-safari-with-malavika/20251213.htm
+      - generic [ref=e624]:
+        - generic [ref=e625]:
+          - link "photoimage" [ref=e626] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/report/urvashi-blows-kisses-to/20251213.htm
+            - img "Urvashi Blows Kisses To..." [ref=e627] [cursor=pointer]
+          - heading "Urvashi Blows Kisses To..." [level=3] [ref=e628]:
+            - link "Urvashi Blows Kisses To..." [ref=e629] [cursor=pointer]:
+              - /url: https://www.rediff.com/movies/report/urvashi-blows-kisses-to/20251213.htm
+        - generic [ref=e630]:
+          - link "photoimage" [ref=e631] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/report/gadgets-vivo-rolls-out-x300-x300-pro/20251213.htm
+            - img "Vivo Rolls Out X300, X300 Pro" [ref=e632] [cursor=pointer]
+          - heading "Vivo Rolls Out X300, X300 Pro" [level=3] [ref=e633]:
+            - link "Vivo Rolls Out X300, X300 Pro" [ref=e634] [cursor=pointer]:
+              - /url: https://www.rediff.com/getahead/report/gadgets-vivo-rolls-out-x300-x300-pro/20251213.htm
+        - generic [ref=e635]:
+          - link "photoimage" [ref=e636] [cursor=pointer]:
+            - /url: https://www.rediff.com/sports/report/telangana-cm-reddy-ready-for-messi-penalty-shootout-pix/20251212.htm
+            - img "Telangana CM Reddy 'Ready' for Messi Penalty Shootout" [ref=e637] [cursor=pointer]
+          - heading "Telangana CM Reddy 'Ready' for Messi Penalty Shootout" [level=3] [ref=e638]:
+            - link "Telangana CM Reddy 'Ready' for Messi Penalty Shootout" [ref=e639] [cursor=pointer]:
+              - /url: https://www.rediff.com/sports/report/telangana-cm-reddy-ready-for-messi-penalty-shootout-pix/20251212.htm
+        - generic [ref=e640]:
+          - link "photoimage" [ref=e641] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/report/now-watch-kaantha-on-ott/20251212.htm
+            - img "Now, Watch Kaantha On OTT" [ref=e642] [cursor=pointer]
+          - heading "Now, Watch Kaantha On OTT" [level=3] [ref=e643]:
+            - link "Now, Watch Kaantha On OTT" [ref=e644] [cursor=pointer]:
+              - /url: https://www.rediff.com/movies/report/now-watch-kaantha-on-ott/20251212.htm
+    - generic [ref=e645]:
+      - generic [ref=e646]:
+        - link "Prez Honours Manipuri Women's Courage" [ref=e648] [cursor=pointer]:
+          - /url: https://www.rediff.com/news/report/shutdown-mars-presidents-manipur-visit/20251212.htm
+          - img "Prez Honours Manipuri Women's Courage" [ref=e649] [cursor=pointer]
+        - heading "Prez Honours Manipuri Women's Courage" [level=3] [ref=e650]:
+          - link "Prez Honours Manipuri Women's Courage" [ref=e651] [cursor=pointer]:
+            - /url: https://www.rediff.com/news/report/shutdown-mars-presidents-manipur-visit/20251212.htm
+      - generic [ref=e652]:
+        - link "Aamir-Gauri Go On A Movie Date" [ref=e654] [cursor=pointer]:
+          - /url: https://www.rediff.com/movies/report/aamir-gauri-go-on-a-movie-date/20251212.htm
+          - img "Aamir-Gauri Go On A Movie Date" [ref=e655] [cursor=pointer]
+        - heading "Aamir-Gauri Go On A Movie Date" [level=3] [ref=e656]:
+          - link "Aamir-Gauri Go On A Movie Date" [ref=e657] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/report/aamir-gauri-go-on-a-movie-date/20251212.htm
+      - generic [ref=e658]:
+        - link "Do Indians Need Sunscreen?" [ref=e660] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/report/do-indians-need-sunscreen/20251212.htm
+          - img "Do Indians Need Sunscreen?" [ref=e661] [cursor=pointer]
+        - heading "Do Indians Need Sunscreen?" [level=3] [ref=e662]:
+          - link "Do Indians Need Sunscreen?" [ref=e663] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/report/do-indians-need-sunscreen/20251212.htm
+      - generic [ref=e664]:
+        - link "Priyanka's Look Is The Love Child Of..." [ref=e666] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/report/priyanka-chopras-look-is-the-love-child-of/20251212.htm
+          - img "Priyanka's Look Is The Love Child Of..." [ref=e667] [cursor=pointer]
+        - heading "Priyanka's Look Is The Love Child Of..." [level=3] [ref=e668]:
+          - link "Priyanka's Look Is The Love Child Of..." [ref=e669] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/report/priyanka-chopras-look-is-the-love-child-of/20251212.htm
+      - generic [ref=e670]:
+        - link "Amritsari Kulcha Among World's Best..." [ref=e672] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/report/amritsari-kulcha-among-worlds-best-dishes/20251212.htm
+          - img "Amritsari Kulcha Among World's Best..." [ref=e673] [cursor=pointer]
+        - heading "Amritsari Kulcha Among World's Best..." [level=3] [ref=e674]:
+          - link "Amritsari Kulcha Among World's Best..." [ref=e675] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/report/amritsari-kulcha-among-worlds-best-dishes/20251212.htm
+    - paragraph [ref=e676]:
+      - link "See More >" [ref=e677] [cursor=pointer]:
+        - /url: https://www.rediff.com/photos
+  - generic [ref=e678]:
+    - heading "📺 REDIFF-TV" [level=2] [ref=e679]:
+      - generic [ref=e680]: 📺
+      - link "REDIFF-TV" [ref=e681] [cursor=pointer]:
+        - /url: https://tv.rediff.com
+    - generic [ref=e682]:
+      - link "19 US states sue Trump admin over new fee on H-1B visas 19 US states sue Trump admin over new fee on H-1B visas 4:57 min" [ref=e684] [cursor=pointer]:
+        - /url: https://tv.rediff.com/news/19-us-states-sue-trump-admin-over-new-fee-on-h1b-visas/364430
+        - img "19 US states sue Trump admin over new fee on H-1B visas" [ref=e686] [cursor=pointer]
+        - heading "19 US states sue Trump admin over new fee on H-1B visas" [level=3] [ref=e687] [cursor=pointer]
+        - paragraph [ref=e689] [cursor=pointer]: 4:57 min
+      - link "World's largest Messi statue unveiled in Kolkata World's largest Messi statue unveiled in Kolkata 1:20 min" [ref=e691] [cursor=pointer]:
+        - /url: https://tv.rediff.com/sports/worlds-largest-messi-statue-unveiled-in-kolkata/364427
+        - img "World's largest Messi statue unveiled in Kolkata" [ref=e693] [cursor=pointer]
+        - heading "World's largest Messi statue unveiled in Kolkata" [level=3] [ref=e694] [cursor=pointer]
+        - paragraph [ref=e696] [cursor=pointer]: 1:20 min
+      - link "'Lack of role clarity hurting India in run chases in T20 cricket' 'Lack of role clarity hurting India in run chases in T20 cricket' 1:56 min" [ref=e698] [cursor=pointer]:
+        - /url: https://tv.rediff.com/cricket/lack-of-role-clarity-hurting-india-in-run-chases-in-t20-cricket/364426
+        - img "'Lack of role clarity hurting India in run chases in T20 cricket'" [ref=e700] [cursor=pointer]
+        - heading "'Lack of role clarity hurting India in run chases in T20 cricket'" [level=3] [ref=e701] [cursor=pointer]
+        - paragraph [ref=e703] [cursor=pointer]: 1:56 min
+      - link "Gambhir-Hardik's Intense Chat Sparks Buzz! Gambhir-Hardik's Intense Chat Sparks Buzz! 1:09 min" [ref=e705] [cursor=pointer]:
+        - /url: https://tv.rediff.com/cricket/gambhirhardiks-intense-chat-sparks-buzz/364423
+        - img "Gambhir-Hardik's Intense Chat Sparks Buzz!" [ref=e707] [cursor=pointer]
+        - heading "Gambhir-Hardik's Intense Chat Sparks Buzz!" [level=3] [ref=e708] [cursor=pointer]
+        - paragraph [ref=e710] [cursor=pointer]: 1:09 min
+    - paragraph [ref=e711]:
+      - link "See More >" [ref=e712] [cursor=pointer]:
+        - /url: https://tv.rediff.com
+  - heading "CRICKET" [level=2] [ref=e713]:
+    - link "CRICKET" [ref=e715] [cursor=pointer]:
+      - /url: https://www.rediff.com/cricket
+  - generic [ref=e716]:
+    - generic [ref=e717]:
+      - link "Should Gill Make Way For Samson?" [ref=e719] [cursor=pointer]:
+        - /url: https://www.rediff.com/cricket/report/should-gill-make-way-for-samson/20251212.htm
+        - img "Should Gill Make Way For Samson?" [ref=e720] [cursor=pointer]
+      - heading "Should Gill Make Way For Samson?" [level=2] [ref=e721]:
+        - link "Should Gill Make Way For Samson?" [ref=e722] [cursor=pointer]:
+          - /url: https://www.rediff.com/cricket/report/should-gill-make-way-for-samson/20251212.htm
+      - paragraph [ref=e723]: 3 min read
+    - generic [ref=e724]:
+      - generic [ref=e725]:
+        - link "'I'm still determined to play three formats'" [ref=e727] [cursor=pointer]:
+          - /url: https://www.rediff.com/cricket/report/ashes-im-still-determined-to-play-three-formats-hazlewood/20251213.htm
+          - img "'I'm still determined to play three formats'" [ref=e728] [cursor=pointer]
+        - generic [ref=e729]:
+          - heading "'I'm still determined to play three formats'" [level=3] [ref=e730]:
+            - link "'I'm still determined to play three formats'" [ref=e731] [cursor=pointer]:
+              - /url: https://www.rediff.com/cricket/report/ashes-im-still-determined-to-play-three-formats-hazlewood/20251213.htm
+          - generic [ref=e732]:
+            - paragraph [ref=e733]: 2 min read
+            - paragraph [ref=e734]: 3 hours ago
+      - generic [ref=e735]:
+        - 'link "IPL Auction: Look Out For These Youngsters" [ref=e737] [cursor=pointer]':
+          - /url: https://www.rediff.com/cricket/report/ipl-auction-look-out-for-these-youngsters/20251212.htm
+          - 'img "IPL Auction: Look Out For These Youngsters" [ref=e738] [cursor=pointer]'
+        - generic [ref=e739]:
+          - 'heading "IPL Auction: Look Out For These Youngsters" [level=3] [ref=e740]':
+            - 'link "IPL Auction: Look Out For These Youngsters" [ref=e741] [cursor=pointer]':
+              - /url: https://www.rediff.com/cricket/report/ipl-auction-look-out-for-these-youngsters/20251212.htm
+          - generic [ref=e742]:
+            - paragraph [ref=e743]: 4 min read
+            - paragraph [ref=e744]: 1 day ago
+    - generic [ref=e745]:
+      - generic [ref=e746]:
+        - heading "Gill, SKY's Batting Woes Deepen!" [level=3] [ref=e747]:
+          - link "Gill, SKY's Batting Woes Deepen!" [ref=e748] [cursor=pointer]:
+            - /url: https://www.rediff.com/cricket/report/gill-skys-batting-woes-deepen/20251212.htm
+        - paragraph [ref=e749]: 2 min read
+      - generic [ref=e750]:
+        - heading "Big blow for India's WTC Final hopes!" [level=3] [ref=e751]:
+          - link "Big blow for India's WTC Final hopes!" [ref=e752] [cursor=pointer]:
+            - /url: https://www.rediff.com/cricket/report/big-blow-for-indias-wtc-final-hopes/20251212.htm
+        - paragraph [ref=e753]: 2 min read
+      - generic [ref=e754]:
+        - heading "Yuvraj 'Grateful' as He, Harmanpreet Get Stadium Honours" [level=3] [ref=e755]:
+          - link "Yuvraj 'Grateful' as He, Harmanpreet Get Stadium Honours" [ref=e756] [cursor=pointer]:
+            - /url: https://www.rediff.com/cricket/report/yuvraj-grateful-as-he-harmanpreet-get-stadium-honours/20251213.htm
+        - paragraph [ref=e757]: 2 min read
+      - generic [ref=e758]:
+        - heading "ICC-JioStar Slam Reports, Say Rights Deal 'Fully In Force'" [level=3] [ref=e759]:
+          - link "ICC-JioStar Slam Reports, Say Rights Deal 'Fully In Force'" [ref=e760] [cursor=pointer]:
+            - /url: https://www.rediff.com/cricket/report/icc-jiostar-slam-reports-say-rights-deal-fully-in-force/20251212.htm
+        - paragraph [ref=e761]: 2 min read
+      - generic [ref=e762]:
+        - 'heading "U-19 Asia Cup: Suryavanshi hits 95-ball 171 in opening win" [level=3] [ref=e763]':
+          - 'link "U-19 Asia Cup: Suryavanshi hits 95-ball 171 in opening win" [ref=e764] [cursor=pointer]':
+            - /url: https://www.rediff.com/cricket/report/vaibhav-suryavanshi-blasts-95-ball-171-in-u-19-asia-cup-vs-uae/20251212.htm
+        - paragraph [ref=e765]: 4 min read
+      - paragraph [ref=e766]:
+        - link "See More >" [ref=e767] [cursor=pointer]:
+          - /url: https://www.rediff.com/cricket
+  - heading "CRICKET & SPORTS" [level=2] [ref=e768]:
+    - link "CRICKET & SPORTS" [ref=e770] [cursor=pointer]:
+      - /url: https://www.rediff.com/sports
+  - generic [ref=e771]:
+    - generic [ref=e772]:
+      - link "World's largest Messi statue unveiled in Kolkata" [ref=e774] [cursor=pointer]:
+        - /url: https://www.rediff.com/sports/report/worlds-largest-lionel-messi-statue-unveiled-in-kolkata/20251213.htm
+        - img "World's largest Messi statue unveiled in Kolkata" [ref=e775] [cursor=pointer]
+      - heading "World's largest Messi statue unveiled in Kolkata" [level=2] [ref=e776]:
+        - link "World's largest Messi statue unveiled in Kolkata" [ref=e777] [cursor=pointer]:
+          - /url: https://www.rediff.com/sports/report/worlds-largest-lionel-messi-statue-unveiled-in-kolkata/20251213.htm
+      - paragraph [ref=e778]: 2 min read
+    - generic [ref=e779]:
+      - generic [ref=e780]:
+        - link "Meet Messi's Ultimate Superfans In India!" [ref=e782] [cursor=pointer]:
+          - /url: https://www.rediff.com/sports/report/meet-messis-ultimate-superfans-in-india/20251212.htm
+          - img "Meet Messi's Ultimate Superfans In India!" [ref=e783] [cursor=pointer]
+        - generic [ref=e784]:
+          - heading "Meet Messi's Ultimate Superfans In India!" [level=3] [ref=e785]:
+            - link "Meet Messi's Ultimate Superfans In India!" [ref=e786] [cursor=pointer]:
+              - /url: https://www.rediff.com/sports/report/meet-messis-ultimate-superfans-in-india/20251212.htm
+          - generic [ref=e787]:
+            - paragraph [ref=e788]: 5 min read
+            - paragraph [ref=e789]: 22 hours ago
+      - generic [ref=e790]:
+        - link "Telangana CM Reddy 'Ready' for Messi Penalty Shootout" [ref=e792] [cursor=pointer]:
+          - /url: https://www.rediff.com/sports/report/telangana-cm-reddy-ready-for-messi-penalty-shootout-pix/20251212.htm
+          - img "Telangana CM Reddy 'Ready' for Messi Penalty Shootout" [ref=e793] [cursor=pointer]
+        - generic [ref=e794]:
+          - heading "Telangana CM Reddy 'Ready' for Messi Penalty Shootout" [level=3] [ref=e795]:
+            - link "Telangana CM Reddy 'Ready' for Messi Penalty Shootout" [ref=e796] [cursor=pointer]:
+              - /url: https://www.rediff.com/sports/report/telangana-cm-reddy-ready-for-messi-penalty-shootout-pix/20251212.htm
+          - generic [ref=e797]:
+            - paragraph [ref=e798]: 3 min read
+            - paragraph [ref=e799]: 16 hours ago
+    - generic [ref=e800]:
+      - generic [ref=e801]:
+        - 'heading "''The fire never left'': Vinesh reverses retirement!" [level=3] [ref=e802]':
+          - 'link "''The fire never left'': Vinesh reverses retirement!" [ref=e803] [cursor=pointer]':
+            - /url: https://www.rediff.com/sports/report/vinesh-phogat-reverses-retirement-eyes-2028-la-olympics/20251212.htm
+        - paragraph [ref=e804]: 3 min read
+      - generic [ref=e805]:
+        - heading "Antim Claims 55kg Gold; Haryana Sweep Women's Nationals" [level=3] [ref=e806]:
+          - link "Antim Claims 55kg Gold; Haryana Sweep Women's Nationals" [ref=e807] [cursor=pointer]:
+            - /url: https://www.rediff.com/sports/report/antim-panghal-claims-55kg-gold-haryana-sweep-womens-nationals/20251212.htm
+        - paragraph [ref=e808]: 2 min read
+      - generic [ref=e809]:
+        - heading "Formula One teams sign Concorde Governance Agreement" [level=3] [ref=e810]:
+          - link "Formula One teams sign Concorde Governance Agreement" [ref=e811] [cursor=pointer]:
+            - /url: https://www.rediff.com/sports/report/formula-one-teams-sign-concorde-governance-agreement/20251212.htm
+        - paragraph [ref=e812]: 1 min read
+      - generic [ref=e813]:
+        - heading "English Premier League clubs brace for AFCON exodus" [level=3] [ref=e814]:
+          - link "English Premier League clubs brace for AFCON exodus" [ref=e815] [cursor=pointer]:
+            - /url: https://www.rediff.com/sports/report/english-premier-league-clubs-brace-for-afcon-exodus/20251212.htm
+        - paragraph [ref=e816]: 4 min read
+      - generic [ref=e817]:
+        - heading "AIFF Begins Process to Form National Players' Association" [level=3] [ref=e818]:
+          - link "AIFF Begins Process to Form National Players' Association" [ref=e819] [cursor=pointer]:
+            - /url: https://www.rediff.com/sports/report/aiff-begins-process-to-form-national-players-association/20251212.htm
+        - paragraph [ref=e820]: 3 min read
+      - paragraph [ref=e821]:
+        - link "See More >" [ref=e822] [cursor=pointer]:
+          - /url: https://www.rediff.com/sports
+  - heading "MOVIES" [level=2] [ref=e823]:
+    - link "MOVIES" [ref=e825] [cursor=pointer]:
+      - /url: https://www.rediff.com/movies
+  - generic [ref=e826]:
+    - generic [ref=e827]:
+      - link "Does Tamannaah Look Like Jayashree? VOTE" [ref=e829] [cursor=pointer]:
+        - /url: https://www.rediff.com/movies/report/does-tamannaah-look-like-jayashree-vote/20251210.htm
+        - img "Does Tamannaah Look Like Jayashree? VOTE" [ref=e830] [cursor=pointer]
+      - heading "Does Tamannaah Look Like Jayashree? VOTE" [level=2] [ref=e831]:
+        - link "Does Tamannaah Look Like Jayashree? VOTE" [ref=e832] [cursor=pointer]:
+          - /url: https://www.rediff.com/movies/report/does-tamannaah-look-like-jayashree-vote/20251210.htm
+      - paragraph [ref=e833]: 3 min read
+    - generic [ref=e834]:
+      - generic [ref=e835]:
+        - link "Samantha Won't Take Raj's Last Name" [ref=e837] [cursor=pointer]:
+          - /url: https://www.rediff.com/movies/report/samantha-wont-take-rajs-last-name/20251209.htm
+          - img "Samantha Won't Take Raj's Last Name" [ref=e838] [cursor=pointer]
+        - generic [ref=e839]:
+          - heading "Samantha Won't Take Raj's Last Name" [level=3] [ref=e840]:
+            - link "Samantha Won't Take Raj's Last Name" [ref=e841] [cursor=pointer]:
+              - /url: https://www.rediff.com/movies/report/samantha-wont-take-rajs-last-name/20251209.htm
+          - generic [ref=e842]:
+            - paragraph [ref=e843]: 3 min read
+            - paragraph [ref=e844]: 4 days ago
+      - generic [ref=e845]:
+        - link "Alia Gets Us Alpha-Ready" [ref=e847] [cursor=pointer]:
+          - /url: https://www.rediff.com/movies/report/alia-gets-us-alpha-ready/20251211.htm
+          - img "Alia Gets Us Alpha-Ready" [ref=e848] [cursor=pointer]
+        - generic [ref=e849]:
+          - heading "Alia Gets Us Alpha-Ready" [level=3] [ref=e850]:
+            - link "Alia Gets Us Alpha-Ready" [ref=e851] [cursor=pointer]:
+              - /url: https://www.rediff.com/movies/report/alia-gets-us-alpha-ready/20251211.htm
+          - generic [ref=e852]:
+            - paragraph [ref=e853]: 2 min read
+            - paragraph [ref=e854]: 2 days ago
+    - generic [ref=e855]:
+      - generic [ref=e856]:
+        - heading "'Grammy's Coming Home This Year'" [level=3] [ref=e857]:
+          - link "'Grammy's Coming Home This Year'" [ref=e858] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/special/grammys-coming-home-this-year/20251211.htm
+        - paragraph [ref=e859]: 8 min read
+      - generic [ref=e860]:
+        - heading "Why Are Katrina, Vicky Sleep Deprived?" [level=3] [ref=e861]:
+          - link "Why Are Katrina, Vicky Sleep Deprived?" [ref=e862] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/report/why-are-katrina-vicky-sleep-deprived/20251210.htm
+        - paragraph [ref=e863]: 1 min read
+      - generic [ref=e864]:
+        - 'heading "AI Films Are Coming: India Must Adapt" [level=3] [ref=e865]':
+          - 'link "AI Films Are Coming: India Must Adapt" [ref=e866] [cursor=pointer]':
+            - /url: https://www.rediff.com/movies/report/ai-films-are-coming-india-must-adapt/20251210.htm
+        - paragraph [ref=e867]: 4 min read
+      - generic [ref=e868]:
+        - heading "JioHotStar Is Investing 4K Cr In South!" [level=3] [ref=e869]:
+          - link "JioHotStar Is Investing 4K Cr In South!" [ref=e870] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/report/jiohotstar-is-investing-4k-cr-in-south/20251210.htm
+        - paragraph [ref=e871]: 5 min read
+      - generic [ref=e872]:
+        - heading "Take This COOL Bollywood Quiz!" [level=3] [ref=e873]:
+          - link "Take This COOL Bollywood Quiz!" [ref=e874] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/report/take-this-cool-bollywood-quiz/20251211.htm
+        - paragraph [ref=e875]: 1 min read
+      - paragraph [ref=e876]:
+        - link "See More >" [ref=e877] [cursor=pointer]:
+          - /url: https://www.rediff.com/movies
+  - generic [ref=e878]:
+    - generic [ref=e879]: Advertisement
+    - generic:
+      - insertion
+  - heading "GET AHEAD" [level=2] [ref=e880]:
+    - link "GET AHEAD" [ref=e882] [cursor=pointer]:
+      - /url: https://www.rediff.com/getahead
+  - generic [ref=e883]:
+    - generic [ref=e884]:
+      - link "How Bhavitha Mandava Made Fashion History" [ref=e886] [cursor=pointer]:
+        - /url: https://www.rediff.com/getahead/report/how-bhavitha-mandava-made-fashion-history/20251208.htm
+        - img "How Bhavitha Mandava Made Fashion History" [ref=e887] [cursor=pointer]
+      - heading "How Bhavitha Mandava Made Fashion History" [level=2] [ref=e888]:
+        - link "How Bhavitha Mandava Made Fashion History" [ref=e889] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/report/how-bhavitha-mandava-made-fashion-history/20251208.htm
+      - paragraph [ref=e890]: 2 min read
+    - generic [ref=e891]:
+      - generic [ref=e892]:
+        - link "Aishwarya Knows No Fashion Limits" [ref=e894] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/report/aishwarya-rajesh-knows-no-fashion-limits/20251209.htm
+          - img "Aishwarya Knows No Fashion Limits" [ref=e895] [cursor=pointer]
+        - generic [ref=e896]:
+          - heading "Aishwarya Knows No Fashion Limits" [level=3] [ref=e897]:
+            - link "Aishwarya Knows No Fashion Limits" [ref=e898] [cursor=pointer]:
+              - /url: https://www.rediff.com/getahead/report/aishwarya-rajesh-knows-no-fashion-limits/20251209.htm
+          - generic [ref=e899]:
+            - paragraph [ref=e900]: 2 min read
+            - paragraph [ref=e901]: 4 days ago
+      - generic [ref=e902]:
+        - link "Rashmika, Samantha Glow In Pantone's Colour of 2026" [ref=e904] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/report/rashmika-samantha-glow-in-cloud-dancer-pantones-colour-of-2026/20251205.htm
+          - img "Rashmika, Samantha Glow In Pantone's Colour of 2026" [ref=e905] [cursor=pointer]
+        - generic [ref=e906]:
+          - heading "Rashmika, Samantha Glow In Pantone's Colour of 2026" [level=3] [ref=e907]:
+            - link "Rashmika, Samantha Glow In Pantone's Colour of 2026" [ref=e908] [cursor=pointer]:
+              - /url: https://www.rediff.com/getahead/report/rashmika-samantha-glow-in-cloud-dancer-pantones-colour-of-2026/20251205.htm
+          - generic [ref=e909]:
+            - paragraph [ref=e910]: 2 min read
+            - paragraph [ref=e911]: 1 week ago
+    - generic [ref=e912]:
+      - generic [ref=e913]:
+        - heading "Do Indians Need Sunscreen?" [level=3] [ref=e914]:
+          - link "Do Indians Need Sunscreen?" [ref=e915] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/report/do-indians-need-sunscreen/20251212.htm
+        - paragraph [ref=e916]: 3 min read
+      - generic [ref=e917]:
+        - heading "'Can't Get Divorced. Can I Date Again?'" [level=3] [ref=e918]:
+          - link "'Can't Get Divorced. Can I Date Again?'" [ref=e919] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/report/rediffguru-ravi-mittal-cant-get-divorced-can-i-date-again/20251205.htm
+        - paragraph [ref=e920]: 3 min read
+      - generic [ref=e921]:
+        - heading "'Can EPF+SIP Sustain Me Till 75?'" [level=3] [ref=e922]:
+          - link "'Can EPF+SIP Sustain Me Till 75?'" [ref=e923] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/report/can-epf-sip-sustain-me-till-75/20251210.htm
+        - paragraph [ref=e924]: 6 min read
+      - generic [ref=e925]:
+        - 'heading "27% Bitcoin Slide: What Must Investors Do?" [level=3] [ref=e926]':
+          - 'link "27% Bitcoin Slide: What Must Investors Do?" [ref=e927] [cursor=pointer]':
+            - /url: https://www.rediff.com/getahead/report/27-bitcoin-slide-what-must-investors-do/20251211.htm
+        - paragraph [ref=e928]: 4 min read
+      - generic [ref=e929]:
+        - heading "The Lady Who Designed A Billionaire Wedding" [level=3] [ref=e930]:
+          - link "The Lady Who Designed A Billionaire Wedding" [ref=e931] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/report/the-lady-who-designed-the-billionaire-wedding/20251209.htm
+        - paragraph [ref=e932]: 7 min read
+      - paragraph [ref=e933]:
+        - link "See More >" [ref=e934] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead
+  - heading "BUSINESS" [level=2] [ref=e935]:
+    - link "BUSINESS" [ref=e937] [cursor=pointer]:
+      - /url: https://www.rediff.com/business
+  - generic [ref=e938]:
+    - generic [ref=e939]:
+      - link "20% Shopping Centres Are Ghost Malls" [ref=e941] [cursor=pointer]:
+        - /url: https://www.rediff.com/business/report/20-shopping-centres-are-ghost-malls/20251212.htm
+        - img "20% Shopping Centres Are Ghost Malls" [ref=e942] [cursor=pointer]
+      - heading "20% Shopping Centres Are Ghost Malls" [level=2] [ref=e943]:
+        - link "20% Shopping Centres Are Ghost Malls" [ref=e944] [cursor=pointer]:
+          - /url: https://www.rediff.com/business/report/20-shopping-centres-are-ghost-malls/20251212.htm
+      - paragraph [ref=e945]: 3 min read
+    - generic [ref=e946]:
+      - generic [ref=e947]:
+        - 'link "Test Drive: On the road with the 2025 Tata Sierra" [ref=e949] [cursor=pointer]':
+          - /url: https://www.rediff.com/business/report/auto-on-the-road-with-the-2025-tata-sierra/20251210.htm
+          - 'img "Test Drive: On the road with the 2025 Tata Sierra" [ref=e950] [cursor=pointer]'
+        - generic [ref=e951]:
+          - 'heading "Test Drive: On the road with the 2025 Tata Sierra" [level=3] [ref=e952]':
+            - 'link "Test Drive: On the road with the 2025 Tata Sierra" [ref=e953] [cursor=pointer]':
+              - /url: https://www.rediff.com/business/report/auto-on-the-road-with-the-2025-tata-sierra/20251210.htm
+          - generic [ref=e954]:
+            - paragraph [ref=e955]: 5 min read
+            - paragraph [ref=e956]: 3 days ago
+      - generic [ref=e957]:
+        - link "GST 2.0 Puts Luxury Cars In Fast Lane" [ref=e959] [cursor=pointer]:
+          - /url: https://www.rediff.com/business/report/gst-20-puts-luxury-cars-in-fast-lane/20251210.htm
+          - img "GST 2.0 Puts Luxury Cars In Fast Lane" [ref=e960] [cursor=pointer]
+        - generic [ref=e961]:
+          - heading "GST 2.0 Puts Luxury Cars In Fast Lane" [level=3] [ref=e962]:
+            - link "GST 2.0 Puts Luxury Cars In Fast Lane" [ref=e963] [cursor=pointer]:
+              - /url: https://www.rediff.com/business/report/gst-20-puts-luxury-cars-in-fast-lane/20251210.htm
+          - generic [ref=e964]:
+            - paragraph [ref=e965]: 3 min read
+            - paragraph [ref=e966]: 3 days ago
+    - generic [ref=e967]:
+      - generic [ref=e968]:
+        - heading "Forex reserves jump by $1 bn to $687 bn" [level=3] [ref=e969]:
+          - link "Forex reserves jump by $1 bn to $687 bn" [ref=e970] [cursor=pointer]:
+            - /url: https://www.rediff.com/business/report/forex-reserves-jump-by-1-bn-to-687-bn/20251212.htm
+        - paragraph [ref=e971]: 1 min read
+      - generic [ref=e972]:
+        - heading "Sensex jumps nearly 450 pts on buying in metal shares" [level=3] [ref=e973]:
+          - link "Sensex jumps nearly 450 pts on buying in metal shares" [ref=e974] [cursor=pointer]:
+            - /url: https://www.rediff.com/business/report/sensex-jumps-nearly-450-pts-on-buying-in-metal-shares/20251212.htm
+        - paragraph [ref=e975]: 2 min read
+      - generic [ref=e976]:
+        - heading "Robust demand pushes PV dispatches up 19% in Nov" [level=3] [ref=e977]:
+          - link "Robust demand pushes PV dispatches up 19% in Nov" [ref=e978] [cursor=pointer]:
+            - /url: https://www.rediff.com/business/report/auto-robust-demand-pushes-pv-dispatches-up-19-in-nov/20251212.htm
+        - paragraph [ref=e979]: 2 min read
+      - generic [ref=e980]:
+        - heading "Mexico imposes up to 50% tariff on imports from India" [level=3] [ref=e981]:
+          - link "Mexico imposes up to 50% tariff on imports from India" [ref=e982] [cursor=pointer]:
+            - /url: https://www.rediff.com/business/report/mexico-imposes-up-to-50-tariff-on-imports-from-india-and-china/20251212.htm
+        - paragraph [ref=e983]: 4 min read
+      - generic [ref=e984]:
+        - heading "Gold returns beat equities, realty in 20-yr period" [level=3] [ref=e985]:
+          - link "Gold returns beat equities, realty in 20-yr period" [ref=e986] [cursor=pointer]:
+            - /url: https://www.rediff.com/business/report/gold-returns-beat-equities-realty-in-20-yr-period/20251212.htm
+        - paragraph [ref=e987]: 3 min read
+      - paragraph [ref=e988]:
+        - link "See More >" [ref=e989] [cursor=pointer]:
+          - /url: https://www.rediff.com/business
+  - heading "EDITOR'S CHOICE" [level=2] [ref=e990]: EDITOR'S CHOICE
+  - generic [ref=e992]:
+    - generic [ref=e993]:
+      - link "The Kader Khan Interview You Must Read!" [ref=e995] [cursor=pointer]:
+        - /url: https://www.rediff.com/movies/report/the-kader-khan-interview-you-must-read/20251023.htm
+        - img "The Kader Khan Interview You Must Read!" [ref=e996] [cursor=pointer]
+      - heading "The Kader Khan Interview You Must Read!" [level=2] [ref=e997]:
+        - link "The Kader Khan Interview You Must Read!" [ref=e998] [cursor=pointer]:
+          - /url: https://www.rediff.com/movies/report/the-kader-khan-interview-you-must-read/20251023.htm
+      - paragraph [ref=e999]: 10 min read
+    - generic [ref=e1000]:
+      - generic [ref=e1001]:
+        - link "'I was the highest paid actress'" [ref=e1003] [cursor=pointer]:
+          - /url: https://www.rediff.com/movies/report/mumtaz-i-was-the-highest-paid-actress/20240405.htm
+          - img "'I was the highest paid actress'" [ref=e1004] [cursor=pointer]
+        - generic [ref=e1005]:
+          - heading "'I was the highest paid actress'" [level=3] [ref=e1006]:
+            - link "'I was the highest paid actress'" [ref=e1007] [cursor=pointer]:
+              - /url: https://www.rediff.com/movies/report/mumtaz-i-was-the-highest-paid-actress/20240405.htm
+          - generic [ref=e1008]:
+            - paragraph [ref=e1009]: 10 min read
+            - paragraph [ref=e1010]: 1 year ago
+      - generic [ref=e1011]:
+        - link "'Aamir Chased Me With A Snake...'" [ref=e1013] [cursor=pointer]:
+          - /url: https://www.rediff.com/movies/report/aamir-chased-me-with-a-snake-and-made-me-cry/20250311.htm
+          - img "'Aamir Chased Me With A Snake...'" [ref=e1014] [cursor=pointer]
+        - generic [ref=e1015]:
+          - heading "'Aamir Chased Me With A Snake...'" [level=3] [ref=e1016]:
+            - link "'Aamir Chased Me With A Snake...'" [ref=e1017] [cursor=pointer]:
+              - /url: https://www.rediff.com/movies/report/aamir-chased-me-with-a-snake-and-made-me-cry/20250311.htm
+          - generic [ref=e1018]:
+            - paragraph [ref=e1019]: 8 min read
+            - paragraph [ref=e1020]: 9 months ago
+    - generic [ref=e1021]:
+      - generic [ref=e1022]:
+        - heading "Why Dilip Kumar Never Sang In Mughal-e-Azam" [level=3] [ref=e1023]:
+          - link "Why Dilip Kumar Never Sang In Mughal-e-Azam" [ref=e1024] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/report/why-dilip-kumar-never-sang-in-mughal-e-azam/20250505.htm
+        - paragraph [ref=e1025]: 8 min read
+      - generic [ref=e1026]:
+        - heading "The Kiss Girl Hema Malini Took Panga With" [level=3] [ref=e1027]:
+          - link "The Kiss Girl Hema Malini Took Panga With" [ref=e1028] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/report/the-kiss-girl-hema-malini-took-panga-with/20250611.htm
+        - paragraph [ref=e1029]: 8 min read
+      - generic [ref=e1030]:
+        - heading "'People Said I Was A Bewaqoof'" [level=3] [ref=e1031]:
+          - link "'People Said I Was A Bewaqoof'" [ref=e1032] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/report/people-said-i-was-a-bewaqoof/20250205.htm
+        - paragraph [ref=e1033]: 6 min read
+      - generic [ref=e1034]:
+        - heading "'Sairaji asked me to speak to him in Marathi'" [level=3] [ref=e1035]:
+          - link "'Sairaji asked me to speak to him in Marathi'" [ref=e1036] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/special/sairaji-asked-me-to-speak-to-him-in-marathi/20210721.htm
+        - paragraph [ref=e1037]: 6 min read
+      - generic [ref=e1038]:
+        - heading "Revealed! The Drama Behind Andaz Apna Apna's Comedy" [level=3] [ref=e1039]:
+          - link "Revealed! The Drama Behind Andaz Apna Apna's Comedy" [ref=e1040] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/report/revealed-the-drama-behind-andaz-apna-apnas-comedy/20250425.htm
+        - paragraph [ref=e1041]: 8 min read
+  - generic [ref=e1043]:
+    - generic [ref=e1044]:
+      - heading "MARKET NEWS" [level=2] [ref=e1045]:
+        - link "MARKET NEWS" [ref=e1046] [cursor=pointer]:
+          - /url: https://money.rediff.com/news/share-market-news
+          - text: MARKET NEWS
+      - generic [ref=e1048]:
+        - 'link "India-Mexico Trade: Tariff Hike Concerns" [ref=e1050] [cursor=pointer]':
+          - /url: https://money.rediff.com/news/market/india-mexico-trade-tariff-hike-concerns/38559920251213
+          - 'img "India-Mexico Trade: Tariff Hike Concerns" [ref=e1051] [cursor=pointer]'
+        - 'heading "India-Mexico Trade: Tariff Hike Concerns" [level=3] [ref=e1052]':
+          - 'link "India-Mexico Trade: Tariff Hike Concerns" [ref=e1053] [cursor=pointer]':
+            - /url: https://money.rediff.com/news/market/india-mexico-trade-tariff-hike-concerns/38559920251213
+        - paragraph
+    - generic [ref=e1054]:
+      - generic [ref=e1055]:
+        - link "Shiprocket Files IPO Papers; Eyes ₹2,342 Cr Public Issue" [ref=e1057] [cursor=pointer]:
+          - /url: https://money.rediff.com/news/market/shiprocket-files-ipo-papers-eyes-2-342-cr-public-issue/38559020251213
+          - img "Shiprocket Files IPO Papers; Eyes ₹2,342 Cr Public Issue" [ref=e1058] [cursor=pointer]
+        - link "Shiprocket Files IPO Papers; Eyes ₹2,342 Cr Public Issue" [ref=e1060] [cursor=pointer]:
+          - /url: https://money.rediff.com/news/market/shiprocket-files-ipo-papers-eyes-2-342-cr-public-issue/38559020251213
+      - generic [ref=e1061]:
+        - link "SAIL Sales Up 14% in Apr-Nov Amid Price Pressures" [ref=e1063] [cursor=pointer]:
+          - /url: https://money.rediff.com/news/market/sail-sales-up-14-in-apr-nov-amid-price-pressures/38557720251213
+          - img "SAIL Sales Up 14% in Apr-Nov Amid Price Pressures" [ref=e1064] [cursor=pointer]
+        - link "SAIL Sales Up 14% in Apr-Nov Amid Price Pressures" [ref=e1066] [cursor=pointer]:
+          - /url: https://money.rediff.com/news/market/sail-sales-up-14-in-apr-nov-amid-price-pressures/38557720251213
+      - generic [ref=e1067]:
+        - link "Chennai Bullion Rates Today" [ref=e1069] [cursor=pointer]:
+          - /url: https://money.rediff.com/news/market/chennai-bullion-rates-today/38553920251213
+          - img "Chennai Bullion Rates Today" [ref=e1070] [cursor=pointer]
+        - link "Chennai Bullion Rates Today" [ref=e1072] [cursor=pointer]:
+          - /url: https://money.rediff.com/news/market/chennai-bullion-rates-today/38553920251213
+      - paragraph [ref=e1073]:
+        - link "See More >" [ref=e1074] [cursor=pointer]:
+          - /url: https://money.rediff.com/news/share-market-news
+    - generic [ref=e1075]:
+      - generic [ref=e1076]:
+        - heading "MOST POPULAR" [level=2] [ref=e1077]
+        - list [ref=e1078]:
+          - listitem [ref=e1079]:
+            - link "Retail inflation rises to 0.71% in Nov" [ref=e1080] [cursor=pointer]:
+              - /url: https://www.rediff.com/business/report/retail-inflation-rises-to-071-in-nov/20251212.htm
+          - listitem [ref=e1081]:
+            - link "Developers Must Rethink Coding For AI Era" [ref=e1082] [cursor=pointer]:
+              - /url: https://www.rediff.com/business/report/nadella-developers-must-rethink-coding-for-ai-era/20251212.htm
+          - listitem [ref=e1083]:
+            - link "Bangladesh to hold general elections on February..." [ref=e1084] [cursor=pointer]:
+              - /url: https://www.rediff.com/news/report/bangladesh-to-hold-general-elections-on-february-12/20251211.htm
+          - listitem [ref=e1085]:
+            - 'link "Preventing suicide: How to help a loved one" [ref=e1086] [cursor=pointer]':
+              - /url: https://www.rediff.com/getahead/report/health-preventing-suicide-how-to-help-a-loved-one/20190123.htm
+          - listitem [ref=e1087]:
+            - link "'Shivakumar will become Karnataka CM next month'" [ref=e1088] [cursor=pointer]:
+              - /url: https://www.rediff.com/news/report/shivakumar-will-become-karnataka-cm-next-month/20251212.htm
+      - generic [ref=e1089]:
+        - link "image for you" [ref=e1091] [cursor=pointer]:
+          - /url: https://www.rediff.com/sports/report/epl-liverpool-boss-slot-to-meet-salah-amid-tension/20251212.htm
+          - img "image for you" [ref=e1092] [cursor=pointer]
+        - generic [ref=e1093]:
+          - heading "FOR YOU" [level=2] [ref=e1094]
+          - heading "Liverpool boss Slot to meet Salah amid tension" [level=3] [ref=e1095]:
+            - link "Liverpool boss Slot to meet Salah amid tension" [ref=e1096] [cursor=pointer]:
+              - /url: https://www.rediff.com/sports/report/epl-liverpool-boss-slot-to-meet-salah-amid-tension/20251212.htm
+  - generic [ref=e1098]:
+    - heading "STORIES YOU MAY HAVE MISSED" [level=2] [ref=e1099]
+    - generic [ref=e1100]:
+      - generic [ref=e1101]:
+        - link "5 Of The Most Peaceful Places Worldwide" [ref=e1103] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/report/travel-listicle-5-of-the-most-peaceful-places-worldwide/20251121.htm
+          - img "5 Of The Most Peaceful Places Worldwide" [ref=e1104] [cursor=pointer]
+        - heading "5 Of The Most Peaceful Places Worldwide" [level=3] [ref=e1105]:
+          - link "5 Of The Most Peaceful Places Worldwide" [ref=e1106] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/report/travel-listicle-5-of-the-most-peaceful-places-worldwide/20251121.htm
+        - paragraph [ref=e1107]: 3 min read
+      - generic [ref=e1108]:
+        - link "'Hidma's Death Is Death Of Maoist Insurgency'" [ref=e1110] [cursor=pointer]:
+          - /url: https://www.rediff.com/news/interview/hidmas-death-is-death-of-maoist-insurgency/20251120.htm
+          - img "'Hidma's Death Is Death Of Maoist Insurgency'" [ref=e1111] [cursor=pointer]
+        - heading "'Hidma's Death Is Death Of Maoist Insurgency'" [level=3] [ref=e1112]:
+          - link "'Hidma's Death Is Death Of Maoist Insurgency'" [ref=e1113] [cursor=pointer]:
+            - /url: https://www.rediff.com/news/interview/hidmas-death-is-death-of-maoist-insurgency/20251120.htm
+        - paragraph [ref=e1114]: 9 min read
+      - generic [ref=e1115]:
+        - link "6 Pioneering Women Of Indian Art" [ref=e1117] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-6-pioneering-women-of-indian-art/20251121.htm
+          - img "6 Pioneering Women Of Indian Art" [ref=e1118] [cursor=pointer]
+        - heading "6 Pioneering Women Of Indian Art" [level=3] [ref=e1119]:
+          - link "6 Pioneering Women Of Indian Art" [ref=e1120] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/slide-show/slide-show-1-6-pioneering-women-of-indian-art/20251121.htm
+        - paragraph [ref=e1121]: 9 min read
+      - generic [ref=e1122]:
+        - link "How I Almost Lost My WhatsApp To A Scam" [ref=e1124] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/column/how-i-almost-lost-my-whatsapp-to-a-scam/20251119.htm
+          - img "How I Almost Lost My WhatsApp To A Scam" [ref=e1125] [cursor=pointer]
+        - heading "How I Almost Lost My WhatsApp To A Scam" [level=3] [ref=e1126]:
+          - link "How I Almost Lost My WhatsApp To A Scam" [ref=e1127] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/column/how-i-almost-lost-my-whatsapp-to-a-scam/20251119.htm
+        - paragraph [ref=e1128]: 5 min read
+      - generic [ref=e1129]:
+        - 'link "Terror Module: ''Pakistan''s Handlers Shifted Strategy''" [ref=e1131] [cursor=pointer]':
+          - /url: https://www.rediff.com/news/interview/terror-module-pakistans-handlers-shifted-strategy/20251121.htm
+          - 'img "Terror Module: ''Pakistan''s Handlers Shifted Strategy''" [ref=e1132] [cursor=pointer]'
+        - 'heading "Terror Module: ''Pakistan''s Handlers Shifted Strategy''" [level=3] [ref=e1133]':
+          - 'link "Terror Module: ''Pakistan''s Handlers Shifted Strategy''" [ref=e1134] [cursor=pointer]':
+            - /url: https://www.rediff.com/news/interview/terror-module-pakistans-handlers-shifted-strategy/20251121.htm
+        - paragraph [ref=e1135]: 5 min read
+      - generic [ref=e1136]:
+        - link "Dining With The Kapoors Review" [ref=e1138] [cursor=pointer]:
+          - /url: https://www.rediff.com/movies/review/dining-with-the-kapoors-review/20251121.htm
+          - img "Dining With The Kapoors Review" [ref=e1139] [cursor=pointer]
+        - heading "Dining With The Kapoors Review" [level=3] [ref=e1140]:
+          - link "Dining With The Kapoors Review" [ref=e1141] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/review/dining-with-the-kapoors-review/20251121.htm
+        - paragraph [ref=e1142]: 4 min read
+      - generic [ref=e1143]:
+        - link "Is Your Husband Doing THIS To You?" [ref=e1145] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/report/is-your-husband-doing-this-to-you/20251121.htm
+          - img "Is Your Husband Doing THIS To You?" [ref=e1146] [cursor=pointer]
+        - heading "Is Your Husband Doing THIS To You?" [level=3] [ref=e1147]:
+          - link "Is Your Husband Doing THIS To You?" [ref=e1148] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/report/is-your-husband-doing-this-to-you/20251121.htm
+        - paragraph [ref=e1149]: 3 min read
+      - generic [ref=e1150]:
+        - link "The Secret US Hand In 1962 War" [ref=e1152] [cursor=pointer]:
+          - /url: https://www.rediff.com/news/column/the-secret-us-hand-in-1962-war/20251121.htm
+          - img "The Secret US Hand In 1962 War" [ref=e1153] [cursor=pointer]
+        - heading "The Secret US Hand In 1962 War" [level=3] [ref=e1154]:
+          - link "The Secret US Hand In 1962 War" [ref=e1155] [cursor=pointer]:
+            - /url: https://www.rediff.com/news/column/the-secret-us-hand-in-1962-war/20251121.htm
+        - paragraph [ref=e1156]: 7 min read
+      - generic [ref=e1157]:
+        - link "Sara, Kareena Go Wild With..." [ref=e1159] [cursor=pointer]:
+          - /url: https://www.rediff.com/getahead/report/sara-kareena-go-wild-with/20251120.htm
+          - img "Sara, Kareena Go Wild With..." [ref=e1160] [cursor=pointer]
+        - heading "Sara, Kareena Go Wild With..." [level=3] [ref=e1161]:
+          - link "Sara, Kareena Go Wild With..." [ref=e1162] [cursor=pointer]:
+            - /url: https://www.rediff.com/getahead/report/sara-kareena-go-wild-with/20251120.htm
+        - paragraph [ref=e1163]: 2 min read
+      - generic [ref=e1164]:
+        - 'link "Budget 2026: Nirmalaji''s Challenges, Opportunities" [ref=e1166] [cursor=pointer]':
+          - /url: https://www.rediff.com/business/column/a-k-bhattacharya-budget-2026-nirmalajis-challenges-opportunities/20251121.htm
+          - 'img "Budget 2026: Nirmalaji''s Challenges, Opportunities" [ref=e1167] [cursor=pointer]'
+        - 'heading "Budget 2026: Nirmalaji''s Challenges, Opportunities" [level=3] [ref=e1168]':
+          - 'link "Budget 2026: Nirmalaji''s Challenges, Opportunities" [ref=e1169] [cursor=pointer]':
+            - /url: https://www.rediff.com/business/column/a-k-bhattacharya-budget-2026-nirmalajis-challenges-opportunities/20251121.htm
+        - paragraph [ref=e1170]: 7 min read
+  - generic [ref=e1171]:
+    - heading "THE TIMELESS 100" [level=2] [ref=e1172]:
+      - link "THE TIMELESS 100" [ref=e1173] [cursor=pointer]:
+        - /url: https://www.rediff.com/topstories
+    - generic [ref=e1174]:
+      - generic [ref=e1175]:
+        - link "Abhishek Sharma hits 5 sixes, 5 fours for 12-ball 50!" [ref=e1177] [cursor=pointer]:
+          - /url: https://www.rediff.com/cricket/report/abhishek-sharma-hits-record-12-ball-50-syed-mushtaq-ali-trophy/20251130.htm
+          - img "Abhishek Sharma hits 5 sixes, 5 fours for 12-ball 50!" [ref=e1178] [cursor=pointer]
+        - heading "Abhishek Sharma hits 5 sixes, 5 fours for 12-ball 50!" [level=3] [ref=e1179]:
+          - link "Abhishek Sharma hits 5 sixes, 5 fours for 12-ball 50!" [ref=e1180] [cursor=pointer]:
+            - /url: https://www.rediff.com/cricket/report/abhishek-sharma-hits-record-12-ball-50-syed-mushtaq-ali-trophy/20251130.htm
+        - paragraph [ref=e1181]: 2 min read
+      - generic [ref=e1182]:
+        - link "Big Names Quit IPL Weeks Before Auction" [ref=e1184] [cursor=pointer]:
+          - /url: https://www.rediff.com/cricket/report/big-names-quit-ipl-weeks-before-auction/20251202.htm
+          - img "Big Names Quit IPL Weeks Before Auction" [ref=e1185] [cursor=pointer]
+        - heading "Big Names Quit IPL Weeks Before Auction" [level=3] [ref=e1186]:
+          - link "Big Names Quit IPL Weeks Before Auction" [ref=e1187] [cursor=pointer]:
+            - /url: https://www.rediff.com/cricket/report/big-names-quit-ipl-weeks-before-auction/20251202.htm
+        - paragraph [ref=e1188]: 2 min read
+      - generic [ref=e1189]:
+        - link "Rubaiyya Sayeed key kidnapping suspect held after 36 yrs" [ref=e1191] [cursor=pointer]:
+          - /url: https://www.rediff.com/news/report/cbi-nabs-key-suspect-in-1989-rubaiyya-sayeed-kidnapping/20251201.htm
+          - img "Rubaiyya Sayeed key kidnapping suspect held after 36 yrs" [ref=e1192] [cursor=pointer]
+        - heading "Rubaiyya Sayeed key kidnapping suspect held after 36 yrs" [level=3] [ref=e1193]:
+          - link "Rubaiyya Sayeed key kidnapping suspect held after 36 yrs" [ref=e1194] [cursor=pointer]:
+            - /url: https://www.rediff.com/news/report/cbi-nabs-key-suspect-in-1989-rubaiyya-sayeed-kidnapping/20251201.htm
+        - paragraph [ref=e1195]: 3 min read
+      - generic [ref=e1196]:
+        - 'link "Box Office: Tere Ishk Mein Is A HIT" [ref=e1198] [cursor=pointer]':
+          - /url: https://www.rediff.com/movies/report/box-office-tere-ishk-mein-is-a-hit/20251201.htm
+          - 'img "Box Office: Tere Ishk Mein Is A HIT" [ref=e1199] [cursor=pointer]'
+        - 'heading "Box Office: Tere Ishk Mein Is A HIT" [level=3] [ref=e1200]':
+          - 'link "Box Office: Tere Ishk Mein Is A HIT" [ref=e1201] [cursor=pointer]':
+            - /url: https://www.rediff.com/movies/report/box-office-tere-ishk-mein-is-a-hit/20251201.htm
+        - paragraph [ref=e1202]: 2 min read
+      - generic [ref=e1203]:
+        - link "Tere Ishk Mein Review" [ref=e1205] [cursor=pointer]:
+          - /url: https://www.rediff.com/movies/review/tere-ishk-mein-review/20251128.htm
+          - img "Tere Ishk Mein Review" [ref=e1206] [cursor=pointer]
+        - heading "Tere Ishk Mein Review" [level=3] [ref=e1207]:
+          - link "Tere Ishk Mein Review" [ref=e1208] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/review/tere-ishk-mein-review/20251128.htm
+        - paragraph [ref=e1209]: 6 min read
+      - generic [ref=e1210]:
+        - link "'50 Congress MLAs' Defection Is No Joke'" [ref=e1212] [cursor=pointer]:
+          - /url: https://www.rediff.com/news/special/50-congress-mlas-defection-is-no-joke/20251129.htm
+          - img "'50 Congress MLAs' Defection Is No Joke'" [ref=e1213] [cursor=pointer]
+        - heading "'50 Congress MLAs' Defection Is No Joke'" [level=3] [ref=e1214]:
+          - link "'50 Congress MLAs' Defection Is No Joke'" [ref=e1215] [cursor=pointer]:
+            - /url: https://www.rediff.com/news/special/50-congress-mlas-defection-is-no-joke/20251129.htm
+        - paragraph [ref=e1216]: 4 min read
+      - generic [ref=e1217]:
+        - link "'I'm the only one who bowls at 150kph'" [ref=e1219] [cursor=pointer]:
+          - /url: https://www.rediff.com/cricket/report/im-the-only-one-who-bowls-at-150kph/20251128.htm
+          - img "'I'm the only one who bowls at 150kph'" [ref=e1220] [cursor=pointer]
+        - heading "'I'm the only one who bowls at 150kph'" [level=3] [ref=e1221]:
+          - link "'I'm the only one who bowls at 150kph'" [ref=e1222] [cursor=pointer]:
+            - /url: https://www.rediff.com/cricket/report/im-the-only-one-who-bowls-at-150kph/20251128.htm
+        - paragraph [ref=e1223]: 5 min read
+      - generic [ref=e1224]:
+        - link "Suryavanshi storm hits SMAT, becomes youngest...." [ref=e1226] [cursor=pointer]:
+          - /url: https://www.rediff.com/cricket/report/suryavanshi-storm-hits-smat-becomes-youngest-centurion/20251202.htm
+          - img "Suryavanshi storm hits SMAT, becomes youngest...." [ref=e1227] [cursor=pointer]
+        - heading "Suryavanshi storm hits SMAT, becomes youngest...." [level=3] [ref=e1228]:
+          - link "Suryavanshi storm hits SMAT, becomes youngest...." [ref=e1229] [cursor=pointer]:
+            - /url: https://www.rediff.com/cricket/report/suryavanshi-storm-hits-smat-becomes-youngest-centurion/20251202.htm
+        - paragraph [ref=e1230]: 3 min read
+      - generic [ref=e1231]:
+        - link "'Gambhir best ever coach and human being'" [ref=e1233] [cursor=pointer]:
+          - /url: https://www.rediff.com/cricket/report/gambhir-best-ever-coach-and-human-being-india-south-africa/20251202.htm
+          - img "'Gambhir best ever coach and human being'" [ref=e1234] [cursor=pointer]
+        - heading "'Gambhir best ever coach and human being'" [level=3] [ref=e1235]:
+          - link "'Gambhir best ever coach and human being'" [ref=e1236] [cursor=pointer]:
+            - /url: https://www.rediff.com/cricket/report/gambhir-best-ever-coach-and-human-being-india-south-africa/20251202.htm
+        - paragraph [ref=e1237]: 4 min read
+      - generic [ref=e1238]:
+        - link "Samantha Weds Raj Nidimoru" [ref=e1240] [cursor=pointer]:
+          - /url: https://www.rediff.com/movies/report/samantha-weds-raj-nidimoru/20251201.htm
+          - img "Samantha Weds Raj Nidimoru" [ref=e1241] [cursor=pointer]
+        - heading "Samantha Weds Raj Nidimoru" [level=3] [ref=e1242]:
+          - link "Samantha Weds Raj Nidimoru" [ref=e1243] [cursor=pointer]:
+            - /url: https://www.rediff.com/movies/report/samantha-weds-raj-nidimoru/20251201.htm
+        - paragraph [ref=e1244]: 1 min read
+    - link "See More >" [ref=e1245] [cursor=pointer]:
+      - /url: https://www.rediff.com/topstories
+  - generic [ref=e1247]:
+    - generic [ref=e1248]: Advertisement
+    - generic:
+      - insertion
+  - generic [ref=e1249]:
+    - link "Rediffmail for Work" [ref=e1250] [cursor=pointer]:
+      - /url: https://track.rediff.com/click?url=___https://workmail.rediff.com?sc_cid=footer-biz-email___&cmp=host&lnk=footer-biz-email&nsrv1=host
+    - link "Book a domain" [ref=e1251] [cursor=pointer]:
+      - /url: https://track.rediff.com/click?url=___https://businessemail.rediff.com/domain?sc_cid=footer-domain___&cmp=host&lnk=footer-domain&nsrv1=host
+    - link "Rediffmail" [ref=e1252] [cursor=pointer]:
+      - /url: https://mail.rediff.com/cgi-bin/login.cgi
+    - link "Money" [ref=e1253] [cursor=pointer]:
+      - /url: https://money.rediff.com
+    - link "Videos" [ref=e1254] [cursor=pointer]:
+      - /url: https://ishare.rediff.com
+    - link "The Timeless 100" [ref=e1255] [cursor=pointer]:
+      - /url: https://www.rediff.com/topstories
+  - generic [ref=e1256]:
+    - img "rediff on the net" [ref=e1257]
+    - text: © 2025
+    - link "Rediff.com" [ref=e1258] [cursor=pointer]:
+      - /url: https://www.rediff.com/
+    - text: "-"
+    - link "Investor Information" [ref=e1259] [cursor=pointer]:
+      - /url: https://investor.rediff.com/
+    - text: "-"
+    - link "Advertise with us" [ref=e1260] [cursor=pointer]:
+      - /url: https://clients.rediff.com/rediff_advertisewithus/contact.htm
+    - text: "-"
+    - link "Disclaimer" [ref=e1261] [cursor=pointer]:
+      - /url: https://www.rediff.com/disclaim.htm
+    - text: "-"
+    - link "Privacy Policy" [ref=e1262] [cursor=pointer]:
+      - /url: https://www.rediff.com/w3c/policy.html
+    - text: "-"
+    - link "Sitemap" [ref=e1263] [cursor=pointer]:
+      - /url: https://www.rediff.com/sitemap.xml
+    - text: "-"
+    - link "Feedback" [ref=e1264] [cursor=pointer]:
+      - /url: https://mypage.rediff.com/feedback
+    - text: "-"
+    - link "About us" [ref=e1265] [cursor=pointer]:
+      - /url: https://www.rediff.com/aboutus.html
+    - text: "-"
+    - link "Terms of use" [ref=e1266] [cursor=pointer]:
+      - /url: https://www.rediff.com/terms.html
+    - text: "-"
+    - link "Grievances" [ref=e1267] [cursor=pointer]:
+      - /url: https://www.rediff.com/grievances.html
+  - iframe [ref=e1272]:
+    - generic [active]:
+      - img [ref=f6e5]
+      - link "RediffPay | Pay credit card bill instantly with Zero Platform Fee Pay Now" [ref=f6e8] [cursor=pointer]:
+        - /url: https://adclick.g.doubleclick.net/pcs/click?xai=AKAOjssVsv2CsRna7KOJTS3zZgbQhOpi5xmzAW-45Tf9j-9YxWY71pUXqZij-e_McCctZZrf58awNrMnRVCZGi6DuwGeulCz0r-iz2zZB343VauoUZRsETG1y6n6RcBtUOnPdrWMo9o9AKr3i5kEfxx5hZNA_Lr4wlnoyctik2zuWTC8oolhLXiInHfFjMQ7qwwyK48sMZa6--ycT5afrIq9JlNZeclA_SKuFOKnwBJ_TsvvflJjX2Agl640uECavOKXWB_aWCe0WyP7m38SqhAGLJd3i3NdpqNos8p7h62WmWhjeAq0EGFovWJl1mDdrrPuFlsIH7Mul6jkIxarAIQ58H_p5nuB_lFVMuXo24ZztSC0njhsWNQ-487X1n2jqajRrvQ2uGLsGrVKVM82ErELtlWQchT7FuqWGRHm&sai=AMfl-YSRVrPtQSI4mC5SAK6aLoixvE3bGdGxtanQtEBhYTncnnqwV1gzJDdSJdwXihigXjQH8D_OkUamxyYWcKtIP2DlJJIDJVBskAcVqs6DURs-X0E0c7a_ch9YFMBVpkMVZVgsMIpQK2IhwWbEx-i10MvH2PKxGdbztkwxFdYO4yj4R6IgdvFvu5r838oe3U3xD49mZHc_VXHz4n65SXt5dy09PVQkPWlrpA9T7NY0fPFF8r_tjohMRX8d6Nto58GZq3n7Tre5aihQmphkYUxXtRssHZoxT5g&sig=Cg0ArKJSzAo_Y1kKQzHPEAE&fbs_aeid=%5Bgw_fbsaeid%5D&urlfix=1&adurl=https://pay.rediff.com/webapp/recharge/3e30e8ac-1cc8-4378-b789-1c8d08c71ea3?utm_source=rediffInhouse&utm_medium=970x50_desktopsticky&utm_campaign=rediffwebpay_creditcard3&utm_content=rediffwebpay_creditcard3_970x50_desktopsticky
+        - table [ref=f6e9] [cursor=pointer]:
+          - rowgroup [ref=f6e10] [cursor=pointer]:
+            - row "RediffPay | Pay credit card bill instantly with Zero Platform Fee Pay Now" [ref=f6e11] [cursor=pointer]:
+              - cell "RediffPay | Pay credit card bill instantly with Zero Platform Fee Pay Now" [ref=f6e12] [cursor=pointer]:
+                - table [ref=f6e13] [cursor=pointer]:
+                  - rowgroup [ref=f6e14] [cursor=pointer]:
+                    - row "RediffPay | Pay credit card bill instantly with Zero Platform Fee Pay Now" [ref=f6e15] [cursor=pointer]:
+                      - cell "RediffPay" [ref=f6e16] [cursor=pointer]:
+                        - img "RediffPay" [ref=f6e17] [cursor=pointer]
+                      - cell "|" [ref=f6e18] [cursor=pointer]
+                      - cell "Pay credit card bill instantly with Zero Platform Fee" [ref=f6e19] [cursor=pointer]:
+                        - generic [ref=f6e20] [cursor=pointer]: Pay credit card bill instantly
+                        - text: with Zero Platform Fee
+                      - cell [ref=f6e21] [cursor=pointer]
+                      - cell "Pay Now" [ref=f6e22] [cursor=pointer]:
+                        - generic [ref=f6e23] [cursor=pointer]: Pay Now
+```

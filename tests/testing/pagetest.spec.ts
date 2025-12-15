@@ -1,9 +1,9 @@
 
 
-import { test } from "../pages/myFixtures";
+import { test } from "./pages/myFixtures";
 import { expect } from "@playwright/test";
-import { LoginPage } from "../pages/LoginPage";
-import { DashboardPage } from "../pages/DashboardPage";
+import { LoginPage } from "./pages/LoginPage";
+import { DashboardPage } from "./pages/DashboardPage";
 
 test("pagetest", async({ loginPage, dashboardPage }: { loginPage: LoginPage; dashboardPage: DashboardPage })=>{
 

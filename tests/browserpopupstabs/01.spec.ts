@@ -68,6 +68,23 @@ test('multiple pages from context menu test', async ({context }) => {
 
 
 
+//check the output
+test('browser with page directly', async ({browser }) => {
+
+   //browser taken from config 
+   const page1= await browser.newPage(); 
+   const page2= await browser.newPage(); 
+
+  await page1.goto('https://www.wwe.com/');
+  await page1.goto('https://www.rediff.com/');
+
+
+  console.log(browser.contexts().length); //
+
+});
+
+
+
 
 
 test('from page', async ({ page }) => {

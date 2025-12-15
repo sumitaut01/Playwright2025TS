@@ -1,4 +1,4 @@
-import {test, expect, chromium } from "@playwright/test";
+import {test, expect, chromium, webkit } from "@playwright/test";
 
 
 
@@ -14,8 +14,18 @@ console.log("done");
 
 
 //launches chrome
-test("browser",async({})=>{
+test("browser chromium",async ()=>{
 const chrome=await chromium.launch();
+const context= await chrome.newContext();
+  const page=context.newPage();
+ (await page).goto("https://demowebshop.tricentis.com/")
+console.log("done");
+})
+
+
+
+test("browser wbekit",async ()=>{
+const chrome=await webkit.launch();
 const context= await chrome.newContext();
   const page=context.newPage();
  (await page).goto("https://demowebshop.tricentis.com/")

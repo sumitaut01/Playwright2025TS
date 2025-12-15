@@ -32,6 +32,6 @@ test('auto waiting assertions test',async({page})=>{
     const searchButton=page.locator('button[type="submit"]');
     await searchButton.click();    
     
-    
 
-})
+
+});

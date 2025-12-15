@@ -1,0 +1,2 @@
+prinnting innertext and textContent below
+innertext is ${text1} and textContent is ${text2}
