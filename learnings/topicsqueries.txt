@@ -7,3 +7,16 @@ page.once
 pagea.on  for dialog
 
 if pom methods returns array, should ibe promise of array or list
+
+
+
+: what is serial
+
+:broken links from webpage
+:await fetch 
+//bdd bindings
+
+
+
+
+
