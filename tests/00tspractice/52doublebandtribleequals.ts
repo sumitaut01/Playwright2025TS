@@ -1,6 +1,6 @@
 
 
-let x="sumit";
+export let x="sumit";
 
 console.log(x==='neha');
 console.log(x==='sumit');   

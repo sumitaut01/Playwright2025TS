@@ -1,5 +1,5 @@
 
-//1 Optinal Parameter
+//1 Optional Parameter
 
 //Normal
 function getInfo(firstname:String,age:number):String{

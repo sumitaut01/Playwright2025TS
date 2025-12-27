@@ -40,6 +40,17 @@ console.log(st);
 
 
 
+//tuples
+let stx:[string];
+stx=["sumit"];
+
+let stx2:[string,string,number];
+stx2=["sumit","raut",35];
+
+console.log(stx2[0]);//sumit
+
+console.log(stx2.at(0));//sumit
+
 
 
 

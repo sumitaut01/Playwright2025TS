@@ -1,9 +1,7 @@
 //1 named functions
 function myFunc(bae:string):void
 {
-
     console.log(bae);
-
 }
 //myFunc("sumit");
 
