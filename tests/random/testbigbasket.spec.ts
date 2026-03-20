@@ -2,9 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('BigBasket menu test', async ({ page }) => {
   await page.goto('https://www.bigbasket.com/');
-
-
-  await page.waitForLoadState('networkidle');
+ await page.waitForLoadState('networkidle');
 
 //const closedMenu = page.getByRole('button', { name: 'Shop by Category' }).filter({ has: page.locator('[aria-expanded="false"]')})
 const closedMenu = page.locator('#');

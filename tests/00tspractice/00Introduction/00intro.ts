@@ -23,7 +23,7 @@ x=40  allowed in js
 
 nodejs path and node mules path in path
 
-npm is sued to install software which run on nodejs
+npm is used to install software which run on nodejs
 
 
 npm install -g typescript   // type script compliler

@@ -13,9 +13,7 @@ Playwright can run two types of browsers:
 These are the Playwright-packaged versions of:
 
 Chromium
-
 Firefox
-
 WebKit
 
 When you run:
@@ -24,15 +22,11 @@ npx playwright install
 
 
 Playwright downloads its own custom-built browsers.
-
 Why?
 
 Because:
-
 They are optimized for automation
-
 Have stable APIs
-
 Have deterministic behavior
 
 Support special features (protocol patches, tracing, HAR recording)
@@ -49,21 +43,15 @@ Runs on Playwright's Chromium, not your system Chrome.
 🔵 2. Unbundled (Branded System Browsers)
 
 These are your actual installed browsers, like:
-
 Google Chrome
-
 Microsoft Edge
-
 Chrome Canary
-
 WebKit system browser (macOS only)
 
 Playwright can run tests on these too.
-
 How?
 
 By specifying the browser channel:
-
 projects: [
   {
     name: 'Google Chrome',
@@ -78,9 +66,7 @@ projects: [
 Why use unbundled?
 
 To test exactly what end-users use
-
 For compatibility testing
-
 For testing Chrome-specific features (extensions, enterprise policies)
 
 Example command:

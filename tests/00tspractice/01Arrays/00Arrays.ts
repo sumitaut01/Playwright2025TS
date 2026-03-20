@@ -2,11 +2,12 @@
 // Mixed Array 
 export const arr:Array<number|string>=[10,'Sumitra',20,'Automation',30,'Testing'];
 
-//
+//Array of any type
 
 const arr2:Array<any>=[10,'Sumitra',true,20,'Automation',false,30,'Testing'];
 console.log('mixed array:',arr2);
 
+//array of arrays
 const arr3:number[][]=[[10,20,30],[40,50,60],[70,80,90]];
 
 

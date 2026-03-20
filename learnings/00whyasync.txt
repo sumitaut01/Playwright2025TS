@@ -38,14 +38,10 @@ Playwright TEST framework injects fixtures automatically.
 Fixtures include:
 
 page
-
 context
-
 browser
-
-request
-
 browserName
+request--for api
 
 and any custom fixture you added
 
@@ -67,9 +63,7 @@ test('login', async ({ page }) => {
 This page object is automatically:
 
 launched
-
 isolated
-
 cleaned up
 
 You don’t create it manually.
@@ -123,11 +117,8 @@ test('demo', ({ page }) => {
 It will:
 
 NOT wait for navigation
-
 Fail automatically
-
 Give warnings
-
 So Playwright expects async/await.
 
 ❤️ Summary (Easy to Remember)
@@ -138,5 +129,4 @@ Function → your Flow/test
 A-D-F → Async + Destructuring + Function
 
 This is all you need to remember.
-
 If you want, I can explain how fixtures actually inject page, with a diagram.

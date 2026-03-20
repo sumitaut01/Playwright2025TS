@@ -2,16 +2,11 @@
 //all of them takes functiion as parameter
 // these are moslt used
 
-
-
-
 //for each
 const arr:number[]=[10,20,30,40];
 
 console.log('foreach()')
 arr.forEach((item,index)=>console.log(item,index));
-
-
 
 
 //map
