@@ -1,0 +1,2502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playwright + TypeScript: From Basics to Advanced</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Sora:wght@300;400;600;800&display=swap');
+  :root {
+    --bg:#0d1117;--surface:#161b22;--surface2:#1e2530;--border:#30363d;
+    --pw:#e8462e;--pw-soft:rgba(232,70,46,.12);
+    --se:#3e8ee1;--se-soft:rgba(62,142,225,.12);
+    --ts:#3178c6;--ts-soft:rgba(49,120,198,.12);
+    --green:#3fb950;--yellow:#d29922;--text:#e6edf3;--muted:#8b949e;--accent:#f0883e;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;}
+  header{background:linear-gradient(135deg,#0d1117 0%,#1a0a08 50%,#0d1117 100%);border-bottom:1px solid var(--border);padding:32px 24px 22px;text-align:center;position:relative;overflow:hidden;}
+  header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(232,70,46,.18) 0%,transparent 70%);pointer-events:none;}
+  .badge-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;}
+  .badge-pw{background:var(--pw-soft);color:var(--pw);border:1px solid var(--pw);}
+  .badge-ts{background:var(--ts-soft);color:#5ba0e0;border:1px solid var(--ts);}
+  .badge-se{background:var(--se-soft);color:var(--se);border:1px solid var(--se);}
+  .badge-app{background:rgba(63,185,80,.12);color:var(--green);border:1px solid var(--green);}
+  h1{font-size:clamp(20px,5vw,38px);font-weight:800;letter-spacing:-.02em;color:#fff;position:relative;}
+  h1 span{color:var(--pw);}
+  .subtitle{color:var(--muted);margin-top:6px;font-size:13px;font-weight:300;position:relative;}
+  .app-pills{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px;}
+  .app-pill{font-size:11px;padding:3px 11px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'JetBrains Mono',monospace;}
+  .app-pill a{color:inherit;text-decoration:none;}.app-pill a:hover{color:var(--accent);}
+  .tab-bar{display:flex;background:var(--surface);border-bottom:1px solid var(--border);padding:0 10px;overflow-x:auto;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+  .tab-bar::-webkit-scrollbar{display:none;}
+  .tab{font-family:'Sora',sans-serif;font-size:11.5px;font-weight:600;padding:11px 12px;border:none;background:transparent;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s;}
+  .tab:hover{color:var(--text);}.tab.active{color:var(--pw);border-bottom-color:var(--pw);}
+  .page{display:none;padding:18px 14px;max-width:960px;margin:0 auto;}.page.active{display:block;}
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;overflow:hidden;}
+  .section-header{display:flex;align-items:center;gap:10px;padding:12px 15px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;background:var(--surface2);}
+  .section-header:hover{background:#222b38;}
+  .section-icon{font-size:16px;}.section-title{font-weight:600;font-size:13.5px;flex:1;}
+  .section-tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 7px;border-radius:4px;font-weight:700;}
+  .tag-basics{background:#1c2e1c;color:var(--green);}.tag-inter{background:#2a2208;color:var(--yellow);}
+  .tag-adv{background:#2a0e08;color:var(--pw);}.tag-ts{background:var(--ts-soft);color:#5ba0e0;}
+  .tag-fw{background:rgba(240,136,62,.12);color:var(--accent);}
+  .chevron{color:var(--muted);font-size:11px;transition:transform .25s;}.chevron.open{transform:rotate(90deg);}
+  .section-body{padding:15px;display:none;}.section-body.open{display:block;}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;}
+  @media(max-width:600px){.compare{grid-template-columns:1fr;}}
+  .compare-card{border-radius:8px;padding:12px;}
+  .pw-card{background:var(--pw-soft);border:1px solid rgba(232,70,46,.3);}
+  .se-card{background:var(--se-soft);border:1px solid rgba(62,142,225,.3);}
+  .compare-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;font-family:'JetBrains Mono',monospace;}
+  .pw-card .compare-label{color:var(--pw);}.se-card .compare-label{color:var(--se);}
+  pre{background:#010409;border:1px solid var(--border);border-radius:6px;padding:12px 14px;overflow-x:auto;margin:6px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.75;}
+  code{font-family:'JetBrains Mono',monospace;font-size:11px;background:#1e2530;padding:1px 5px;border-radius:3px;}
+  .kw{color:#ff7b72;}.fn{color:#d2a8ff;}.str{color:#a5d6ff;}.cm{color:#8b949e;font-style:italic;}.ty{color:#ffa657;}.op{color:#79c0ff;}
+  .callout{border-radius:8px;padding:10px 14px;margin:10px 0;font-size:12.5px;display:flex;gap:10px;align-items:flex-start;}
+  .callout-info{background:rgba(49,120,198,.12);border-left:3px solid var(--ts);}
+  .callout-tip{background:rgba(63,185,80,.1);border-left:3px solid var(--green);}
+  .callout-warn{background:rgba(210,153,34,.1);border-left:3px solid var(--yellow);}
+  .callout-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+  .checklist{list-style:none;}
+  .checklist li{display:flex;align-items:flex-start;gap:10px;padding:6px 0;border-bottom:1px solid #1e2530;font-size:12.5px;}
+  .checklist li:last-child{border:none;}
+  .check{width:17px;height:17px;border-radius:4px;border:2px solid var(--border);cursor:pointer;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s;}
+  .check.done{background:var(--green);border-color:var(--green);}.check.done::after{content:'✓';color:#000;font-size:10px;font-weight:800;}
+  .check-text.done{text-decoration:line-through;color:var(--muted);}
+  .progress-bar{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin:3px 0 10px;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--pw),var(--accent));border-radius:3px;transition:width .4s;}
+  .timeline{position:relative;padding-left:24px;}
+  .timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border);}
+  .tl-item{position:relative;margin-bottom:16px;}
+  .tl-dot{position:absolute;left:-20px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--pw);border:2px solid var(--bg);}
+  .tl-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+  .tl-title{font-weight:600;font-size:13px;margin:2px 0 2px;}
+  .tl-desc{font-size:12px;color:var(--muted);}
+  .overview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:12px 0;}
+  .ov-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:13px;text-align:center;}
+  .ov-num{font-size:22px;font-weight:800;color:var(--pw);font-family:'JetBrains Mono',monospace;}
+  .ov-label{font-size:11px;color:var(--muted);margin-top:3px;}
+  .tree{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.9;background:#010409;border:1px solid var(--border);border-radius:6px;padding:14px 16px;color:var(--text);}
+  .tree .folder{color:var(--accent);}.tree .file{color:#a5d6ff;}.tree .comment{color:#8b949e;font-style:italic;}
+  .cmd-table{width:100%;border-collapse:collapse;font-size:12px;margin:6px 0;}
+  .cmd-table th{text-align:left;padding:7px 11px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;font-family:'JetBrains Mono',monospace;}
+  .cmd-table td{padding:6px 11px;border:1px solid var(--border);vertical-align:top;}
+  .cmd-table tr:hover td{background:#1a2030;}
+  .cmd-table td:first-child{font-family:'JetBrains Mono',monospace;font-size:11px;color:#d2a8ff;white-space:nowrap;}
+  .cmd-table td:nth-child(2){color:var(--muted);font-size:11.5px;}
+  .cmd-table td:nth-child(3){color:#3fb95099;font-size:10.5px;font-family:'JetBrains Mono',monospace;}
+  .cmd-section-row td{background:var(--pw-soft)!important;color:var(--pw)!important;font-weight:700;font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;}
+  .method{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:1px 7px;border-radius:3px;margin-right:5px;}
+  .get{background:rgba(63,185,80,.15);color:#3fb950;border:1px solid rgba(63,185,80,.3);}
+  .post{background:rgba(240,136,62,.15);color:var(--accent);border:1px solid rgba(240,136,62,.3);}
+  .put{background:rgba(49,120,198,.15);color:#5ba0e0;border:1px solid rgba(49,120,198,.3);}
+  .del{background:rgba(232,70,46,.15);color:var(--pw);border:1px solid rgba(232,70,46,.3);}
+  p{font-size:13px;color:var(--muted);margin:4px 0;}
+  h3{font-size:13px;font-weight:600;margin:12px 0 5px;color:var(--text);}
+  h4{font-size:11px;font-weight:700;color:var(--accent);margin:12px 0 4px;text-transform:uppercase;letter-spacing:.05em;}
+  ul{padding-left:16px;font-size:12.5px;color:var(--muted);}ul li{margin:3px 0;}
+  strong{color:var(--text);}
+  hr{border:none;border-top:1px solid var(--border);margin:12px 0;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge-row">
+    <span class="badge badge-pw">🎭 Playwright</span>
+    <span class="badge badge-ts">TS TypeScript</span>
+    <span class="badge badge-se">⚖️ vs Selenium/Java</span>
+    <span class="badge badge-app">🌐 Real Apps</span>
+  </div>
+  <h1>Playwright + <span>TypeScript</span></h1>
+  <p class="subtitle">Complete lesson · UI + API · Locators · Waits · POM · Framework · Async/Promises · Serialization · Data Driving · Utilities · GitHub Actions · Sharding · NPX Commands · Config Deep Dive</p>
+  <div class="app-pills">
+    <span class="app-pill">🛒 UI App: <a href="https://www.saucedemo.com" target="_blank">saucedemo.com</a></span>
+    <span class="app-pill">🔌 API: <a href="https://reqres.in" target="_blank">reqres.in</a></span>
+    <span class="app-pill">📚 API: <a href="https://jsonplaceholder.typicode.com" target="_blank">jsonplaceholder.typicode.com</a></span>
+  </div>
+</header>
+
+<div class="tab-bar">
+  <button class="tab active"  onclick="showTab('overview',this)">📋 Overview</button>
+  <button class="tab"         onclick="showTab('typescript',this)">🔷 TypeScript</button>
+  <button class="tab"         onclick="showTab('setup',this)">⚙️ Setup</button>
+  <button class="tab"         onclick="showTab('framework',this)">🏗️ Framework</button>
+  <button class="tab"         onclick="showTab('locators',this)">🎯 Locators</button>
+  <button class="tab"         onclick="showTab('waits',this)">⏳ Waits</button>
+  <button class="tab"         onclick="showTab('api',this)">🌐 API Tests</button>
+  <button class="tab"         onclick="showTab('pom',this)">📄 POM</button>
+  <button class="tab"         onclick="showTab('commands',this)">⚡ Commands</button>
+  <button class="tab"         onclick="showTab('reporting',this)">📊 Reporting</button>
+  <button class="tab"         onclick="showTab('async',this)">🔄 Async/Promises</button>
+  <button class="tab"         onclick="showTab('serialization',this)">🔁 Serialization</button>
+  <button class="tab"         onclick="showTab('datadriving',this)">📂 Data Driving</button>
+  <button class="tab"         onclick="showTab('utils',this)">🧰 Utilities</button>
+  <button class="tab"         onclick="showTab('github',this)">🚀 GitHub Actions</button>
+  <button class="tab"         onclick="showTab('sharding',this)">🗄️ Sharding</button>
+  <button class="tab"         onclick="showTab('npx',this)">🖥️ NPX Commands</button>
+  <button class="tab"         onclick="showTab('config',this)">⚙️ Config Deep Dive</button>
+  <button class="tab"         onclick="showTab('checklist',this)">✅ Checklist</button>
+</div>
+
+<!-- ═══ OVERVIEW ═══ -->
+<div id="tab-overview" class="page active">
+  <div class="overview-grid">
+    <div class="ov-card"><div class="ov-num">19</div><div class="ov-label">Tabs / Modules</div></div>
+    <div class="ov-card"><div class="ov-num">UI+API</div><div class="ov-label">Coverage</div></div>
+    <div class="ov-card"><div class="ov-num">2</div><div class="ov-label">Real Demo Apps</div></div>
+    <div class="ov-card"><div class="ov-num">60+</div><div class="ov-label">Commands Ref</div></div>
+    <div class="ov-card"><div class="ov-num">28</div><div class="ov-label">Checklist Items</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🗺️</span><span class="section-title">Learning Path</span>
+      <span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Module 1</div><div class="tl-title">TypeScript Essentials for Testers</div><div class="tl-desc">Types, interfaces, async/await — only what you need</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Module 2</div><div class="tl-title">Setup & Project Config</div><div class="tl-desc">Install, playwright.config.ts — compare with Maven + Selenium</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Module 3</div><div class="tl-title">Full Framework Architecture</div><div class="tl-desc">Folder structure, fixtures, test data, helpers using SauceDemo + Reqres.in</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Module 4</div><div class="tl-title">Locators — All Strategies</div><div class="tl-desc">Role, text, CSS, XPath, testId, chaining — vs Selenium By.*</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Module 5</div><div class="tl-title">Waits & Auto-Waiting</div><div class="tl-desc">Why Playwright rarely needs explicit waits</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Module 6</div><div class="tl-title">API Testing — Full Suite (Reqres.in)</div><div class="tl-desc">GET/POST/PUT/DELETE with Java RestAssured comparison</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Module 7</div><div class="tl-title">POM + End-to-End Tests</div><div class="tl-desc">SauceDemo LoginPage + InventoryPage + Checkout flow</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Module 8</div><div class="tl-title">Commands Cheat Sheet</div><div class="tl-desc">60+ commands with Selenium equivalents</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Module 9</div><div class="tl-title">Reporting — HTML, Allure, Trace Viewer</div><div class="tl-desc">Like Extent Reports but zero extra config</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🌐</span><span class="section-title">Demo Apps Used</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="section-body">
+      <div class="compare">
+        <div class="compare-card pw-card">
+          <div class="compare-label">🛒 SauceDemo — UI</div>
+          <p><strong>https://www.saucedemo.com</strong></p>
+          <p>Free e-commerce app built for automation practice.</p>
+          <ul><li>Login: <code>standard_user / secret_sauce</code></li><li>Product listing, cart, checkout flow</li><li>Multiple user types (locked, performance-glitch)</li></ul>
+        </div>
+        <div class="compare-card se-card">
+          <div class="compare-label">🔌 Reqres.in — API</div>
+          <p><strong>https://reqres.in</strong></p>
+          <p>Free hosted REST API. All CRUD operations, no auth needed.</p>
+          <ul><li>GET/POST/PUT/DELETE /api/users</li><li>POST /api/login and /api/register</li><li>Returns realistic paginated JSON</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">⚖️</span><span class="section-title">Playwright vs Selenium Philosophy</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="section-body">
+      <div class="compare">
+        <div class="compare-card pw-card"><div class="compare-label">🎭 Playwright</div>
+          <ul><li>Auto-waits on every action</li><li>Built-in API testing</li><li>TypeScript / JS native</li><li>Browser contexts (isolated sessions)</li><li>Network interception built-in</li><li>Trace Viewer for debugging</li><li>Single tool: UI + API + Report</li></ul>
+        </div>
+        <div class="compare-card se-card"><div class="compare-label">🔵 Selenium + Java</div>
+          <ul><li>Manual explicit/implicit waits</li><li>Needs RestAssured for API</li><li>Java, Python, many languages</li><li>Driver per instance</li><li>External libs for network</li><li>External reporting (Extent/Allure)</li><li>Multiple tools to stitch together</li></ul>
+        </div>
+      </div>
+      <div class="callout callout-tip"><span class="callout-icon">💡</span><span>Your Selenium + TestNG + RestAssured maps 1:1. Playwright merges all three into one framework.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TYPESCRIPT ═══ -->
+<div id="tab-typescript" class="page">
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🔷</span><span class="section-title">TypeScript — 5 Concepts You Need</span>
+      <span class="section-tag tag-ts">TS Primer</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="callout callout-info"><span class="callout-icon">ℹ️</span><span>Don't learn all TypeScript upfront. Learn these 5 things — they cover 95% of what you'll write in Playwright tests.</span></div>
+
+      <h3>1. Types</h3>
+      <div class="compare">
+        <div class="compare-card pw-card"><div class="compare-label">TypeScript</div>
+<pre><span class="kw">const</span> username: <span class="ty">string</span>  = <span class="str">'standard_user'</span>;
+<span class="kw">const</span> retries:  <span class="ty">number</span>  = <span class="op">3</span>;
+<span class="kw">const</span> headless: <span class="ty">boolean</span> = <span class="kw">true</span>;</pre></div>
+        <div class="compare-card se-card"><div class="compare-label">Java</div>
+<pre><span class="ty">String</span>  username = <span class="str">"standard_user"</span>;
+<span class="ty">int</span>     retries  = <span class="op">3</span>;
+<span class="ty">boolean</span> headless = <span class="kw">true</span>;</pre></div>
+      </div>
+
+      <h3>2. Interface (like a Java POJO / data class)</h3>
+<pre><span class="kw">interface</span> <span class="ty">User</span> {
+  username: <span class="ty">string</span>;
+  password: <span class="ty">string</span>;
+  role?:    <span class="ty">string</span>;   <span class="cm">// optional field — no @Nullable needed</span>
+}
+<span class="kw">const</span> u: <span class="ty">User</span> = { username: <span class="str">'standard_user'</span>, password: <span class="str">'secret_sauce'</span> };</pre>
+
+      <h3>3. async / await — replaces WebDriverWait entirely</h3>
+      <div class="compare">
+        <div class="compare-card pw-card"><div class="compare-label">TypeScript / Playwright</div>
+<pre><span class="kw">test</span>(<span class="str">'login'</span>, <span class="kw">async</span> ({ page }) => {
+  <span class="kw">await</span> page.<span class="fn">goto</span>(<span class="str">'https://www.saucedemo.com'</span>);
+  <span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'#user-name'</span>, <span class="str">'standard_user'</span>);
+  <span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'#password'</span>,  <span class="str">'secret_sauce'</span>);
+  <span class="kw">await</span> page.<span class="fn">click</span>(<span class="str">'#login-button'</span>);
+});</pre></div>
+        <div class="compare-card se-card"><div class="compare-label">Java / Selenium</div>
+<pre><span class="ty">@Test</span>
+<span class="kw">public void</span> <span class="fn">login</span>() {
+  driver.<span class="fn">get</span>(<span class="str">"https://www.saucedemo.com"</span>);
+  driver.<span class="fn">findElement</span>(By.<span class="fn">id</span>(<span class="str">"user-name"</span>))
+        .<span class="fn">sendKeys</span>(<span class="str">"standard_user"</span>);
+  driver.<span class="fn">findElement</span>(By.<span class="fn">id</span>(<span class="str">"password"</span>))
+        .<span class="fn">sendKeys</span>(<span class="str">"secret_sauce"</span>);
+  driver.<span class="fn">findElement</span>(By.<span class="fn">id</span>(<span class="str">"login-button"</span>)).<span class="fn">click</span>();
+}</pre></div>
+      </div>
+
+      <h3>4. Classes — same concept as Java</h3>
+<pre><span class="kw">class</span> <span class="ty">LoginPage</span> {
+  <span class="kw">private readonly</span> page: <span class="ty">Page</span>;
+  <span class="fn">constructor</span>(page: <span class="ty">Page</span>) { <span class="kw">this</span>.page = page; }
+
+  <span class="kw">async</span> <span class="fn">login</span>(u: <span class="ty">string</span>, p: <span class="ty">string</span>): <span class="ty">Promise&lt;void&gt;</span> {
+    <span class="kw">await</span> <span class="kw">this</span>.page.<span class="fn">fill</span>(<span class="str">'#user-name'</span>, u);
+    <span class="kw">await</span> <span class="kw">this</span>.page.<span class="fn">fill</span>(<span class="str">'#password'</span>, p);
+    <span class="kw">await</span> <span class="kw">this</span>.page.<span class="fn">click</span>(<span class="str">'#login-button'</span>);
+  }
+}</pre>
+
+      <h3>5. Type for API response body</h3>
+<pre><span class="kw">type</span> <span class="ty">ApiUser</span> = { id: <span class="ty">number</span>; email: <span class="ty">string</span>; first_name: <span class="ty">string</span>; };
+
+<span class="kw">const</span> body = (<span class="kw">await</span> response.<span class="fn">json</span>()) <span class="kw">as</span> { data: <span class="ty">ApiUser</span> };
+<span class="fn">expect</span>(body.data.email).<span class="fn">toContain</span>(<span class="str">'@reqres.in'</span>);</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SETUP ═══ -->
+<div id="tab-setup" class="page">
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">⚙️</span><span class="section-title">Installation & playwright.config.ts</span>
+      <span class="section-tag tag-basics">Basics</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <h3>Install</h3>
+<pre><span class="cm"># One command — replaces Maven setup + pom.xml dependencies</span>
+npm init playwright@latest
+
+<span class="cm"># Install browsers manually if needed</span>
+npx playwright install chromium firefox webkit
+npx playwright install --with-deps   <span class="cm"># includes system OS libraries</span></pre>
+
+      <h3>playwright.config.ts — replaces testng.xml + pom.xml + extent-config.xml</h3>
+<pre><span class="kw">import</span> { defineConfig, devices } from <span class="str">'@playwright/test'</span>;
+
+<span class="kw">export default</span> <span class="fn">defineConfig</span>({
+  testDir:  <span class="str">'./tests'</span>,
+  timeout:  <span class="op">30_000</span>,                      <span class="cm">// per-test timeout</span>
+  retries:  process.env.<span class="ty">CI</span> ? <span class="op">2</span> : <span class="op">0</span>,    <span class="cm">// retry on CI only</span>
+  workers:  <span class="op">4</span>,                           <span class="cm">// parallel — like TestNG parallel="methods"</span>
+  reporter: [[<span class="str">'html'</span>], [<span class="str">'list'</span>]],
+
+  use: {
+    baseURL:    <span class="str">'https://www.saucedemo.com'</span>,
+    headless:   <span class="kw">true</span>,
+    screenshot: <span class="str">'only-on-failure'</span>,
+    video:      <span class="str">'on-first-retry'</span>,
+    trace:      <span class="str">'on-first-retry'</span>,
+  },
+
+  projects: [
+    { name: <span class="str">'chromium'</span>, use: { ...devices[<span class="str">'Desktop Chrome'</span>] } },
+    { name: <span class="str">'firefox'</span>,  use: { ...devices[<span class="str">'Desktop Firefox'</span>] } },
+    { name: <span class="str">'mobile'</span>,   use: { ...devices[<span class="str">'Pixel 5'</span>] } },
+  ],
+});</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FRAMEWORK ═══ -->
+<div id="tab-framework" class="page">
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">📁</span><span class="section-title">Framework Folder Structure</span>
+      <span class="section-tag tag-fw">Framework</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <p>Full project using <strong>SauceDemo</strong> (UI) + <strong>Reqres.in</strong> (API).</p>
+      <div class="tree">
+<span class="folder">playwright-framework/</span>
+├── <span class="folder">tests/</span>
+│   ├── <span class="folder">ui/</span>
+│   │   ├── <span class="file">login.spec.ts</span>         <span class="comment">← SauceDemo login tests</span>
+│   │   ├── <span class="file">inventory.spec.ts</span>     <span class="comment">← Product listing tests</span>
+│   │   └── <span class="file">checkout.spec.ts</span>      <span class="comment">← End-to-end cart + checkout</span>
+│   └── <span class="folder">api/</span>
+│       ├── <span class="file">users.spec.ts</span>         <span class="comment">← GET/POST/PUT/DELETE (Reqres)</span>
+│       └── <span class="file">auth.spec.ts</span>          <span class="comment">← Login/Register API tests</span>
+├── <span class="folder">pages/</span>                       <span class="comment">← Page Object Model</span>
+│   ├── <span class="file">LoginPage.ts</span>
+│   ├── <span class="file">InventoryPage.ts</span>
+│   └── <span class="file">CheckoutPage.ts</span>
+├── <span class="folder">fixtures/</span>
+│   └── <span class="file">index.ts</span>              <span class="comment">← Custom fixtures (pre-login, API context)</span>
+├── <span class="folder">utils/</span>
+│   ├── <span class="file">apiHelper.ts</span>          <span class="comment">← Reusable API wrapper</span>
+│   └── <span class="file">testData.ts</span>           <span class="comment">← Centralised test data</span>
+├── <span class="folder">test-data/</span>
+│   └── <span class="file">users.json</span>            <span class="comment">← JSON-driven test data</span>
+├── <span class="file">playwright.config.ts</span>
+└── <span class="file">package.json</span>
+      </div>
+      <div class="callout callout-info"><span class="callout-icon">ℹ️</span><span>Same concepts as your Selenium Java framework — <code>tests/</code> = test classes, <code>pages/</code> = POM, <code>utils/</code> = helpers, <code>testData.ts</code> = DataProvider, <code>fixtures/</code> = @Before/@After.</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🗃️</span><span class="section-title">Test Data — testData.ts + users.json</span>
+      <span class="section-tag tag-fw">Framework</span><span class="chevron">▶</span>
+    </div>
+    <div class="section-body">
+      <h3>utils/testData.ts</h3>
+<pre><span class="kw">export const</span> USERS = {
+  standard:    { username: <span class="str">'standard_user'</span>,         password: <span class="str">'secret_sauce'</span> },
+  locked:      { username: <span class="str">'locked_out_user'</span>,        password: <span class="str">'secret_sauce'</span> },
+  performance: { username: <span class="str">'performance_glitch_user'</span>, password: <span class="str">'secret_sauce'</span> },
+};
+<span class="kw">export const</span> API_BASE    = <span class="str">'https://reqres.in/api'</span>;
+<span class="kw">export const</span> REQRES_USER = { email: <span class="str">'<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b9dccfdc97d1d6d5cdf9cbdcc8cbdcca97d0d7">[email&#160;protected]</a>'</span>, password: <span class="str">'cityslicka'</span> };</pre>
+
+      <h3>test-data/users.json — data-driven (like @DataProvider)</h3>
+<pre>[
+  { <span class="str">"username"</span>: <span class="str">"standard_user"</span>,         <span class="str">"password"</span>: <span class="str">"secret_sauce"</span>, <span class="str">"expected"</span>: <span class="str">"pass"</span> },
+  { <span class="str">"username"</span>: <span class="str">"locked_out_user"</span>,        <span class="str">"password"</span>: <span class="str">"secret_sauce"</span>, <span class="str">"expected"</span>: <span class="str">"fail"</span> },
+  { <span class="str">"username"</span>: <span class="str">"invalid_user"</span>,           <span class="str">"password"</span>: <span class="str">"wrongpass"</span>,    <span class="str">"expected"</span>: <span class="str">"fail"</span> }
+]</pre>
+
+      <h3>Data-driven test with JSON loop</h3>
+<pre><span class="kw">import</span> users from <span class="str">'../test-data/users.json'</span>;
+
+<span class="kw">for</span> (<span class="kw">const</span> user of users) {
+  test(<span class="str">`login [</span>${user.username}<span class="str">] → </span>${user.expected}<span class="str">`</span>, <span class="kw">async</span> ({ page }) => {
+    <span class="kw">await</span> page.<span class="fn">goto</span>(<span class="str">'/'</span>);
+    <span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'#user-name'</span>, user.username);
+    <span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'#password'</span>,  user.password);
+    <span class="kw">await</span> page.<span class="fn">click</span>(<span class="str">'#login-button'</span>);
+    <span class="kw">if</span> (user.expected === <span class="str">'pass'</span>) {
+      <span class="kw">await</span> <span class="fn">expect</span>(page).<span class="fn">toHaveURL</span>(<span class="str">/inventory/</span>);
+    } <span class="kw">else</span> {
+      <span class="kw">await</span> <span class="fn">expect</span>(page.<span class="fn">locator</span>(<span class="str">'.error-message-container'</span>)).<span class="fn">toBeVisible</span>();
+    }
+  });
+}</pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🔩</span><span class="section-title">Custom Fixtures — like @BeforeMethod / @AfterMethod</span>
+      <span class="section-tag tag-fw">Framework</span><span class="chevron">▶</span>
+    </div>
+    <div class="section-body">
+<pre><span class="cm">// fixtures/index.ts</span>
+<span class="kw">import</span> { test <span class="kw">as</span> base, Page } from <span class="str">'@playwright/test'</span>;
+<span class="kw">import</span> { <span class="ty">LoginPage</span> } from <span class="str">'../pages/LoginPage'</span>;
+
+<span class="kw">type</span> <span class="ty">Fixtures</span> = { loggedInPage: <span class="ty">Page</span> };
+
+<span class="kw">export const</span> test = base.<span class="fn">extend</span>&lt;<span class="ty">Fixtures</span>&gt;({
+  loggedInPage: <span class="kw">async</span> ({ page }, use) => {
+    <span class="cm">// ← @BeforeMethod equivalent</span>
+    <span class="kw">await</span> page.<span class="fn">goto</span>(<span class="str">'/'</span>);
+    <span class="kw">await</span> <span class="kw">new</span> <span class="ty">LoginPage</span>(page).<span class="fn">login</span>(<span class="str">'standard_user'</span>, <span class="str">'secret_sauce'</span>);
+    <span class="kw">await</span> <span class="fn">use</span>(page);   <span class="cm">// hand control to test</span>
+    <span class="cm">// ← @AfterMethod equivalent</span>
+    <span class="kw">await</span> page.<span class="fn">close</span>();
+  }
+});
+<span class="kw">export</span> { expect } from <span class="str">'@playwright/test'</span>;
+
+<span class="cm">// In test file:</span>
+<span class="cm">// import { test, expect } from '../fixtures';</span>
+<span class="cm">// test('cart test', async ({ loggedInPage }) => { ... });</span></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🛠️</span><span class="section-title">API Helper Utility — like Java BaseApiTest class</span>
+      <span class="section-tag tag-fw">Framework</span><span class="chevron">▶</span>
+    </div>
+    <div class="section-body">
+<pre><span class="cm">// utils/apiHelper.ts</span>
+<span class="kw">import</span> { APIRequestContext, expect } from <span class="str">'@playwright/test'</span>;
+
+<span class="kw">export class</span> <span class="ty">ApiHelper</span> {
+  <span class="fn">constructor</span>(<span class="kw">private</span> request: <span class="ty">APIRequestContext</span>) {}
+
+  <span class="kw">async</span> <span class="fn">get</span>&lt;<span class="ty">T</span>&gt;(url: <span class="ty">string</span>): <span class="ty">Promise&lt;T&gt;</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> <span class="kw">this</span>.request.<span class="fn">get</span>(url);
+    <span class="fn">expect</span>(res.<span class="fn">ok</span>()).<span class="fn">toBeTruthy</span>();
+    <span class="kw">return</span> res.<span class="fn">json</span>();
+  }
+
+  <span class="kw">async</span> <span class="fn">post</span>&lt;<span class="ty">T</span>&gt;(url: <span class="ty">string</span>, data: <span class="ty">object</span>): <span class="ty">Promise&lt;{status: number; body: T}&gt;</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> <span class="kw">this</span>.request.<span class="fn">post</span>(url, { data });
+    <span class="kw">return</span> { status: res.<span class="fn">status</span>(), body: <span class="kw">await</span> res.<span class="fn">json</span>() };
+  }
+}
+
+<span class="cm">// Usage in test:</span>
+<span class="cm">// const api = new ApiHelper(request);</span>
+<span class="cm">// const data = await api.get('https://reqres.in/api/users/2');</span></pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ LOCATORS ═══ -->
+<div id="tab-locators" class="page">
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🎯</span><span class="section-title">All Locator Strategies — SauceDemo examples</span>
+      <span class="section-tag tag-basics">Core</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="callout callout-tip"><span class="callout-icon">💡</span><span>Priority order: <strong>getByRole → getByLabel → getByText → getByPlaceholder → getByTestId → CSS → XPath</strong></span></div>
+
+      <h4>1. By Role (recommended)</h4>
+<pre>page.<span class="fn">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Login'</span> });
+page.<span class="fn">getByRole</span>(<span class="str">'heading'</span>, { name: <span class="str">'Swag Labs'</span> });
+<span class="cm">// Selenium: By.xpath("//button[normalize-space()='Login']")</span></pre>
+
+      <h4>2. By Text</h4>
+<pre>page.<span class="fn">getByText</span>(<span class="str">'Sauce Labs Backpack'</span>);
+page.<span class="fn">getByText</span>(<span class="str">/sauce labs/i</span>);   <span class="cm">// regex, case-insensitive</span></pre>
+
+      <h4>3. By Label</h4>
+<pre>page.<span class="fn">getByLabel</span>(<span class="str">'Username'</span>);
+page.<span class="fn">getByLabel</span>(<span class="str">'Password'</span>);</pre>
+
+      <h4>4. By Placeholder</h4>
+<pre>page.<span class="fn">getByPlaceholder</span>(<span class="str">'Username'</span>);
+<span class="cm">// Selenium: By.cssSelector("input[placeholder='Username']")</span></pre>
+
+      <h4>5. By CSS Selector</h4>
+<pre>page.<span class="fn">locator</span>(<span class="str">'#user-name'</span>);
+page.<span class="fn">locator</span>(<span class="str">'.btn_action'</span>);
+page.<span class="fn">locator</span>(<span class="str">'input[type="text"]'</span>);
+<span class="cm">// Selenium: By.cssSelector("#user-name")</span></pre>
+
+      <h4>6. By XPath</h4>
+<pre>page.<span class="fn">locator</span>(<span class="str">'xpath=//div[@class="inventory_item_name"]'</span>);
+<span class="cm">// Selenium: By.xpath("//div[@class='inventory_item_name']")</span></pre>
+
+      <h4>7. By Test ID (data-testid)</h4>
+<pre>page.<span class="fn">getByTestId</span>(<span class="str">'login-button'</span>);
+<span class="cm">// HTML: &lt;input data-testid="login-button"&gt;</span></pre>
+
+      <h4>8. Chaining + Filtering</h4>
+<pre><span class="cm">// Click "Add to cart" inside a specific product card</span>
+page.<span class="fn">locator</span>(<span class="str">'.inventory_item'</span>)
+    .<span class="fn">filter</span>({ hasText: <span class="str">'Sauce Labs Backpack'</span> })
+    .<span class="fn">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Add to cart'</span> });</pre>
+
+      <h4>9. nth / first / last</h4>
+<pre>page.<span class="fn">locator</span>(<span class="str">'.inventory_item_name'</span>).<span class="fn">first</span>();
+page.<span class="fn">locator</span>(<span class="str">'.inventory_item_name'</span>).<span class="fn">nth</span>(<span class="op">2</span>);  <span class="cm">// 0-indexed</span>
+<span class="cm">// Selenium: findElements(...).get(0)</span></pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ WAITS ═══ -->
+<div id="tab-waits" class="page">
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">⏳</span><span class="section-title">Waits & Auto-Waiting</span>
+      <span class="section-tag tag-inter">Intermediate</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="callout callout-tip"><span class="callout-icon">🚀</span><span><strong>Key advantage:</strong> Every click(), fill(), check() auto-waits for: visible → stable → enabled → not obscured. No more WebDriverWait + ExpectedConditions.</span></div>
+      <div class="compare">
+        <div class="compare-card pw-card"><div class="compare-label">Playwright — zero wait code</div>
+<pre><span class="kw">await</span> page.<span class="fn">click</span>(<span class="str">'#login-button'</span>);
+<span class="cm">// Internally waits for all conditions</span></pre></div>
+        <div class="compare-card se-card"><div class="compare-label">Selenium — manual wait</div>
+<pre><span class="kw">new</span> <span class="ty">WebDriverWait</span>(driver, <span class="ty">Duration</span>.<span class="fn">ofSeconds</span>(<span class="op">10</span>))
+  .<span class="fn">until</span>(<span class="ty">ExpectedConditions</span>
+    .<span class="fn">elementToBeClickable</span>(By.<span class="fn">id</span>(<span class="str">"login-button"</span>)));
+driver.<span class="fn">findElement</span>(By.<span class="fn">id</span>(<span class="str">"login-button"</span>)).<span class="fn">click</span>();</pre></div>
+      </div>
+      <h3>When you do need explicit waits</h3>
+<pre><span class="kw">await</span> page.<span class="fn">waitForURL</span>(<span class="str">'**/inventory.html'</span>);            <span class="cm">// URL change</span>
+<span class="kw">await</span> page.<span class="fn">waitForSelector</span>(<span class="str">'.inventory_list'</span>);          <span class="cm">// element in DOM</span>
+<span class="kw">await</span> page.<span class="fn">waitForResponse</span>(<span class="str">'**/api/products'</span>);          <span class="cm">// network call</span>
+<span class="kw">await</span> page.<span class="fn">locator</span>(<span class="str">'.loading'</span>).<span class="fn">waitFor</span>({ state: <span class="str">'hidden'</span> });  <span class="cm">// spinner gone</span>
+<span class="kw">await</span> page.<span class="fn">waitForFunction</span>(() =>
+  document.<span class="fn">querySelectorAll</span>(<span class="str">'.inventory_item'</span>).length > <span class="op">0</span>
+);</pre>
+      <h3>Assertions as smart waits (preferred)</h3>
+<pre><span class="cm">// expect() retries for 5 seconds — use this over waitFor when possible</span>
+<span class="kw">await</span> <span class="fn">expect</span>(page.<span class="fn">locator</span>(<span class="str">'.inventory_list'</span>)).<span class="fn">toBeVisible</span>();
+<span class="kw">await</span> <span class="fn">expect</span>(page).<span class="fn">toHaveURL</span>(<span class="str">/inventory/</span>);</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ API TESTS ═══ -->
+<div id="tab-api" class="page">
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🌐</span><span class="section-title">API Tests — Playwright vs RestAssured (Java)</span>
+      <span class="section-tag tag-inter">Intermediate</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="callout callout-info"><span class="callout-icon">ℹ️</span><span>All examples use <strong>https://reqres.in</strong> — free, no auth. Open it in your browser to see the response shapes.</span></div>
+      <hr>
+
+      <h3><span class="method get">GET</span> Single user — <code>GET /api/users/2</code></h3>
+      <div class="compare">
+        <div class="compare-card pw-card"><div class="compare-label">Playwright</div>
+<pre><span class="kw">test</span>(<span class="str">'GET single user'</span>, <span class="kw">async</span> ({ request }) => {
+  <span class="kw">const</span> res = <span class="kw">await</span> request.<span class="fn">get</span>(
+    <span class="str">'https://reqres.in/api/users/2'</span>
+  );
+  <span class="fn">expect</span>(res.<span class="fn">status</span>()).<span class="fn">toBe</span>(<span class="op">200</span>);
+  <span class="fn">expect</span>(res.<span class="fn">ok</span>()).<span class="fn">toBeTruthy</span>();
+  <span class="kw">const</span> body = <span class="kw">await</span> res.<span class="fn">json</span>();
+  <span class="fn">expect</span>(body.data.id).<span class="fn">toBe</span>(<span class="op">2</span>);
+  <span class="fn">expect</span>(body.data.email).<span class="fn">toContain</span>(<span class="str">'@reqres.in'</span>);
+  <span class="fn">expect</span>(body.data).<span class="fn">toHaveProperty</span>(<span class="str">'first_name'</span>);
+});</pre></div>
+        <div class="compare-card se-card"><div class="compare-label">RestAssured (Java)</div>
+<pre><span class="ty">@Test</span>
+<span class="kw">public void</span> <span class="fn">getSingleUser</span>() {
+  <span class="fn">given</span>()
+    .<span class="fn">baseUri</span>(<span class="str">"https://reqres.in"</span>)
+  .<span class="fn">when</span>()
+    .<span class="fn">get</span>(<span class="str">"/api/users/2"</span>)
+  .<span class="fn">then</span>()
+    .<span class="fn">statusCode</span>(<span class="op">200</span>)
+    .<span class="fn">body</span>(<span class="str">"data.id"</span>, <span class="fn">equalTo</span>(<span class="op">2</span>))
+    .<span class="fn">body</span>(<span class="str">"data.email"</span>,
+         <span class="fn">containsString</span>(<span class="str">"@reqres.in"</span>));
+}</pre></div>
+      </div>
+      <hr>
+
+      <h3><span class="method get">GET</span> List with pagination — <code>GET /api/users?page=2</code></h3>
+<pre><span class="kw">test</span>(<span class="str">'GET user list page 2'</span>, <span class="kw">async</span> ({ request }) => {
+  <span class="kw">const</span> res  = <span class="kw">await</span> request.<span class="fn">get</span>(<span class="str">'https://reqres.in/api/users'</span>, {
+    params: { page: <span class="op">2</span> }
+  });
+  <span class="fn">expect</span>(res.<span class="fn">status</span>()).<span class="fn">toBe</span>(<span class="op">200</span>);
+  <span class="kw">const</span> body = <span class="kw">await</span> res.<span class="fn">json</span>();
+  <span class="fn">expect</span>(body.page).<span class="fn">toBe</span>(<span class="op">2</span>);
+  <span class="fn">expect</span>(body.data).<span class="fn">toHaveLength</span>(<span class="op">6</span>);
+  <span class="cm">// Validate every user has an email</span>
+  body.data.<span class="fn">forEach</span>((u: <span class="kw">any</span>) => {
+    <span class="fn">expect</span>(u.email).<span class="fn">toContain</span>(<span class="str">'@reqres.in'</span>);
+    <span class="fn">expect</span>(u).toHaveProperty(<span class="str">'first_name'</span>);
+  });
+});</pre>
+      <hr>
+
+      <h3><span class="method post">POST</span> Create user — <code>POST /api/users</code></h3>
+      <div class="compare">
+        <div class="compare-card pw-card"><div class="compare-label">Playwright</div>
+<pre><span class="kw">test</span>(<span class="str">'POST create user'</span>, <span class="kw">async</span> ({ request }) => {
+  <span class="kw">const</span> res = <span class="kw">await</span> request.<span class="fn">post</span>(
+    <span class="str">'https://reqres.in/api/users'</span>, {
+      headers: { <span class="str">'Content-Type'</span>: <span class="str">'application/json'</span> },
+      data: { name: <span class="str">'Sumit'</span>, job: <span class="str">'QA Engineer'</span> }
+    }
+  );
+  <span class="fn">expect</span>(res.<span class="fn">status</span>()).<span class="fn">toBe</span>(<span class="op">201</span>);
+  <span class="kw">const</span> body = <span class="kw">await</span> res.<span class="fn">json</span>();
+  <span class="fn">expect</span>(body.name).<span class="fn">toBe</span>(<span class="str">'Sumit'</span>);
+  <span class="fn">expect</span>(body.job).<span class="fn">toBe</span>(<span class="str">'QA Engineer'</span>);
+  <span class="fn">expect</span>(body.id).<span class="fn">toBeDefined</span>();
+  <span class="fn">expect</span>(body.createdAt).<span class="fn">toBeDefined</span>();
+});</pre></div>
+        <div class="compare-card se-card"><div class="compare-label">RestAssured (Java)</div>
+<pre><span class="ty">@Test</span>
+<span class="kw">public void</span> <span class="fn">createUser</span>() {
+  <span class="ty">String</span> body =
+    <span class="str">"{\"name\":\"Sumit\",\"job\":\"QA Engineer\"}"</span>;
+  <span class="fn">given</span>()
+    .<span class="fn">baseUri</span>(<span class="str">"https://reqres.in"</span>)
+    .<span class="fn">contentType</span>(<span class="ty">ContentType</span>.<span class="ty">JSON</span>)
+    .<span class="fn">body</span>(body)
+  .<span class="fn">when</span>()
+    .<span class="fn">post</span>(<span class="str">"/api/users"</span>)
+  .<span class="fn">then</span>()
+    .<span class="fn">statusCode</span>(<span class="op">201</span>)
+    .<span class="fn">body</span>(<span class="str">"name"</span>, <span class="fn">equalTo</span>(<span class="str">"Sumit"</span>))
+    .<span class="fn">body</span>(<span class="str">"id"</span>, <span class="fn">notNullValue</span>());
+}</pre></div>
+      </div>
+      <hr>
+
+      <h3><span class="method put">PUT</span> Update user — <code>PUT /api/users/2</code></h3>
+<pre><span class="kw">test</span>(<span class="str">'PUT update user'</span>, <span class="kw">async</span> ({ request }) => {
+  <span class="kw">const</span> res = <span class="kw">await</span> request.<span class="fn">put</span>(
+    <span class="str">'https://reqres.in/api/users/2'</span>,
+    { data: { name: <span class="str">'Sumit Sagar'</span>, job: <span class="str">'Senior QA'</span> } }
+  );
+  <span class="fn">expect</span>(res.<span class="fn">status</span>()).<span class="fn">toBe</span>(<span class="op">200</span>);
+  <span class="kw">const</span> body = <span class="kw">await</span> res.<span class="fn">json</span>();
+  <span class="fn">expect</span>(body.name).<span class="fn">toBe</span>(<span class="str">'Sumit Sagar'</span>);
+  <span class="fn">expect</span>(body.updatedAt).<span class="fn">toBeDefined</span>();
+});</pre>
+      <hr>
+
+      <h3><span class="method del">DELETE</span> Delete user — <code>DELETE /api/users/2</code></h3>
+<pre><span class="kw">test</span>(<span class="str">'DELETE user'</span>, <span class="kw">async</span> ({ request }) => {
+  <span class="kw">const</span> res = <span class="kw">await</span> request.<span class="fn">delete</span>(
+    <span class="str">'https://reqres.in/api/users/2'</span>
+  );
+  <span class="fn">expect</span>(res.<span class="fn">status</span>()).<span class="fn">toBe</span>(<span class="op">204</span>);  <span class="cm">// 204 No Content — no body</span>
+});</pre>
+      <hr>
+
+      <h3><span class="method post">POST</span> Login — valid + negative case</h3>
+<pre><span class="kw">test</span>(<span class="str">'POST login - valid'</span>, <span class="kw">async</span> ({ request }) => {
+  <span class="kw">const</span> res = <span class="kw">await</span> request.<span class="fn">post</span>(<span class="str">'https://reqres.in/api/login'</span>, {
+    data: { email: <span class="str">'<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="97f2e1f2b9fff8fbe3d7e5f2e6e5f2e4b9fef9">[email&#160;protected]</a>'</span>, password: <span class="str">'cityslicka'</span> }
+  });
+  <span class="fn">expect</span>(res.<span class="fn">status</span>()).<span class="fn">toBe</span>(<span class="op">200</span>);
+  <span class="kw">const</span> { token } = <span class="kw">await</span> res.<span class="fn">json</span>();
+  <span class="fn">expect</span>(token).<span class="fn">toBeDefined</span>();
+});
+
+<span class="kw">test</span>(<span class="str">'POST login - missing password (negative)'</span>, <span class="kw">async</span> ({ request }) => {
+  <span class="kw">const</span> res = <span class="kw">await</span> request.<span class="fn">post</span>(<span class="str">'https://reqres.in/api/login'</span>, {
+    data: { email: <span class="str">'<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="197c6f7c377176756d596b7c686b7c6a377077">[email&#160;protected]</a>'</span> }  <span class="cm">// no password</span>
+  });
+  <span class="fn">expect</span>(res.<span class="fn">status</span>()).<span class="fn">toBe</span>(<span class="op">400</span>);
+  <span class="kw">const</span> body = <span class="kw">await</span> res.<span class="fn">json</span>();
+  <span class="fn">expect</span>(body.error).<span class="fn">toBe</span>(<span class="str">'Missing password'</span>);
+});</pre>
+      <hr>
+
+      <h3>🔗 API + UI Combined — inject token, skip login form</h3>
+<pre><span class="kw">test</span>(<span class="str">'API login → UI access'</span>, <span class="kw">async</span> ({ page, request }) => {
+  <span class="cm">// 1. Get token via API (fast, no browser form)</span>
+  <span class="kw">const</span> res = <span class="kw">await</span> request.<span class="fn">post</span>(<span class="str">'https://reqres.in/api/login'</span>, {
+    data: { email: <span class="str">'<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="533625367d3b3c3f27132136222136207d3a3d">[email&#160;protected]</a>'</span>, password: <span class="str">'cityslicka'</span> }
+  });
+  <span class="kw">const</span> { token } = <span class="kw">await</span> res.<span class="fn">json</span>();
+
+  <span class="cm">// 2. Inject token into browser before page loads</span>
+  <span class="kw">await</span> page.<span class="fn">addInitScript</span>(t => {
+    localStorage.<span class="fn">setItem</span>(<span class="str">'auth_token'</span>, t);
+  }, token);
+
+  <span class="cm">// 3. Go straight to protected page</span>
+  <span class="kw">await</span> page.<span class="fn">goto</span>(<span class="str">'https://www.saucedemo.com'</span>);
+  <span class="kw">await</span> <span class="fn">expect</span>(page.<span class="fn">locator</span>(<span class="str">'#login-button'</span>)).<span class="fn">toBeVisible</span>();
+});</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ POM ═══ -->
+<div id="tab-pom" class="page">
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">📄</span><span class="section-title">Page Object Model — SauceDemo</span>
+      <span class="section-tag tag-inter">Intermediate</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <h3>pages/LoginPage.ts</h3>
+<pre><span class="kw">import</span> { Page, Locator } from <span class="str">'@playwright/test'</span>;
+
+<span class="kw">export class</span> <span class="ty">LoginPage</span> {
+  <span class="kw">private readonly</span> usernameInput: <span class="ty">Locator</span>;
+  <span class="kw">private readonly</span> passwordInput: <span class="ty">Locator</span>;
+  <span class="kw">private readonly</span> loginBtn:      <span class="ty">Locator</span>;
+  <span class="kw">private readonly</span> errorMsg:      <span class="ty">Locator</span>;
+
+  <span class="fn">constructor</span>(<span class="kw">private</span> page: <span class="ty">Page</span>) {
+    <span class="kw">this</span>.usernameInput = page.<span class="fn">locator</span>(<span class="str">'#user-name'</span>);
+    <span class="kw">this</span>.passwordInput = page.<span class="fn">locator</span>(<span class="str">'#password'</span>);
+    <span class="kw">this</span>.loginBtn      = page.<span class="fn">locator</span>(<span class="str">'#login-button'</span>);
+    <span class="kw">this</span>.errorMsg      = page.<span class="fn">locator</span>(<span class="str">'[data-test="error"]'</span>);
+  }
+
+  <span class="kw">async</span> <span class="fn">goto</span>()   { <span class="kw">await</span> <span class="kw">this</span>.page.<span class="fn">goto</span>(<span class="str">'/'</span>); }
+
+  <span class="kw">async</span> <span class="fn">login</span>(username: <span class="ty">string</span>, password: <span class="ty">string</span>) {
+    <span class="kw">await</span> <span class="kw">this</span>.usernameInput.<span class="fn">fill</span>(username);
+    <span class="kw">await</span> <span class="kw">this</span>.passwordInput.<span class="fn">fill</span>(password);
+    <span class="kw">await</span> <span class="kw">this</span>.loginBtn.<span class="fn">click</span>();
+  }
+
+  <span class="kw">async</span> <span class="fn">getErrorText</span>(): <span class="ty">Promise&lt;string | null&gt;</span> {
+    <span class="kw">return</span> <span class="kw">this</span>.errorMsg.<span class="fn">textContent</span>();
+  }
+}</pre>
+
+      <h3>pages/InventoryPage.ts</h3>
+<pre><span class="kw">import</span> { Page, Locator, expect } from <span class="str">'@playwright/test'</span>;
+
+<span class="kw">export class</span> <span class="ty">InventoryPage</span> {
+  <span class="kw">private readonly</span> items: <span class="ty">Locator</span>;
+
+  <span class="fn">constructor</span>(<span class="kw">private</span> page: <span class="ty">Page</span>) {
+    <span class="kw">this</span>.items = page.<span class="fn">locator</span>(<span class="str">'.inventory_item'</span>);
+  }
+
+  <span class="kw">async</span> <span class="fn">assertLoaded</span>() {
+    <span class="kw">await</span> <span class="fn">expect</span>(<span class="kw">this</span>.page).<span class="fn">toHaveURL</span>(<span class="str">/inventory/</span>);
+    <span class="kw">await</span> <span class="fn">expect</span>(<span class="kw">this</span>.items).<span class="fn">toHaveCount</span>(<span class="op">6</span>);
+  }
+
+  <span class="kw">async</span> <span class="fn">addToCartByName</span>(name: <span class="ty">string</span>) {
+    <span class="kw">await</span> <span class="kw">this</span>.page
+      .<span class="fn">locator</span>(<span class="str">'.inventory_item'</span>)
+      .<span class="fn">filter</span>({ hasText: name })
+      .<span class="fn">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Add to cart'</span> })
+      .<span class="fn">click</span>();
+  }
+}</pre>
+
+      <h3>tests/ui/checkout.spec.ts — Full E2E Test</h3>
+<pre><span class="kw">import</span> { test, expect } from <span class="str">'@playwright/test'</span>;
+<span class="kw">import</span> { <span class="ty">LoginPage</span> }     from <span class="str">'../../pages/LoginPage'</span>;
+<span class="kw">import</span> { <span class="ty">InventoryPage</span> } from <span class="str">'../../pages/InventoryPage'</span>;
+<span class="kw">import</span> { USERS }         from <span class="str">'../../utils/testData'</span>;
+
+test.<span class="fn">describe</span>(<span class="str">'Checkout Flow'</span>, () => {
+
+  test(<span class="str">'Add item and complete checkout'</span>, <span class="kw">async</span> ({ page }) => {
+    <span class="kw">const</span> loginPage     = <span class="kw">new</span> <span class="ty">LoginPage</span>(page);
+    <span class="kw">const</span> inventoryPage = <span class="kw">new</span> <span class="ty">InventoryPage</span>(page);
+
+    <span class="kw">await</span> loginPage.<span class="fn">goto</span>();
+    <span class="kw">await</span> loginPage.<span class="fn">login</span>(USERS.standard.username, USERS.standard.password);
+    <span class="kw">await</span> inventoryPage.<span class="fn">assertLoaded</span>();
+    <span class="kw">await</span> inventoryPage.<span class="fn">addToCartByName</span>(<span class="str">'Sauce Labs Backpack'</span>);
+    <span class="kw">await</span> <span class="fn">expect</span>(page.<span class="fn">locator</span>(<span class="str">'.shopping_cart_badge'</span>)).<span class="fn">toHaveText</span>(<span class="str">'1'</span>);
+
+    <span class="kw">await</span> page.<span class="fn">locator</span>(<span class="str">'.shopping_cart_link'</span>).<span class="fn">click</span>();
+    <span class="kw">await</span> page.<span class="fn">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Checkout'</span> }).<span class="fn">click</span>();
+    <span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'[data-test="firstName"]'</span>, <span class="str">'Sumit'</span>);
+    <span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'[data-test="lastName"]'</span>,  <span class="str">'Sagar'</span>);
+    <span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'[data-test="postalCode"]'</span>,<span class="str">'441904'</span>);
+    <span class="kw">await</span> page.<span class="fn">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Continue'</span> }).<span class="fn">click</span>();
+    <span class="kw">await</span> page.<span class="fn">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Finish'</span> }).<span class="fn">click</span>();
+
+    <span class="kw">await</span> <span class="fn">expect</span>(page.<span class="fn">locator</span>(<span class="str">'.complete-header'</span>))
+      .<span class="fn">toHaveText</span>(<span class="str">'Thank you for your order!'</span>);
+  });
+
+  test(<span class="str">'Locked user cannot login'</span>, <span class="kw">async</span> ({ page }) => {
+    <span class="kw">const</span> loginPage = <span class="kw">new</span> <span class="ty">LoginPage</span>(page);
+    <span class="kw">await</span> loginPage.<span class="fn">goto</span>();
+    <span class="kw">await</span> loginPage.<span class="fn">login</span>(USERS.locked.username, USERS.locked.password);
+    <span class="kw">const</span> err = <span class="kw">await</span> loginPage.<span class="fn">getErrorText</span>();
+    <span class="fn">expect</span>(err).<span class="fn">toContain</span>(<span class="str">'locked out'</span>);
+  });
+
+  test(<span class="str">'Soft assertions on product details'</span>, <span class="kw">async</span> ({ page }) => {
+    <span class="kw">const</span> loginPage = <span class="kw">new</span> <span class="ty">LoginPage</span>(page);
+    <span class="kw">await</span> loginPage.<span class="fn">goto</span>();
+    <span class="kw">await</span> loginPage.<span class="fn">login</span>(USERS.standard.username, USERS.standard.password);
+
+    <span class="cm">// Soft asserts — like TestNG SoftAssert.assertAll()</span>
+    <span class="fn">expect</span>.<span class="fn">soft</span>(page.<span class="fn">locator</span>(<span class="str">'.inventory_list'</span>)).<span class="fn">toBeVisible</span>();
+    <span class="fn">expect</span>.<span class="fn">soft</span>(page.<span class="fn">locator</span>(<span class="str">'.inventory_item'</span>)).<span class="fn">toHaveCount</span>(<span class="op">6</span>);
+    <span class="fn">expect</span>.<span class="fn">soft</span>(page.<span class="fn">locator</span>(<span class="str">'.shopping_cart_badge'</span>)).<span class="fn">toBeHidden</span>();
+    <span class="cm">// All failures reported together, test continues</span>
+  });
+});</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ COMMANDS ═══ -->
+<div id="tab-commands" class="page">
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">⚡</span><span class="section-title">Playwright Commands Cheat Sheet</span>
+      <span class="section-tag tag-adv">Reference</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <table class="cmd-table">
+        <thead><tr><th>Command</th><th>What it does</th><th>Selenium/Java equivalent</th></tr></thead>
+        <tbody>
+          <tr class="cmd-section-row"><td colspan="3">🧭 NAVIGATION</td></tr>
+          <tr><td>page.goto(url)</td><td>Navigate to URL</td><td>driver.get(url)</td></tr>
+          <tr><td>page.goBack()</td><td>Browser back</td><td>driver.navigate().back()</td></tr>
+          <tr><td>page.goForward()</td><td>Browser forward</td><td>driver.navigate().forward()</td></tr>
+          <tr><td>page.reload()</td><td>Reload page</td><td>driver.navigate().refresh()</td></tr>
+          <tr><td>page.url()</td><td>Get current URL string</td><td>driver.getCurrentUrl()</td></tr>
+          <tr><td>page.title()</td><td>Get page title</td><td>driver.getTitle()</td></tr>
+
+          <tr class="cmd-section-row"><td colspan="3">🎯 LOCATORS</td></tr>
+          <tr><td>page.locator(selector)</td><td>CSS or XPath locator</td><td>driver.findElement(By.*)</td></tr>
+          <tr><td>page.getByRole(role,{name})</td><td>ARIA role locator</td><td>No equivalent</td></tr>
+          <tr><td>page.getByText(text)</td><td>Visible text locator</td><td>By.xpath("//*[text()=...]")</td></tr>
+          <tr><td>page.getByLabel(label)</td><td>Form input via label</td><td>No direct equivalent</td></tr>
+          <tr><td>page.getByPlaceholder(txt)</td><td>Input by placeholder</td><td>By.cssSelector("[placeholder=...]")</td></tr>
+          <tr><td>page.getByTestId(id)</td><td>data-testid attribute</td><td>By.cssSelector("[data-testid=...]")</td></tr>
+          <tr><td>locator.filter({hasText})</td><td>Filter matching elements</td><td>No equivalent</td></tr>
+          <tr><td>locator.first() / .last()</td><td>First or last match</td><td>findElements().get(0)</td></tr>
+          <tr><td>locator.nth(n)</td><td>nth match (0-indexed)</td><td>findElements().get(n)</td></tr>
+
+          <tr class="cmd-section-row"><td colspan="3">🖱️ ACTIONS</td></tr>
+          <tr><td>locator.click()</td><td>Left click</td><td>element.click()</td></tr>
+          <tr><td>locator.dblclick()</td><td>Double click</td><td>Actions dblClick</td></tr>
+          <tr><td>locator.fill(value)</td><td>Clear + type into input</td><td>element.clear() + sendKeys()</td></tr>
+          <tr><td>locator.type(value)</td><td>Type char-by-char (fires key events)</td><td>sendKeys()</td></tr>
+          <tr><td>locator.press(key)</td><td>Keyboard key press</td><td>sendKeys(Keys.ENTER)</td></tr>
+          <tr><td>locator.check()</td><td>Check checkbox/radio</td><td>element.click() if not selected</td></tr>
+          <tr><td>locator.uncheck()</td><td>Uncheck checkbox</td><td>element.click() if selected</td></tr>
+          <tr><td>locator.selectOption(val)</td><td>Select dropdown</td><td>new Select(el).selectByValue()</td></tr>
+          <tr><td>locator.hover()</td><td>Mouse hover</td><td>Actions moveToElement()</td></tr>
+          <tr><td>locator.dragTo(target)</td><td>Drag and drop</td><td>Actions dragAndDrop()</td></tr>
+          <tr><td>locator.clear()</td><td>Clear input field</td><td>element.clear()</td></tr>
+          <tr><td>locator.tap()</td><td>Mobile tap</td><td>TouchActions.tap()</td></tr>
+          <tr><td>locator.scrollIntoViewIfNeeded()</td><td>Scroll element into viewport</td><td>JavascriptExecutor scrollIntoView</td></tr>
+          <tr><td>page.keyboard.press(key)</td><td>Global key press</td><td>Actions keyDown()</td></tr>
+          <tr><td>page.mouse.move(x,y)</td><td>Move mouse to coordinate</td><td>Actions moveByOffset()</td></tr>
+
+          <tr class="cmd-section-row"><td colspan="3">📋 READ / EXTRACT</td></tr>
+          <tr><td>locator.textContent()</td><td>Inner text (incl. hidden)</td><td>element.getText()</td></tr>
+          <tr><td>locator.innerText()</td><td>Visible text only</td><td>element.getText()</td></tr>
+          <tr><td>locator.innerHTML()</td><td>Inner HTML string</td><td>getAttribute("innerHTML")</td></tr>
+          <tr><td>locator.getAttribute(name)</td><td>Get attribute value</td><td>element.getAttribute(name)</td></tr>
+          <tr><td>locator.inputValue()</td><td>Current value of input</td><td>getAttribute("value")</td></tr>
+          <tr><td>locator.isVisible()</td><td>Returns boolean visibility</td><td>element.isDisplayed()</td></tr>
+          <tr><td>locator.isEnabled()</td><td>Returns boolean enabled</td><td>element.isEnabled()</td></tr>
+          <tr><td>locator.isChecked()</td><td>Returns boolean checked</td><td>element.isSelected()</td></tr>
+          <tr><td>locator.count()</td><td>Count of matching elements</td><td>findElements().size()</td></tr>
+
+          <tr class="cmd-section-row"><td colspan="3">✅ ASSERTIONS (expect)</td></tr>
+          <tr><td>expect(loc).toBeVisible()</td><td>Element is visible</td><td>assertTrue(el.isDisplayed())</td></tr>
+          <tr><td>expect(loc).toBeHidden()</td><td>Element is hidden/absent</td><td>assertFalse(el.isDisplayed())</td></tr>
+          <tr><td>expect(loc).toBeEnabled()</td><td>Element is enabled</td><td>assertTrue(el.isEnabled())</td></tr>
+          <tr><td>expect(loc).toBeChecked()</td><td>Checkbox is checked</td><td>assertTrue(el.isSelected())</td></tr>
+          <tr><td>expect(loc).toHaveText(txt)</td><td>Element has exact text</td><td>assertEquals(getText(), txt)</td></tr>
+          <tr><td>expect(loc).toContainText(t)</td><td>Element contains text</td><td>assertTrue(getText().contains(t))</td></tr>
+          <tr><td>expect(loc).toHaveValue(v)</td><td>Input field value</td><td>assertEquals(getAttribute("value"),v)</td></tr>
+          <tr><td>expect(loc).toHaveCount(n)</td><td>n elements found</td><td>assertEquals(findElements().size(),n)</td></tr>
+          <tr><td>expect(loc).toHaveAttribute(a,v)</td><td>Attribute equals value</td><td>assertEquals(getAttribute(a),v)</td></tr>
+          <tr><td>expect(page).toHaveURL(url)</td><td>Page URL matches</td><td>assertEquals(getCurrentUrl(),url)</td></tr>
+          <tr><td>expect(page).toHaveTitle(t)</td><td>Page title matches</td><td>assertEquals(getTitle(), t)</td></tr>
+          <tr><td>expect.soft(loc).toBeVisible()</td><td>Soft assert — continues on fail</td><td>SoftAssert.assertAll()</td></tr>
+
+          <tr class="cmd-section-row"><td colspan="3">⏳ WAITS</td></tr>
+          <tr><td>page.waitForURL(pattern)</td><td>Wait for URL to match</td><td>WebDriverWait + urlContains</td></tr>
+          <tr><td>page.waitForSelector(sel)</td><td>Wait for element in DOM</td><td>WebDriverWait + presenceOf</td></tr>
+          <tr><td>page.waitForResponse(url)</td><td>Wait for HTTP response</td><td>No direct equivalent</td></tr>
+          <tr><td>page.waitForRequest(url)</td><td>Wait for HTTP request</td><td>No direct equivalent</td></tr>
+          <tr><td>page.waitForLoadState()</td><td>Wait for load / networkidle</td><td>ImplicitWait workaround</td></tr>
+          <tr><td>locator.waitFor({state})</td><td>Wait for visible/hidden/attached</td><td>WebDriverWait + ExpectedConditions</td></tr>
+          <tr><td>page.waitForFunction(fn)</td><td>Wait for JS condition</td><td>FluentWait</td></tr>
+          <tr><td>page.waitForTimeout(ms)</td><td>Hard sleep (avoid!)</td><td>Thread.sleep(ms)</td></tr>
+
+          <tr class="cmd-section-row"><td colspan="3">🌐 API (request context)</td></tr>
+          <tr><td>request.get(url, {params})</td><td>HTTP GET with query params</td><td>given().get()</td></tr>
+          <tr><td>request.post(url, {data})</td><td>HTTP POST with body</td><td>given().body().post()</td></tr>
+          <tr><td>request.put(url, {data})</td><td>HTTP PUT</td><td>given().body().put()</td></tr>
+          <tr><td>request.patch(url, {data})</td><td>HTTP PATCH</td><td>given().body().patch()</td></tr>
+          <tr><td>request.delete(url)</td><td>HTTP DELETE</td><td>given().delete()</td></tr>
+          <tr><td>response.status()</td><td>HTTP status code integer</td><td>response.getStatusCode()</td></tr>
+          <tr><td>response.json()</td><td>Parse JSON body</td><td>response.as(MyClass.class)</td></tr>
+          <tr><td>response.text()</td><td>Body as plain string</td><td>response.asString()</td></tr>
+          <tr><td>response.ok()</td><td>true if status 200-299</td><td>statusCode >= 200 and < 300</td></tr>
+          <tr><td>response.headers()</td><td>All response headers</td><td>response.getHeaders()</td></tr>
+
+          <tr class="cmd-section-row"><td colspan="3">🖥️ BROWSER / CONTEXT</td></tr>
+          <tr><td>browser.newContext()</td><td>Isolated browser session</td><td>new driver instance</td></tr>
+          <tr><td>context.newPage()</td><td>New tab in context</td><td>driver.switchTo().newWindow()</td></tr>
+          <tr><td>page.screenshot({path})</td><td>Take screenshot to file</td><td>TakesScreenshot.getScreenshotAs()</td></tr>
+          <tr><td>page.evaluate(fn)</td><td>Execute JavaScript in browser</td><td>JavascriptExecutor.executeScript()</td></tr>
+          <tr><td>page.route(url, handler)</td><td>Intercept / mock network</td><td>BrowserMob Proxy</td></tr>
+          <tr><td>page.close()</td><td>Close page/tab</td><td>driver.close()</td></tr>
+          <tr><td>browser.close()</td><td>Close browser fully</td><td>driver.quit()</td></tr>
+
+          <tr class="cmd-section-row"><td colspan="3">🧰 CLI COMMANDS</td></tr>
+          <tr><td>npx playwright test</td><td>Run all tests</td><td>mvn test</td></tr>
+          <tr><td>npx playwright test --headed</td><td>Visible browser</td><td>headless=false in config</td></tr>
+          <tr><td>npx playwright test login</td><td>Run tests matching "login"</td><td>mvn test -Dtest=LoginTest</td></tr>
+          <tr><td>npx playwright test --project=firefox</td><td>Single browser project</td><td>testng.xml browser param</td></tr>
+          <tr><td>npx playwright test --debug</td><td>Step-through debugger</td><td>IDE breakpoints</td></tr>
+          <tr><td>npx playwright show-report</td><td>Open HTML report</td><td>Open extent report file</td></tr>
+          <tr><td>npx playwright codegen url</td><td>Record test by clicking</td><td>Selenium IDE</td></tr>
+          <tr><td>npx playwright show-trace trace.zip</td><td>Timeline + DOM replay</td><td>No equivalent</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ REPORTING ═══ -->
+<div id="tab-reporting" class="page">
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">📊</span><span class="section-title">Built-in HTML Report</span>
+      <span class="section-tag tag-basics">Basics</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+<pre><span class="cm">// playwright.config.ts</span>
+reporter: [
+  [<span class="str">'html'</span>, { open: <span class="str">'on-failure'</span> }],
+  [<span class="str">'list'</span>],
+  [<span class="str">'junit'</span>, { outputFile: <span class="str">'results.xml'</span> }],  <span class="cm">// for CI/CD</span>
+],
+
+npx playwright test
+npx playwright show-report</pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">📈</span><span class="section-title">Allure Report — like ExtentReports</span>
+      <span class="section-tag tag-inter">Intermediate</span><span class="chevron">▶</span>
+    </div>
+    <div class="section-body">
+<pre>npm install --save-dev allure-playwright
+
+<span class="cm">// playwright.config.ts</span>
+reporter: [<span class="str">'allure-playwright'</span>],
+
+npx allure generate allure-results --clean
+npx allure open allure-report</pre>
+
+      <h3>Add metadata and steps (like Extent steps)</h3>
+<pre>test(<span class="str">'Checkout'</span>, <span class="kw">async</span> ({ page }) => {
+  test.<span class="fn">info</span>().<span class="fn">annotations</span>.<span class="fn">push</span>(
+    { type: <span class="str">'feature'</span>,  description: <span class="str">'Checkout'</span>  },
+    { type: <span class="str">'severity'</span>, description: <span class="str">'critical'</span> }
+  );
+  <span class="kw">await</span> test.<span class="fn">step</span>(<span class="str">'Login to SauceDemo'</span>, <span class="kw">async</span> () => { <span class="cm">/* ... */</span> });
+  <span class="kw">await</span> test.<span class="fn">step</span>(<span class="str">'Add item to cart'</span>,   <span class="kw">async</span> () => { <span class="cm">/* ... */</span> });
+  <span class="kw">await</span> test.<span class="fn">step</span>(<span class="str">'Complete checkout'</span>,   <span class="kw">async</span> () => { <span class="cm">/* ... */</span> });
+});</pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🔍</span><span class="section-title">Trace Viewer — unique to Playwright</span>
+      <span class="section-tag tag-adv">Advanced</span><span class="chevron">▶</span>
+    </div>
+    <div class="section-body">
+      <div class="callout callout-tip"><span class="callout-icon">🔥</span><span>Trace Viewer records every action, DOM snapshot, network call, screenshot and console log. Like rewinding a video of your test. No Selenium equivalent.</span></div>
+<pre><span class="cm">// playwright.config.ts</span>
+use: { trace: <span class="str">'on-first-retry'</span> }
+
+<span class="cm">// View after failure</span>
+npx playwright show-trace test-results/&lt;test&gt;/trace.zip</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CHECKLIST ═══ -->
+<div id="tab-checklist" class="page">
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">✅</span><span class="section-title">Learning Checklist — Track Your Progress</span>
+      <span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div id="progress-label" style="font-size:12px;color:var(--muted);margin-bottom:3px;">0 of 48 completed</div>
+      <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+
+      <ul class="checklist" id="checklist">
+        <h4>TypeScript</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Understand types, interfaces, classes in TypeScript</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Understand async/await vs Java threading</div></li>
+        <h4 style="padding:7px 0 2px;">Setup & Framework</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Install with <code>npm init playwright@latest</code></div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Configure playwright.config.ts (baseURL, timeout, browsers)</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Set up folder structure: tests/, pages/, fixtures/, utils/</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Create testData.ts with SauceDemo user credentials</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Write data-driven test using users.json loop</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Create custom fixture for pre-login state</div></li>
+        <h4 style="padding:7px 0 2px;">Locators</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Use getByRole(), getByText(), getByLabel(), getByPlaceholder()</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Use locator() with CSS and XPath</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Chain and filter locators</div></li>
+        <h4 style="padding:7px 0 2px;">Waits</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Understand auto-waiting — avoid unnecessary explicit waits</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Use waitForURL, waitForSelector, waitForResponse</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Use expect() as a smart retry-based wait</div></li>
+        <h4 style="padding:7px 0 2px;">API Testing (Reqres.in)</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">GET /api/users/2 — validate status + body fields</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">GET list with pagination — validate array length + content</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">POST /api/users — validate 201 + created fields</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">PUT /api/users/2 — validate 200 + updatedAt</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">DELETE /api/users/2 — validate 204 No Content</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">POST login — positive + negative (missing password)</div></li>
+        <h4 style="padding:7px 0 2px;">POM + UI Tests</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Create LoginPage.ts and InventoryPage.ts for SauceDemo</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Write full checkout E2E test using POM + testData</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Test locked user login with error message assertion</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Use soft assertions for multi-field validation</div></li>
+        <h4 style="padding:7px 0 2px;">Reporting & CLI</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Generate and open HTML report</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Set up Allure reporter with steps + annotations</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Use Trace Viewer to debug a failed test</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Run tests with --headed, --debug, --project flags</div></li>
+        <h4 style="padding:7px 0 2px;">Async / Promises</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Understand JS event loop — why async is needed</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Understand Promise states: pending → fulfilled / rejected</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Use Promise.all() for parallel API calls</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Use try/catch/finally in async tests</div></li>
+        <h4 style="padding:7px 0 2px;">Serialization</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Define interfaces for API request and response types</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Deserialize JSON response with type cast <code>as MyType</code></div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Use map/filter/find on arrays (JsonPath equivalent)</div></li>
+        <h4 style="padding:7px 0 2px;">Data Driving</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Drive tests from JSON array with for..of loop</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Read CSV using csv-parse utility</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Read Excel using xlsx (SheetJS) — no Apache POI</div></li>
+        <h4 style="padding:7px 0 2px;">Utilities / Common Methods</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Create BasePage.ts and extend it in all Page Objects</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Create generic ApiClient with typed get/post methods</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Create uiHelpers.ts with fillForm, safeClick utilities</div></li>
+        <h4 style="padding:7px 0 2px;">GitHub Actions</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Create basic .github/workflows/playwright.yml</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Use matrix strategy for multi-browser CI</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Upload HTML report as artifact after test run</div></li>
+        <h4 style="padding:7px 0 2px;">Sharding</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Understand DB sharding: hash/range/geo strategies</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Run test shards with --shard=1/4 syntax</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Set up sharded CI with blob-report merge workflow</div></li>
+        <h4 style="padding:7px 0 2px;">NPX Commands</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Run tests filtered by file name, folder, and --grep</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Use --headed, --debug, and --ui mode for local dev</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Use codegen to record a test on SauceDemo</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Add npm run scripts for smoke, api, uat, report</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Use --list to do a dry run and see all test names</div></li>
+        <h4 style="padding:7px 0 2px;">Config Deep Dive</h4>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Understand every top-level config option (timeout, workers, retries)</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Configure use: {} block fully (screenshot, video, trace, storageState)</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Create auth.setup.ts to save login state once and reuse</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Set up globalSetup.ts for suite-level bootstrapping</div></li>
+        <li><div class="check" onclick="toggle(this)"></div><div class="check-text">Create separate config files for QA and UAT environments</div></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ASYNC / PROMISES ═══ -->
+<div id="tab-async" class="page">
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🔄</span><span class="section-title">The JavaScript Event Loop — Why Everything is Async</span>
+      <span class="section-tag tag-ts">Concept</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="callout callout-info"><span class="callout-icon">ℹ️</span><span>JavaScript runs on a <strong>single thread</strong>. It can't block and wait like Java's <code>Thread.sleep()</code>. Instead it uses an event loop to handle slow operations (network, timers, file I/O) without freezing.</span></div>
+
+      <h3>Synchronous vs Asynchronous — core idea</h3>
+      <div class="compare">
+        <div class="compare-card pw-card"><div class="compare-label">JavaScript (single thread)</div>
+<pre><span class="cm">// JS cannot do this — would freeze the browser</span>
+<span class="kw">const</span> data = httpGet(<span class="str">'https://reqres.in/api/users'</span>);
+<span class="cm">// Instead JS says: "start the request, tell me when done"</span>
+<span class="cm">// → uses callbacks, Promises, or async/await</span></pre></div>
+        <div class="compare-card se-card"><div class="compare-label">Java (multi-thread)</div>
+<pre><span class="cm">// Java can block a thread — others keep running</span>
+<span class="ty">Response</span> r = given().<span class="fn">get</span>(<span class="str">"/api/users"</span>);
+<span class="cm">// Thread BLOCKS here until response arrives</span>
+<span class="ty">System</span>.out.<span class="fn">println</span>(r.<span class="fn">getBody</span>());</pre></div>
+      </div>
+
+      <h3>Evolution: Callback → Promise → async/await</h3>
+<pre><span class="cm">// ── STAGE 1: Callbacks (old way — "callback hell") ──</span>
+<span class="fn">fetchUser</span>(<span class="op">1</span>, (err, user) => {
+  <span class="fn">fetchOrders</span>(user.id, (err, orders) => {
+    <span class="fn">fetchInvoice</span>(orders[<span class="op">0</span>].id, (err, invoice) => {
+      console.<span class="fn">log</span>(invoice); <span class="cm">// 3 levels deep — hard to read</span>
+    });
+  });
+});</pre>
+
+<pre><span class="cm">// ── STAGE 2: Promises (cleaner chaining) ──</span>
+<span class="fn">fetchUser</span>(<span class="op">1</span>)
+  .<span class="fn">then</span>(user    => <span class="fn">fetchOrders</span>(user.id))
+  .<span class="fn">then</span>(orders  => <span class="fn">fetchInvoice</span>(orders[<span class="op">0</span>].id))
+  .<span class="fn">then</span>(invoice => console.<span class="fn">log</span>(invoice))
+  .<span class="fn">catch</span>(err   => console.<span class="fn">error</span>(err));</pre>
+
+<pre><span class="cm">// ── STAGE 3: async/await (reads like Java sync code) ──</span>
+<span class="kw">async function</span> <span class="fn">run</span>() {
+  <span class="kw">const</span> user    = <span class="kw">await</span> <span class="fn">fetchUser</span>(<span class="op">1</span>);
+  <span class="kw">const</span> orders  = <span class="kw">await</span> <span class="fn">fetchOrders</span>(user.id);
+  <span class="kw">const</span> invoice = <span class="kw">await</span> <span class="fn">fetchInvoice</span>(orders[<span class="op">0</span>].id);
+  console.<span class="fn">log</span>(invoice);
+}
+<span class="cm">// async/await is just syntax sugar over Promises</span></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">📦</span><span class="section-title">Promises — What They Are + All States</span>
+      <span class="section-tag tag-ts">Core</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="callout callout-tip"><span class="callout-icon">💡</span><span>A <strong>Promise</strong> is an object representing a value that isn't available yet but will be resolved (success) or rejected (failure) in the future. Think of it like a <code>Future&lt;T&gt;</code> in Java.</span></div>
+
+      <h3>Promise states</h3>
+<pre><span class="cm">// A Promise has 3 states:</span>
+<span class="cm">// ⏳ pending   — operation in progress</span>
+<span class="cm">// ✅ fulfilled — operation succeeded → .then() fires</span>
+<span class="cm">// ❌ rejected  — operation failed    → .catch() fires</span>
+
+<span class="kw">const</span> p = <span class="kw">new</span> Promise&lt;<span class="ty">string</span>&gt;((resolve, reject) => {
+  <span class="kw">const</span> success = <span class="kw">true</span>;
+  <span class="kw">if</span> (success) {
+    <span class="fn">resolve</span>(<span class="str">'Data loaded!'</span>);   <span class="cm">// → fulfilled</span>
+  } <span class="kw">else</span> {
+    <span class="fn">reject</span>(<span class="kw">new</span> <span class="ty">Error</span>(<span class="str">'Failed!'</span>)); <span class="cm">// → rejected</span>
+  }
+});
+
+p.<span class="fn">then</span>(data  => console.<span class="fn">log</span>(data))   <span class="cm">// 'Data loaded!'</span>
+ .<span class="fn">catch</span>(err  => console.<span class="fn">error</span>(err))
+ .<span class="fn">finally</span>(() => console.<span class="fn">log</span>(<span class="str">'Done'</span>));  <span class="cm">// always runs</span></pre>
+
+      <h3>Creating a Promise-based delay (replaces Thread.sleep)</h3>
+<pre><span class="kw">function</span> <span class="fn">delay</span>(ms: <span class="ty">number</span>): <span class="ty">Promise&lt;void&gt;</span> {
+  <span class="kw">return new</span> Promise(resolve => setTimeout(resolve, ms));
+}
+
+<span class="kw">await</span> <span class="fn">delay</span>(<span class="op">2000</span>);  <span class="cm">// pause 2 seconds (use sparingly in tests!)</span></pre>
+
+      <h3>Promise.all — run in parallel (like Java CompletableFuture.allOf)</h3>
+<pre><span class="cm">// Run multiple API calls at the same time</span>
+<span class="kw">const</span> [user1, user2, user3] = <span class="kw">await</span> Promise.<span class="fn">all</span>([
+  request.<span class="fn">get</span>(<span class="str">'https://reqres.in/api/users/1'</span>),
+  request.<span class="fn">get</span>(<span class="str">'https://reqres.in/api/users/2'</span>),
+  request.<span class="fn">get</span>(<span class="str">'https://reqres.in/api/users/3'</span>),
+]);
+<span class="cm">// All 3 run simultaneously — faster than sequential await</span>
+<span class="cm">// Java: CompletableFuture.allOf(f1, f2, f3).join()</span></pre>
+
+      <h3>Promise.allSettled — when you don't want one failure to stop others</h3>
+<pre><span class="kw">const</span> results = <span class="kw">await</span> Promise.<span class="fn">allSettled</span>([
+  request.<span class="fn">get</span>(<span class="str">'https://reqres.in/api/users/1'</span>),
+  request.<span class="fn">get</span>(<span class="str">'https://reqres.in/api/users/999'</span>), <span class="cm">// 404</span>
+  request.<span class="fn">get</span>(<span class="str">'https://reqres.in/api/users/3'</span>),
+]);
+results.<span class="fn">forEach</span>(r => {
+  <span class="kw">if</span> (r.status === <span class="str">'fulfilled'</span>) console.<span class="fn">log</span>(<span class="str">'OK:'</span>, r.value);
+  <span class="kw">else</span>                           console.<span class="fn">log</span>(<span class="str">'Failed:'</span>, r.reason);
+});</pre>
+
+      <h3>async/await with try/catch — like Java try/catch</h3>
+<pre><span class="kw">test</span>(<span class="str">'API with error handling'</span>, <span class="kw">async</span> ({ request }) => {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res  = <span class="kw">await</span> request.<span class="fn">get</span>(<span class="str">'https://reqres.in/api/users/2'</span>);
+    <span class="kw">const</span> body = <span class="kw">await</span> res.<span class="fn">json</span>();
+    <span class="fn">expect</span>(body.data.id).<span class="fn">toBe</span>(<span class="op">2</span>);
+  } <span class="kw">catch</span> (err) {
+    console.<span class="fn">error</span>(<span class="str">'Request failed:'</span>, err);
+    <span class="kw">throw</span> err; <span class="cm">// fail the test</span>
+  } <span class="kw">finally</span> {
+    console.<span class="fn">log</span>(<span class="str">'Cleanup runs regardless'</span>); <span class="cm">// like @AfterMethod</span>
+  }
+});</pre>
+
+      <h3>Why every Playwright action returns a Promise</h3>
+<pre><span class="cm">// page.click() returns Promise&lt;void&gt;</span>
+<span class="cm">// page.fill()  returns Promise&lt;void&gt;</span>
+<span class="cm">// page.goto()  returns Promise&lt;Response | null&gt;</span>
+<span class="cm">// locator.textContent() returns Promise&lt;string | null&gt;</span>
+
+<span class="cm">// Without await — the click starts but test moves on immediately!</span>
+page.<span class="fn">click</span>(<span class="str">'#login-button'</span>);        <span class="cm">// ❌ BUG — not awaited</span>
+<span class="kw">await</span> page.<span class="fn">click</span>(<span class="str">'#login-button'</span>); <span class="cm">// ✅ waits for click to complete</span>
+
+<span class="cm">// TypeScript will warn you if you forget await on a Promise</span></pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SERIALIZATION ═══ -->
+<div id="tab-serialization" class="page">
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🔁</span><span class="section-title">Serialization / Deserialization — alternative to Java POJO + Jackson</span>
+      <span class="section-tag tag-inter">Intermediate</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="callout callout-info"><span class="callout-icon">ℹ️</span><span>In Java you use POJO + Jackson/Gson + <code>response.as(User.class)</code> or JsonPath. In TypeScript you use <strong>interfaces + type casting</strong>. JSON is native — no library needed.</span></div>
+
+      <div class="compare">
+        <div class="compare-card se-card"><div class="compare-label">Java — POJO + Jackson</div>
+<pre><span class="cm">// POJO class</span>
+<span class="kw">public class</span> <span class="ty">User</span> {
+  <span class="kw">public int</span>    id;
+  <span class="kw">public</span> <span class="ty">String</span> email;
+  <span class="kw">public</span> <span class="ty">String</span> first_name;
+}
+
+<span class="cm">// Deserialize response body</span>
+<span class="ty">User</span> user = response.<span class="fn">as</span>(<span class="ty">User</span>.class);
+<span class="ty">System</span>.out.<span class="fn">println</span>(user.email);</pre></div>
+        <div class="compare-card pw-card"><div class="compare-label">TypeScript — Interface + type cast</div>
+<pre><span class="cm">// Interface (like POJO — no annotations needed)</span>
+<span class="kw">interface</span> <span class="ty">User</span> {
+  id:         <span class="ty">number</span>;
+  email:      <span class="ty">string</span>;
+  first_name: <span class="ty">string</span>;
+}
+
+<span class="cm">// Deserialize — JSON.parse built-in</span>
+<span class="kw">const</span> body = <span class="kw">await</span> response.<span class="fn">json</span>() <span class="kw">as</span> { data: <span class="ty">User</span> };
+console.<span class="fn">log</span>(body.data.email);</pre></div>
+      </div>
+
+      <h3>Nested response types (like JsonPath)</h3>
+<pre><span class="cm">// Reqres.in response shape: GET /api/users/2</span>
+<span class="cm">// { "data": { "id":2, "email":"...", "first_name":"..." }, "support": {...} }</span>
+
+<span class="kw">interface</span> <span class="ty">ReqresUser</span> {
+  id:         <span class="ty">number</span>;
+  email:      <span class="ty">string</span>;
+  first_name: <span class="ty">string</span>;
+  last_name:  <span class="ty">string</span>;
+  avatar:     <span class="ty">string</span>;
+}
+
+<span class="kw">interface</span> <span class="ty">SingleUserResponse</span> {
+  data:    <span class="ty">ReqresUser</span>;
+  support: { url: <span class="ty">string</span>; text: <span class="ty">string</span>; };
+}
+
+<span class="kw">interface</span> <span class="ty">UserListResponse</span> {
+  page:         <span class="ty">number</span>;
+  per_page:     <span class="ty">number</span>;
+  total:        <span class="ty">number</span>;
+  total_pages:  <span class="ty">number</span>;
+  data:         <span class="ty">ReqresUser</span>[];
+}
+
+<span class="cm">// Use in test:</span>
+<span class="kw">const</span> res  = <span class="kw">await</span> request.<span class="fn">get</span>(<span class="str">'https://reqres.in/api/users/2'</span>);
+<span class="kw">const</span> body = <span class="kw">await</span> res.<span class="fn">json</span>() <span class="kw">as</span> <span class="ty">SingleUserResponse</span>;
+
+<span class="fn">expect</span>(body.data.id).<span class="fn">toBe</span>(<span class="op">2</span>);
+<span class="fn">expect</span>(body.data.email).<span class="fn">toContain</span>(<span class="str">'@reqres.in'</span>);
+<span class="fn">expect</span>(body.support.url).<span class="fn">toBeDefined</span>();</pre>
+
+      <h3>Serialization — converting an object to JSON for POST body</h3>
+<pre><span class="cm">// Java: ObjectMapper.writeValueAsString(user)</span>
+<span class="cm">// TypeScript: built-in JSON.stringify()</span>
+
+<span class="kw">interface</span> <span class="ty">CreateUserRequest</span> {
+  name: <span class="ty">string</span>;
+  job:  <span class="ty">string</span>;
+}
+
+<span class="kw">const</span> payload: <span class="ty">CreateUserRequest</span> = {
+  name: <span class="str">'Sumit Sagar'</span>,
+  job:  <span class="str">'Senior QA'</span>,
+};
+
+<span class="cm">// Playwright auto-serializes 'data' to JSON</span>
+<span class="kw">const</span> res = <span class="kw">await</span> request.<span class="fn">post</span>(<span class="str">'https://reqres.in/api/users'</span>, {
+  data: payload   <span class="cm">// Playwright calls JSON.stringify internally</span>
+});
+
+<span class="kw">interface</span> <span class="ty">CreateUserResponse</span> {
+  name:      <span class="ty">string</span>;
+  job:       <span class="ty">string</span>;
+  id:        <span class="ty">string</span>;
+  createdAt: <span class="ty">string</span>;
+}
+
+<span class="kw">const</span> body = <span class="kw">await</span> res.<span class="fn">json</span>() <span class="kw">as</span> <span class="ty">CreateUserResponse</span>;
+<span class="fn">expect</span>(body.name).<span class="fn">toBe</span>(<span class="str">'Sumit Sagar'</span>);
+<span class="fn">expect</span>(body.id).<span class="fn">toBeDefined</span>();</pre>
+
+      <h3>JsonPath equivalent — deep access + array operations</h3>
+<pre><span class="cm">// Java JsonPath: JsonPath.read(json, "$.data[0].email")</span>
+<span class="cm">// TypeScript: plain dot notation after type cast</span>
+
+<span class="kw">const</span> res  = <span class="kw">await</span> request.<span class="fn">get</span>(<span class="str">'https://reqres.in/api/users?page=1'</span>);
+<span class="kw">const</span> body = <span class="kw">await</span> res.<span class="fn">json</span>() <span class="kw">as</span> <span class="ty">UserListResponse</span>;
+
+<span class="cm">// Access first user's email</span>
+<span class="kw">const</span> firstEmail = body.data[<span class="op">0</span>].email;
+
+<span class="cm">// Extract all emails (like JsonPath $.data[*].email)</span>
+<span class="kw">const</span> allEmails = body.data.<span class="fn">map</span>(u => u.email);
+
+<span class="cm">// Find specific user</span>
+<span class="kw">const</span> janet = body.data.<span class="fn">find</span>(u => u.first_name === <span class="str">'Janet'</span>);
+
+<span class="cm">// Filter users with long names</span>
+<span class="kw">const</span> longNames = body.data.<span class="fn">filter</span>(u => u.first_name.<span class="fn">length</span> > <span class="op">5</span>);
+
+<span class="cm">// Validate all emails contain domain</span>
+<span class="kw">const</span> allValid = body.data.<span class="fn">every</span>(u => u.email.<span class="fn">includes</span>(<span class="str">'@reqres.in'</span>));
+<span class="fn">expect</span>(allValid).<span class="fn">toBeTruthy</span>();</pre>
+
+      <h3>Type Guards — safely handle unknown response shapes</h3>
+<pre><span class="kw">function</span> <span class="fn">isUser</span>(obj: <span class="kw">any</span>): obj <span class="kw">is</span> <span class="ty">ReqresUser</span> {
+  <span class="kw">return</span> <span class="kw">typeof</span> obj?.id === <span class="str">'number'</span>
+      && <span class="kw">typeof</span> obj?.email === <span class="str">'string'</span>;
+}
+
+<span class="kw">const</span> raw = <span class="kw">await</span> res.<span class="fn">json</span>();
+<span class="kw">if</span> (<span class="fn">isUser</span>(raw.data)) {
+  console.<span class="fn">log</span>(raw.data.email); <span class="cm">// TypeScript knows it's ReqresUser here</span>
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DATA DRIVING ═══ -->
+<div id="tab-datadriving" class="page">
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">📂</span><span class="section-title">Data Driving — Alternatives to Apache POI / JSON files</span>
+      <span class="section-tag tag-inter">Intermediate</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="callout callout-info"><span class="callout-icon">ℹ️</span><span>In Java you use Apache POI (Excel) or Jackson (JSON) for data-driven tests. In Playwright/TypeScript you have multiple elegant options — no POI dependency needed.</span></div>
+
+      <h4>Option 1 — JSON Array (simplest, like testng DataProvider)</h4>
+<pre><span class="cm">// test-data/loginData.json</span>
+[
+  { <span class="str">"username"</span>: <span class="str">"standard_user"</span>,   <span class="str">"password"</span>: <span class="str">"secret_sauce"</span>, <span class="str">"expect"</span>: <span class="str">"pass"</span> },
+  { <span class="str">"username"</span>: <span class="str">"locked_out_user"</span>,  <span class="str">"password"</span>: <span class="str">"secret_sauce"</span>, <span class="str">"expect"</span>: <span class="str">"fail"</span> },
+  { <span class="str">"username"</span>: <span class="str">"wrong_user"</span>,       <span class="str">"password"</span>: <span class="str">"wrong_pass"</span>,   <span class="str">"expect"</span>: <span class="str">"fail"</span> }
+]
+
+<span class="cm">// In test file:</span>
+<span class="kw">import</span> loginData from <span class="str">'../test-data/loginData.json'</span>;
+
+<span class="kw">for</span> (<span class="kw">const</span> d of loginData) {
+  test(<span class="str">`Login: </span>${d.username}<span class="str"> → </span>${d.expect}<span class="str">`</span>, <span class="kw">async</span> ({ page }) => {
+    <span class="kw">await</span> page.<span class="fn">goto</span>(<span class="str">'/'</span>);
+    <span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'#user-name'</span>, d.username);
+    <span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'#password'</span>,  d.password);
+    <span class="kw">await</span> page.<span class="fn">click</span>(<span class="str">'#login-button'</span>);
+    <span class="kw">if</span> (d.expect === <span class="str">'pass'</span>) {
+      <span class="kw">await</span> <span class="fn">expect</span>(page).<span class="fn">toHaveURL</span>(<span class="str">/inventory/</span>);
+    } <span class="kw">else</span> {
+      <span class="kw">await</span> <span class="fn">expect</span>(page.<span class="fn">locator</span>(<span class="str">'[data-test="error"]'</span>)).<span class="fn">toBeVisible</span>();
+    }
+  });
+}</pre>
+
+      <h4>Option 2 — TypeScript constant objects (typed DataProvider)</h4>
+<pre><span class="cm">// test-data/checkoutData.ts</span>
+<span class="kw">export interface</span> <span class="ty">CheckoutData</span> {
+  firstName: <span class="ty">string</span>;
+  lastName:  <span class="ty">string</span>;
+  zip:       <span class="ty">string</span>;
+  product:   <span class="ty">string</span>;
+}
+
+<span class="kw">export const</span> checkoutCases: <span class="ty">CheckoutData</span>[] = [
+  { firstName: <span class="str">'Sumit'</span>, lastName: <span class="str">'Sagar'</span>, zip: <span class="str">'441904'</span>, product: <span class="str">'Sauce Labs Backpack'</span> },
+  { firstName: <span class="str">'John'</span>,  lastName: <span class="str">'Doe'</span>,   zip: <span class="str">'10001'</span>,  product: <span class="str">'Sauce Labs Bike Light'</span> },
+];
+
+<span class="cm">// In test:</span>
+<span class="kw">import</span> { checkoutCases } from <span class="str">'../test-data/checkoutData'</span>;
+
+<span class="kw">for</span> (<span class="kw">const</span> data of checkoutCases) {
+  test(<span class="str">`Checkout: </span>${data.product}<span class="str">`</span>, <span class="kw">async</span> ({ page }) => {
+    <span class="cm">// use data.firstName, data.zip etc.</span>
+  });
+}</pre>
+
+      <h4>Option 3 — CSV file (replacing Excel/Apache POI)</h4>
+<pre><span class="cm"># Install csv-parse</span>
+npm install csv-parse
+
+<span class="cm">// test-data/users.csv</span>
+<span class="cm">// username,password,expected</span>
+<span class="cm">// standard_user,secret_sauce,pass</span>
+<span class="cm">// locked_out_user,secret_sauce,fail</span>
+
+<span class="cm">// utils/csvReader.ts</span>
+<span class="kw">import</span> { parse }   from <span class="str">'csv-parse/sync'</span>;
+<span class="kw">import</span> { readFileSync } from <span class="str">'fs'</span>;
+
+<span class="kw">export function</span> <span class="fn">readCsv</span>&lt;<span class="ty">T</span>&gt;(filePath: <span class="ty">string</span>): <span class="ty">T</span>[] {
+  <span class="kw">const</span> content = <span class="fn">readFileSync</span>(filePath, <span class="str">'utf-8'</span>);
+  <span class="kw">return</span> <span class="fn">parse</span>(content, { columns: <span class="kw">true</span>, skip_empty_lines: <span class="kw">true</span> });
+}
+
+<span class="cm">// In test:</span>
+<span class="kw">const</span> rows = <span class="fn">readCsv</span>&lt;{ username: <span class="ty">string</span>; password: <span class="ty">string</span>; expected: <span class="ty">string</span> }&gt;(
+  <span class="str">'./test-data/users.csv'</span>
+);
+<span class="kw">for</span> (<span class="kw">const</span> row of rows) { ... }</pre>
+
+      <h4>Option 4 — Excel (XLSX) — direct Apache POI alternative</h4>
+<pre><span class="cm"># Install xlsx (SheetJS)</span>
+npm install xlsx
+
+<span class="cm">// utils/excelReader.ts</span>
+<span class="kw">import</span> * <span class="kw">as</span> XLSX from <span class="str">'xlsx'</span>;
+
+<span class="kw">export function</span> <span class="fn">readExcel</span>&lt;<span class="ty">T</span>&gt;(filePath: <span class="ty">string</span>, sheet: <span class="ty">string</span>): <span class="ty">T</span>[] {
+  <span class="kw">const</span> workbook  = XLSX.<span class="fn">readFile</span>(filePath);
+  <span class="kw">const</span> worksheet = workbook.Sheets[sheet];
+  <span class="kw">return</span> XLSX.utils.<span class="fn">sheet_to_json</span>&lt;<span class="ty">T</span>&gt;(worksheet);
+}
+
+<span class="cm">// In test — reads Login.xlsx, Sheet1</span>
+<span class="kw">const</span> users = <span class="fn">readExcel</span>&lt;{ username: <span class="ty">string</span>; password: <span class="ty">string</span> }&gt;(
+  <span class="str">'./test-data/LoginData.xlsx'</span>,
+  <span class="str">'Sheet1'</span>
+);
+<span class="cm">// Same result as Apache POI — but 3 lines of code</span></pre>
+
+      <h4>Option 5 — test.use + fixtures for environment-based data</h4>
+<pre><span class="cm">// playwright.config.ts — pass env at runtime</span>
+<span class="cm">// ENV=uat npx playwright test</span>
+
+<span class="kw">const</span> env = process.env.<span class="ty">ENV</span> ?? <span class="str">'qa'</span>;
+<span class="kw">const</span> envData = {
+  qa:  { baseURL: <span class="str">'https://qa.saucedemo.com'</span>,  user: <span class="str">'qa_user'</span>  },
+  uat: { baseURL: <span class="str">'https://uat.saucedemo.com'</span>, user: <span class="str">'uat_user'</span> },
+};
+
+<span class="kw">export default</span> <span class="fn">defineConfig</span>({
+  use: { baseURL: envData[env].baseURL }
+});</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ UTILITIES / COMMON METHODS ═══ -->
+<div id="tab-utils" class="page">
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🧰</span><span class="section-title">Common / Generic Utilities — Reusable Code Patterns</span>
+      <span class="section-tag tag-fw">Framework</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="callout callout-tip"><span class="callout-icon">💡</span><span>In Java you put reusable code in a <code>BaseTest</code> class, <code>Utils</code> class, or static helper methods. In TypeScript you use <strong>utility classes</strong>, <strong>helper functions</strong>, and <strong>custom fixtures</strong> — same pattern, cleaner syntax.</span></div>
+
+      <h3>1. Base Page class — all Page Objects extend this</h3>
+<pre><span class="cm">// pages/BasePage.ts</span>
+<span class="kw">import</span> { Page, expect } from <span class="str">'@playwright/test'</span>;
+
+<span class="kw">export class</span> <span class="ty">BasePage</span> {
+  <span class="fn">constructor</span>(<span class="kw">protected</span> page: <span class="ty">Page</span>) {}
+
+  <span class="kw">async</span> <span class="fn">waitForPageLoad</span>() {
+    <span class="kw">await</span> <span class="kw">this</span>.page.<span class="fn">waitForLoadState</span>(<span class="str">'networkidle'</span>);
+  }
+
+  <span class="kw">async</span> <span class="fn">getTitle</span>(): <span class="ty">Promise&lt;string&gt;</span> {
+    <span class="kw">return</span> <span class="kw">this</span>.page.<span class="fn">title</span>();
+  }
+
+  <span class="kw">async</span> <span class="fn">takeScreenshot</span>(name: <span class="ty">string</span>) {
+    <span class="kw">await</span> <span class="kw">this</span>.page.<span class="fn">screenshot</span>({ path: <span class="str">`screenshots/</span>${name}<span class="str">.png`</span> });
+  }
+
+  <span class="kw">async</span> <span class="fn">scrollToBottom</span>() {
+    <span class="kw">await</span> <span class="kw">this</span>.page.<span class="fn">evaluate</span>(() => window.<span class="fn">scrollTo</span>(<span class="op">0</span>, document.body.scrollHeight));
+  }
+}
+
+<span class="cm">// LoginPage.ts now extends BasePage:</span>
+<span class="kw">export class</span> <span class="ty">LoginPage</span> <span class="kw">extends</span> <span class="ty">BasePage</span> {
+  <span class="fn">constructor</span>(page: <span class="ty">Page</span>) { <span class="kw">super</span>(page); }
+  <span class="cm">// inherits waitForPageLoad, takeScreenshot etc.</span>
+}</pre>
+
+      <h3>2. Generic API helper with typed response</h3>
+<pre><span class="cm">// utils/ApiClient.ts</span>
+<span class="kw">import</span> { APIRequestContext, expect } from <span class="str">'@playwright/test'</span>;
+
+<span class="kw">export class</span> <span class="ty">ApiClient</span> {
+  <span class="kw">private</span> baseUrl: <span class="ty">string</span>;
+
+  <span class="fn">constructor</span>(<span class="kw">private</span> request: <span class="ty">APIRequestContext</span>, baseUrl: <span class="ty">string</span>) {
+    <span class="kw">this</span>.baseUrl = baseUrl;
+  }
+
+  <span class="kw">async</span> <span class="fn">get</span>&lt;<span class="ty">T</span>&gt;(endpoint: <span class="ty">string</span>, params?: <span class="ty">Record</span>&lt;<span class="ty">string</span>, <span class="kw">any</span>&gt;): <span class="ty">Promise&lt;T&gt;</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> <span class="kw">this</span>.request.<span class="fn">get</span>(<span class="str">`</span>${<span class="kw">this</span>.baseUrl}${endpoint}<span class="str">`</span>, { params });
+    <span class="fn">expect</span>(res.<span class="fn">ok</span>(), <span class="str">`GET </span>${endpoint}<span class="str"> failed with </span>${res.<span class="fn">status</span>()}<span class="str">`</span>).<span class="fn">toBeTruthy</span>();
+    <span class="kw">return</span> res.<span class="fn">json</span>();
+  }
+
+  <span class="kw">async</span> <span class="fn">post</span>&lt;<span class="ty">T</span>&gt;(endpoint: <span class="ty">string</span>, data: <span class="ty">object</span>): <span class="ty">Promise&lt;{status:number; body:T}&gt;</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> <span class="kw">this</span>.request.<span class="fn">post</span>(<span class="str">`</span>${<span class="kw">this</span>.baseUrl}${endpoint}<span class="str">`</span>, { data });
+    <span class="kw">return</span> { status: res.<span class="fn">status</span>(), body: <span class="kw">await</span> res.<span class="fn">json</span>() };
+  }
+
+  <span class="kw">async</span> <span class="fn">delete</span>(endpoint: <span class="ty">string</span>): <span class="ty">Promise&lt;number&gt;</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> <span class="kw">this</span>.request.<span class="fn">delete</span>(<span class="str">`</span>${<span class="kw">this</span>.baseUrl}${endpoint}<span class="str">`</span>);
+    <span class="kw">return</span> res.<span class="fn">status</span>();
+  }
+}
+
+<span class="cm">// Usage in test:</span>
+<span class="kw">const</span> api  = <span class="kw">new</span> <span class="ty">ApiClient</span>(request, <span class="str">'https://reqres.in/api'</span>);
+<span class="kw">const</span> data = <span class="kw">await</span> api.<span class="fn">get</span>&lt;<span class="ty">SingleUserResponse</span>&gt;(<span class="str">'/users/2'</span>);
+<span class="fn">expect</span>(data.data.id).<span class="fn">toBe</span>(<span class="op">2</span>);</pre>
+
+      <h3>3. UI Helper functions — reusable actions</h3>
+<pre><span class="cm">// utils/uiHelpers.ts</span>
+<span class="kw">import</span> { Page, Locator, expect } from <span class="str">'@playwright/test'</span>;
+
+<span class="cm">// Generic wait + assert visible</span>
+<span class="kw">export async function</span> <span class="fn">assertVisible</span>(locator: <span class="ty">Locator</span>, msg?: <span class="ty">string</span>) {
+  <span class="kw">await</span> <span class="fn">expect</span>(locator, msg).<span class="fn">toBeVisible</span>({ timeout: <span class="op">10_000</span> });
+}
+
+<span class="cm">// Retry-click for flaky buttons</span>
+<span class="kw">export async function</span> <span class="fn">safeClick</span>(locator: <span class="ty">Locator</span>, retries = <span class="op">3</span>) {
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="op">0</span>; i &lt; retries; i++) {
+    <span class="kw">try</span> {
+      <span class="kw">await</span> locator.<span class="fn">click</span>({ timeout: <span class="op">5000</span> });
+      <span class="kw">return</span>;
+    } <span class="kw">catch</span> {
+      <span class="kw">if</span> (i === retries - <span class="op">1</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">Error</span>(<span class="str">'safeClick failed after retries'</span>);
+    }
+  }
+}
+
+<span class="cm">// Select dropdown by visible text</span>
+<span class="kw">export async function</span> <span class="fn">selectByText</span>(page: <span class="ty">Page</span>, selector: <span class="ty">string</span>, text: <span class="ty">string</span>) {
+  <span class="kw">await</span> page.<span class="fn">locator</span>(selector).<span class="fn">selectOption</span>({ label: text });
+}
+
+<span class="cm">// Fill multiple fields at once</span>
+<span class="kw">export async function</span> <span class="fn">fillForm</span>(page: <span class="ty">Page</span>, fields: <span class="ty">Record</span>&lt;<span class="ty">string</span>, <span class="ty">string</span>&gt;) {
+  <span class="kw">for</span> (<span class="kw">const</span> [selector, value] of Object.<span class="fn">entries</span>(fields)) {
+    <span class="kw">await</span> page.<span class="fn">fill</span>(selector, value);
+  }
+}
+
+<span class="cm">// Usage:</span>
+<span class="kw">await</span> <span class="fn">fillForm</span>(page, {
+  <span class="str">'[data-test="firstName"]'</span>: <span class="str">'Sumit'</span>,
+  <span class="str">'[data-test="lastName"]'</span>:  <span class="str">'Sagar'</span>,
+  <span class="str">'[data-test="postalCode"]'</span>:<span class="str">'441904'</span>,
+});</pre>
+
+      <h3>4. Custom Expect extensions (like custom AssertJ)</h3>
+<pre><span class="cm">// utils/customExpect.ts</span>
+<span class="kw">import</span> { expect } from <span class="str">'@playwright/test'</span>;
+
+<span class="kw">export const</span> customExpect = <span class="fn">expect</span>.<span class="fn">extend</span>({
+  <span class="kw">async</span> <span class="fn">toBeValidEmail</span>(received: <span class="ty">string</span>) {
+    <span class="kw">const</span> pass = <span class="str">/^[^\s@]+@[^\s@]+\.[^\s@]+$/</span>.<span class="fn">test</span>(received);
+    <span class="kw">return</span> {
+      pass,
+      message: () => pass
+        ? <span class="str">`Expected </span>${received}<span class="str"> NOT to be valid email`</span>
+        : <span class="str">`Expected </span>${received}<span class="str"> to be valid email`</span>,
+    };
+  }
+});
+
+<span class="cm">// Usage:</span>
+<span class="kw">await</span> customExpect(<span class="str">'sumit@example.com'</span>).<span class="fn">toBeValidEmail</span>();</pre>
+
+      <h3>5. Environment config utility</h3>
+<pre><span class="cm">// utils/envConfig.ts</span>
+<span class="kw">type</span> <span class="ty">Env</span> = <span class="str">'qa'</span> | <span class="str">'uat'</span> | <span class="str">'prod'</span>;
+
+<span class="kw">const</span> configs: <span class="ty">Record</span>&lt;<span class="ty">Env</span>, { baseURL: <span class="ty">string</span>; apiBase: <span class="ty">string</span> }&gt; = {
+  qa:   { baseURL: <span class="str">'https://www.saucedemo.com'</span>, apiBase: <span class="str">'https://reqres.in/api'</span> },
+  uat:  { baseURL: <span class="str">'https://uat.saucedemo.com'</span>, apiBase: <span class="str">'https://uat-api.reqres.in'</span> },
+  prod: { baseURL: <span class="str">'https://www.saucedemo.com'</span>, apiBase: <span class="str">'https://reqres.in/api'</span> },
+};
+
+<span class="kw">export const</span> ENV = (process.env.<span class="ty">ENV</span> <span class="kw">as</span> <span class="ty">Env</span>) ?? <span class="str">'qa'</span>;
+<span class="kw">export const</span> config = configs[<span class="ty">ENV</span>];
+
+<span class="cm">// Usage: import { config } from '../utils/envConfig';</span>
+<span class="cm">// ENV=uat npx playwright test</span></pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ GITHUB ACTIONS ═══ -->
+<div id="tab-github" class="page">
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🚀</span><span class="section-title">GitHub Actions — CI/CD for Playwright</span>
+      <span class="section-tag tag-adv">Advanced</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="callout callout-info"><span class="callout-icon">ℹ️</span><span>GitHub Actions is the CI/CD equivalent of Jenkins pipelines. The YAML file replaces your <code>Jenkinsfile</code> + Maven test commands. Playwright has an official GitHub Actions integration.</span></div>
+
+      <h3>Basic workflow — run tests on every push</h3>
+<pre><span class="cm"># .github/workflows/playwright.yml</span>
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: <span class="str">'20'</span>
+          cache: <span class="str">'npm'</span>
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        if: always()   <span class="cm"># upload even on test failure</span>
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30</pre>
+
+      <h3>Matrix — run on multiple browsers in parallel</h3>
+<pre>jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false   <span class="cm"># don't cancel other browsers if one fails</span>
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: <span class="str">'20'</span> }
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - run: npx playwright test --project=${{ matrix.browser }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-${{ matrix.browser }}
+          path: playwright-report/</pre>
+
+      <h3>Environment variables + secrets</h3>
+<pre><span class="cm"># Add secrets in GitHub: Settings → Secrets → Actions</span>
+
+steps:
+  - name: Run tests with secrets
+    run: npx playwright test
+    env:
+      BASE_URL:  ${{ secrets.BASE_URL }}
+      API_TOKEN: ${{ secrets.API_TOKEN }}
+      ENV:       <span class="str">'uat'</span>
+
+<span class="cm">// In test code:</span>
+<span class="kw">const</span> baseUrl   = process.env.<span class="ty">BASE_URL</span> ?? <span class="str">'https://www.saucedemo.com'</span>;
+<span class="kw">const</span> apiToken  = process.env.<span class="ty">API_TOKEN</span>;</pre>
+
+      <h3>Schedule — run nightly regression</h3>
+<pre>on:
+  schedule:
+    - cron: <span class="str">'0 1 * * *'</span>   <span class="cm"># every day at 1:00 AM UTC</span>
+  workflow_dispatch:       <span class="cm"># allow manual trigger from GitHub UI</span></pre>
+
+      <h3>Sharding across multiple machines (see Sharding tab)</h3>
+<pre>jobs:
+  test:
+    strategy:
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
+    steps:
+      - run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}</pre>
+
+      <h3>playwright.config.ts — CI-aware config</h3>
+<pre><span class="kw">export default</span> <span class="fn">defineConfig</span>({
+  retries:  process.env.<span class="ty">CI</span> ? <span class="op">2</span> : <span class="op">0</span>,   <span class="cm">// retry only in CI</span>
+  workers:  process.env.<span class="ty">CI</span> ? <span class="op">1</span> : undefined, <span class="cm">// single worker in CI</span>
+  reporter: process.env.<span class="ty">CI</span>
+    ? [[<span class="str">'github'</span>], [<span class="str">'html'</span>, { open: <span class="str">'never'</span> }]]
+    : [<span class="str">'html'</span>, [<span class="str">'list'</span>]],
+});</pre>
+
+      <h3>Full pipeline with Allure + test summary comment on PR</h3>
+<pre>      - name: Run tests
+        run: npx playwright test
+        continue-on-error: true
+
+      - name: Generate Allure Report
+        run: npx allure generate allure-results --clean
+
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
+
+      - name: Post test results to PR
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Playwright Results
+          path: results.xml
+          reporter: java-junit</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SHARDING ═══ -->
+<div id="tab-sharding" class="page">
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🗄️</span><span class="section-title">Sharding — What It Is + Playwright Test Sharding</span>
+      <span class="section-tag tag-adv">Advanced</span><span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="callout callout-info"><span class="callout-icon">ℹ️</span><span><strong>Sharding</strong> means splitting a large workload into smaller independent pieces (shards) that run simultaneously. It's used in both <strong>databases</strong> (horizontal scaling) and <strong>test suites</strong> (parallel CI execution).</span></div>
+
+      <h3>Database Sharding — the general concept</h3>
+<pre><span class="cm">// ── WHAT IS DATABASE SHARDING? ──
+//
+// A shard is a horizontal partition of data.
+// Instead of one massive database, data is split
+// across multiple database instances.
+//
+//  User IDs 1-1000   → DB Shard 1 (server A)
+//  User IDs 1001-2000 → DB Shard 2 (server B)
+//  User IDs 2001-3000 → DB Shard 3 (server C)
+//
+// Sharding key = the field used to decide which shard
+// Common sharding keys: user_id, region, date range
+//
+// Benefits:
+//   ✅ Horizontal scale — add more servers as data grows
+//   ✅ Queries only touch relevant shard (faster)
+//   ✅ Failure isolation — one shard down ≠ all down
+//
+// Challenges:
+//   ❌ Cross-shard JOINs are complex
+//   ❌ Re-sharding when shards fill up
+//   ❌ Hotspots if shard key is poorly chosen</span></pre>
+
+      <h3>Sharding strategies</h3>
+<pre><span class="cm">// 1. RANGE SHARDING — by value range
+//    user_id 1-10000    → shard_01
+//    user_id 10001-20000 → shard_02
+//    Simple but can cause hotspots (new users all on latest shard)
+
+// 2. HASH SHARDING — hash(user_id) % num_shards
+//    hash(user_id=101) % 4 = 1  → shard_01
+//    hash(user_id=202) % 4 = 2  → shard_02
+//    Distributes evenly but range queries are hard
+
+// 3. GEOGRAPHIC SHARDING — by region
+//    India users     → shard_IN (Mumbai data center)
+//    US users        → shard_US (Virginia data center)
+//    EU users        → shard_EU (Frankfurt data center)
+//    Good for data residency compliance (GDPR)
+
+// 4. DIRECTORY SHARDING — lookup table maps key → shard
+//    Flexible but lookup table becomes a bottleneck</span></pre>
+
+      <h3>Playwright Test Sharding — split test suite across machines</h3>
+<pre><span class="cm">// Shard syntax: --shard=&lt;index&gt;/&lt;total&gt;</span>
+
+<span class="cm">// Machine 1 runs 1st quarter of tests</span>
+npx playwright test --shard=1/4
+
+<span class="cm">// Machine 2 runs 2nd quarter</span>
+npx playwright test --shard=2/4
+
+<span class="cm">// Machine 3 runs 3rd quarter</span>
+npx playwright test --shard=3/4
+
+<span class="cm">// Machine 4 runs 4th quarter</span>
+npx playwright test --shard=4/4
+
+<span class="cm">// Playwright assigns tests evenly by file — no config needed</span></pre>
+
+      <h3>Full GitHub Actions sharding workflow</h3>
+<pre><span class="cm"># .github/workflows/playwright-sharded.yml</span>
+jobs:
+  playwright-shard:
+    name: <span class="str">"Shard ${{ matrix.shardIndex }} / ${{ matrix.shardTotal }}"</span>
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: <span class="str">'20'</span> }
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test
+           --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: blob-report-${{ matrix.shardIndex }}
+          path: blob-report/
+          retention-days: 1   <span class="cm"># short — merged next</span>
+
+  merge-reports:
+    needs: playwright-shard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: <span class="str">'20'</span> }
+      - run: npm ci
+      - name: Download all blob reports
+        uses: actions/download-artifact@v4
+        with:
+          path: all-blob-reports
+          pattern: blob-report-*
+          merge-multiple: true
+      - name: Merge into single HTML report
+        run: npx playwright merge-reports --reporter html ./all-blob-reports
+      - uses: actions/upload-artifact@v4
+        with:
+          name: merged-playwright-report
+          path: playwright-report/</pre>
+
+      <h3>Local parallel execution — workers (not sharding)</h3>
+<pre><span class="cm">// playwright.config.ts</span>
+<span class="kw">export default</span> <span class="fn">defineConfig</span>({
+  workers: <span class="op">4</span>,   <span class="cm">// 4 workers on same machine — like TestNG parallel="methods"</span>
+  <span class="cm">// Sharding = split across MACHINES</span>
+  <span class="cm">// Workers  = split across CPU cores on ONE machine</span>
+});</pre>
+
+      <h3>Sharding vs Workers vs Projects — when to use what</h3>
+<pre><span class="cm">// ┌─────────────┬──────────────────────────────┬────────────────────────┐
+// │ Feature     │ Use case                     │ Command                │
+// ├─────────────┼──────────────────────────────┼────────────────────────┤
+// │ Workers     │ Parallel on 1 machine        │ workers: 4 in config   │
+// │ Sharding    │ Split across CI machines     │ --shard=1/4            │
+// │ Projects    │ Run on multiple browsers     │ --project=chromium     │
+// │ Tags/grep   │ Smoke / regression filter    │ --grep @smoke          │
+// └─────────────┴──────────────────────────────┴────────────────────────┘</span></pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NPX COMMANDS ═══ -->
+<div id="tab-npx" class="page">
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🖥️</span>
+      <span class="section-title">npx playwright — All CLI Commands Explained</span>
+      <span class="section-tag tag-basics">Reference</span>
+      <span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="callout callout-info"><span class="callout-icon">ℹ️</span><span><strong>npx</strong> = Node Package Execute. It runs a package binary without installing it globally. All Playwright CLI commands start with <code>npx playwright</code>. Think of it like <code>mvn</code> for Java.</span></div>
+
+      <!-- RUNNING TESTS -->
+      <h3>▶ Running Tests</h3>
+      <table class="cmd-table">
+        <thead><tr><th>Command</th><th>What it does</th><th>Java/Maven equivalent</th></tr></thead>
+        <tbody>
+          <tr><td>npx playwright test</td><td>Run all tests in <code>testDir</code> with config defaults</td><td>mvn test</td></tr>
+          <tr><td>npx playwright test --headed</td><td>Run with visible browser window (not headless). Useful for local debugging</td><td>headless=false in config</td></tr>
+          <tr><td>npx playwright test --headless</td><td>Force headless even if config says headed</td><td>headless=true</td></tr>
+          <tr><td>npx playwright test login</td><td>Run only test files whose name contains "login". Partial match works</td><td>mvn test -Dtest=LoginTest</td></tr>
+          <tr><td>npx playwright test tests/ui/</td><td>Run all tests inside a specific folder</td><td>mvn test -Dtest=ui/**</td></tr>
+          <tr><td>npx playwright test login.spec.ts checkout.spec.ts</td><td>Run multiple specific files</td><td>mvn test -Dtest=Login,Checkout</td></tr>
+          <tr><td>npx playwright test --grep "should login"</td><td>Run tests whose title matches the regex/string. Like filtering by test name</td><td>-Dtest=Login#shouldLogin</td></tr>
+          <tr><td>npx playwright test --grep-invert "smoke"</td><td>Run all tests EXCEPT those matching "smoke". Useful for excluding WIP tests</td><td>No direct equivalent</td></tr>
+          <tr><td>npx playwright test --project=chromium</td><td>Run tests for a single browser project defined in config</td><td>testng.xml browser param</td></tr>
+          <tr><td>npx playwright test --project=chromium --project=firefox</td><td>Run on multiple specific projects simultaneously</td><td>No direct equivalent</td></tr>
+          <tr><td>npx playwright test -j 4</td><td>Run with 4 parallel workers. Overrides config <code>workers</code> setting</td><td>maven-surefire parallel</td></tr>
+          <tr><td>npx playwright test --workers=1</td><td>Run serially — 1 test at a time. Good for flaky debugging</td><td>parallel="none"</td></tr>
+          <tr><td>npx playwright test --retries=3</td><td>Retry failed tests up to 3 times. Overrides config retries</td><td>@Test(retryAnalyzer)</td></tr>
+          <tr><td>npx playwright test --timeout=60000</td><td>Override timeout to 60 seconds per test</td><td>timeOut= in @Test</td></tr>
+          <tr><td>npx playwright test --repeat-each=5</td><td>Run every test 5 times. Good for finding flakiness</td><td>No direct equivalent</td></tr>
+          <tr><td>npx playwright test --max-failures=5</td><td>Stop entire run after 5 failures. Saves CI time</td><td>No direct equivalent</td></tr>
+          <tr><td>npx playwright test --forbid-only</td><td>Fail if any <code>test.only</code> is committed. Essential for CI pipelines</td><td>No direct equivalent</td></tr>
+          <tr><td>npx playwright test --pass-with-no-tests</td><td>Exit 0 even if no tests found. Useful in conditional CI steps</td><td>No direct equivalent</td></tr>
+          <tr><td>npx playwright test --shard=1/4</td><td>Run 1st quarter of all tests. Used for parallel CI across machines</td><td>No direct equivalent</td></tr>
+          <tr><td>npx playwright test --list</td><td>Print all test names without running them. Like a dry run</td><td>No direct equivalent</td></tr>
+        </tbody>
+      </table>
+
+      <!-- DEBUG -->
+      <h3>🐛 Debugging</h3>
+      <table class="cmd-table">
+        <thead><tr><th>Command</th><th>What it does</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>npx playwright test --debug</td><td>Opens Playwright Inspector — step through actions one by one, see locators highlighted in browser</td><td>Best debugging tool. Like breakpoints in IDE</td></tr>
+          <tr><td>npx playwright test login --debug</td><td>Debug only the login test file</td><td>Combine with file filter</td></tr>
+          <tr><td>PWDEBUG=1 npx playwright test</td><td>Same as --debug. Environment variable form — useful in scripts</td><td>Linux/Mac syntax</td></tr>
+          <tr><td>npx playwright test --ui</td><td>Opens Playwright UI Mode — visual test runner with timeline, locator picker, and live rerun. Best for development</td><td>Like IntelliJ test runner but visual</td></tr>
+          <tr><td>npx playwright show-trace trace.zip</td><td>Open Trace Viewer for a specific trace file. Shows DOM snapshots, network, console for every action</td><td>trace.zip found in test-results/</td></tr>
+          <tr><td>npx playwright show-trace test-results/login-chromium/trace.zip</td><td>Open trace for a specific failed test by path</td><td>Path varies by test name</td></tr>
+        </tbody>
+      </table>
+
+      <!-- REPORTS -->
+      <h3>📊 Reports</h3>
+      <table class="cmd-table">
+        <thead><tr><th>Command</th><th>What it does</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>npx playwright show-report</td><td>Open the last generated HTML report in your default browser</td><td>Report is in playwright-report/ folder</td></tr>
+          <tr><td>npx playwright show-report my-report/</td><td>Open a specific report folder. Useful when you have multiple run reports</td><td>Pass folder path</td></tr>
+          <tr><td>npx playwright merge-reports ./blob-reports</td><td>Merge blob reports from multiple shards into one unified HTML report</td><td>Used after sharded CI runs</td></tr>
+          <tr><td>npx playwright merge-reports --reporter html ./blobs</td><td>Merge blobs and produce HTML format specifically</td><td>Can also use json, junit</td></tr>
+        </tbody>
+      </table>
+
+      <!-- CODEGEN -->
+      <h3>🎥 Code Generation</h3>
+      <table class="cmd-table">
+        <thead><tr><th>Command</th><th>What it does</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>npx playwright codegen</td><td>Open a browser and record your clicks/fills as Playwright code. Like Selenium IDE</td><td>Generated code appears in side panel</td></tr>
+          <tr><td>npx playwright codegen https://www.saucedemo.com</td><td>Start recording immediately at the given URL</td><td>Best starting point for new tests</td></tr>
+          <tr><td>npx playwright codegen --target=typescript</td><td>Generate TypeScript code (default). Can also use javascript, java, python</td><td>Use typescript for this framework</td></tr>
+          <tr><td>npx playwright codegen --save-storage=auth.json https://app.com</td><td>Record login + save authenticated browser state to file. Reuse later to skip login in tests</td><td>Powerful for auth setup</td></tr>
+          <tr><td>npx playwright codegen --load-storage=auth.json https://app.com/dashboard</td><td>Load saved auth state and record from an already-logged-in page</td><td>Pairs with save-storage</td></tr>
+          <tr><td>npx playwright codegen --viewport-size=375,812 https://app.com</td><td>Record on a mobile viewport size</td><td>375x812 = iPhone X</td></tr>
+        </tbody>
+      </table>
+
+      <!-- BROWSERS -->
+      <h3>🌐 Browser Management</h3>
+      <table class="cmd-table">
+        <thead><tr><th>Command</th><th>What it does</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>npx playwright install</td><td>Install all browsers defined in playwright.config.ts projects</td><td>Run after npm install</td></tr>
+          <tr><td>npx playwright install chromium</td><td>Install only Chromium browser</td><td>Faster CI if only testing Chrome</td></tr>
+          <tr><td>npx playwright install firefox webkit</td><td>Install multiple specific browsers</td><td>Separate by space</td></tr>
+          <tr><td>npx playwright install --with-deps</td><td>Install browsers AND system OS dependencies (fonts, libs). Required on Linux/CI</td><td>Always use in GitHub Actions</td></tr>
+          <tr><td>npx playwright install --dry-run</td><td>Show what would be installed without actually downloading</td><td>Good to check before CI run</td></tr>
+          <tr><td>npx playwright uninstall</td><td>Remove all installed Playwright browsers from cache</td><td>Free up disk space</td></tr>
+        </tbody>
+      </table>
+
+      <!-- INIT + INFO -->
+      <h3>🔧 Project Init + Info</h3>
+      <table class="cmd-table">
+        <thead><tr><th>Command</th><th>What it does</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>npm init playwright@latest</td><td>Scaffold a new Playwright project — installs packages, creates config, example tests, GitHub Actions workflow</td><td>Run once when starting a new project</td></tr>
+          <tr><td>npx playwright --version</td><td>Print the installed Playwright version</td><td>Like mvn --version</td></tr>
+          <tr><td>npx playwright --help</td><td>List all available commands with descriptions</td><td>Always check here first</td></tr>
+          <tr><td>npx playwright test --help</td><td>List all flags/options for the test command specifically</td><td>Very detailed</td></tr>
+        </tbody>
+      </table>
+
+      <!-- ENVIRONMENT VARS -->
+      <h3>🌍 Useful Environment Variable Prefixes</h3>
+      <table class="cmd-table">
+        <thead><tr><th>Variable</th><th>Effect</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>PWDEBUG=1</td><td>Enable Playwright Inspector (same as --debug)</td><td>PWDEBUG=1 npx playwright test</td></tr>
+          <tr><td>PWDEBUG=console</td><td>Log Playwright API calls to terminal without opening Inspector</td><td>PWDEBUG=console npx playwright test</td></tr>
+          <tr><td>DEBUG=pw:api</td><td>Print every Playwright API call to stderr — very verbose</td><td>DEBUG=pw:api npx playwright test</td></tr>
+          <tr><td>CI=true</td><td>Playwright detects CI mode — affects retries, workers, reporter defaults</td><td>Set automatically by GitHub Actions</td></tr>
+          <tr><td>PLAYWRIGHT_BROWSERS_PATH</td><td>Custom path for browser installs. Useful if disk space is constrained</td><td>PLAYWRIGHT_BROWSERS_PATH=/tmp/pw npx playwright install</td></tr>
+        </tbody>
+      </table>
+
+      <!-- NPM SCRIPTS -->
+      <h3>📦 Recommended package.json scripts</h3>
+<pre><span class="cm">// package.json — like Maven profiles</span>
+{
+  <span class="str">"scripts"</span>: {
+    <span class="str">"test"</span>:          <span class="str">"npx playwright test"</span>,
+    <span class="str">"test:headed"</span>:   <span class="str">"npx playwright test --headed"</span>,
+    <span class="str">"test:debug"</span>:    <span class="str">"npx playwright test --debug"</span>,
+    <span class="str">"test:ui"</span>:       <span class="str">"npx playwright test --ui"</span>,
+    <span class="str">"test:smoke"</span>:    <span class="str">"npx playwright test --grep @smoke"</span>,
+    <span class="str">"test:api"</span>:      <span class="str">"npx playwright test tests/api/"</span>,
+    <span class="str">"test:chrome"</span>:   <span class="str">"npx playwright test --project=chromium"</span>,
+    <span class="str">"test:ci"</span>:       <span class="str">"npx playwright test --retries=2 --workers=4"</span>,
+    <span class="str">"test:uat"</span>:      <span class="str">"ENV=uat npx playwright test"</span>,
+    <span class="str">"report"</span>:        <span class="str">"npx playwright show-report"</span>,
+    <span class="str">"codegen"</span>:       <span class="str">"npx playwright codegen https://www.saucedemo.com"</span>
+  }
+}
+
+<span class="cm">// Then run with: npm run test:smoke</span>
+<span class="cm">//                npm run test:uat</span>
+<span class="cm">//                npm run report</span></pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONFIG DEEP DIVE ═══ -->
+<div id="tab-config" class="page">
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">⚙️</span>
+      <span class="section-title">playwright.config.ts — Every Option Explained</span>
+      <span class="section-tag tag-fw">Deep Dive</span>
+      <span class="chevron open">▶</span>
+    </div>
+    <div class="section-body open">
+      <div class="callout callout-tip"><span class="callout-icon">💡</span><span>This is the single most important file in your framework. It replaces <code>testng.xml</code> + <code>pom.xml</code> + <code>extent-config.xml</code> + <code>log4j.properties</code> all in one place.</span></div>
+
+      <h3>Complete annotated config</h3>
+<pre><span class="kw">import</span> { defineConfig, devices } from <span class="str">'@playwright/test'</span>;
+
+<span class="kw">export default</span> <span class="fn">defineConfig</span>({
+
+  <span class="cm">// ── WHERE TO FIND TESTS ──────────────────────────────────────────</span>
+  testDir: <span class="str">'./tests'</span>,
+  <span class="cm">// Like pointing TestNG to src/test/java/tests/</span>
+  <span class="cm">// Can use globs: './tests/**/*.spec.ts'</span>
+
+  testMatch: <span class="str">'**/*.spec.ts'</span>,
+  <span class="cm">// File pattern to pick up as test files</span>
+  <span class="cm">// Default: **/*.spec.{ts,js}, **/*.test.{ts,js}</span>
+
+  testIgnore: <span class="str">'**/node_modules/**'</span>,
+  <span class="cm">// Glob pattern for files to exclude</span>
+
+  <span class="cm">// ── TIMEOUTS ─────────────────────────────────────────────────────</span>
+  timeout: <span class="op">30_000</span>,
+  <span class="cm">// Per-test timeout in ms. Test fails if it takes longer.</span>
+  <span class="cm">// Like @Test(timeOut=30000) in TestNG</span>
+  <span class="cm">// Default: 30000</span>
+
+  expect: {
+    timeout: <span class="op">5_000</span>,
+    <span class="cm">// How long expect() retries before failing</span>
+    <span class="cm">// Default: 5000ms</span>
+    <span class="cm">// e.g. expect(locator).toBeVisible() retries for 5 seconds</span>
+  },
+
+  <span class="cm">// ── PARALLEL EXECUTION ───────────────────────────────────────────</span>
+  workers: process.env.<span class="ty">CI</span> ? <span class="op">2</span> : <span class="op">4</span>,
+  <span class="cm">// Number of parallel test workers</span>
+  <span class="cm">// Like TestNG parallel="methods" with thread-count="4"</span>
+  <span class="cm">// CI gets fewer to avoid overloading the machine</span>
+  <span class="cm">// Default: 50% of CPU cores</span>
+
+  fullyParallel: <span class="kw">true</span>,
+  <span class="cm">// Run tests WITHIN a file in parallel too (not just across files)</span>
+  <span class="cm">// Default: false (tests in same file run sequentially)</span>
+
+  <span class="cm">// ── RETRIES ──────────────────────────────────────────────────────</span>
+  retries: process.env.<span class="ty">CI</span> ? <span class="op">2</span> : <span class="op">0</span>,
+  <span class="cm">// Retry failed tests N times before marking as failed</span>
+  <span class="cm">// Like @Test(retryAnalyzer=RetryAnalyzer.class) in TestNG</span>
+  <span class="cm">// Only retry in CI — locally see failures immediately</span>
+
+  <span class="cm">// ── FORBID .ONLY ─────────────────────────────────────────────────</span>
+  forbidOnly: !!process.env.<span class="ty">CI</span>,
+  <span class="cm">// In CI: fail if any test.only() is committed to the codebase</span>
+  <span class="cm">// Prevents accidentally shipping "focused" tests that skip everything else</span>
+
+  <span class="cm">// ── OUTPUT ───────────────────────────────────────────────────────</span>
+  outputDir: <span class="str">'test-results/'</span>,
+  <span class="cm">// Where to store test artifacts (screenshots, videos, traces)</span>
+  <span class="cm">// Created per-test: test-results/&lt;test-title&gt;/</span>
+
+  <span class="cm">// ── REPORTER ─────────────────────────────────────────────────────</span>
+  reporter: [
+    [<span class="str">'html'</span>,  { open: <span class="str">'on-failure'</span>, outputFolder: <span class="str">'playwright-report'</span> }],
+    <span class="cm">// Built-in HTML report. open: 'always' | 'never' | 'on-failure'</span>
+
+    [<span class="str">'list'</span>],
+    <span class="cm">// Console output: prints each test result as it finishes</span>
+
+    [<span class="str">'junit'</span>, { outputFile: <span class="str">'results/junit.xml'</span> }],
+    <span class="cm">// JUnit XML — needed for CI tools like Jenkins, GitHub Actions test reporter</span>
+
+    [<span class="str">'json'</span>,  { outputFile: <span class="str">'results/results.json'</span> }],
+    <span class="cm">// Machine-readable JSON — for custom dashboards</span>
+
+    <span class="cm">// ['allure-playwright']  — after npm install allure-playwright</span>
+    <span class="cm">// ['@playwright/test/reporter']  — blob reporter for sharding</span>
+    <span class="cm">// ['dot']  — minimal: just dots per test (fast CI output)</span>
+    <span class="cm">// ['line'] — one line per test</span>
+    <span class="cm">// ['github'] — GitHub Actions annotations in PR UI</span>
+  ],
+
+  <span class="cm">// ── GLOBAL USE (shared by all projects) ──────────────────────────</span>
+  use: {
+
+    <span class="cm">// Navigation</span>
+    baseURL: <span class="str">'https://www.saucedemo.com'</span>,
+    <span class="cm">// Prepended to page.goto('/login') → https://www.saucedemo.com/login</span>
+    <span class="cm">// Like @BeforeSuite setting driver.get(baseUrl + path)</span>
+
+    <span class="cm">// Browser window</span>
+    headless: <span class="kw">true</span>,
+    <span class="cm">// true = no visible window. false = see browser while test runs</span>
+
+    viewport: { width: <span class="op">1280</span>, height: <span class="op">720</span> },
+    <span class="cm">// Browser window size. Affects responsive layouts</span>
+    <span class="cm">// null = maximised (uses OS screen size)</span>
+
+    <span class="cm">// Timeouts</span>
+    actionTimeout: <span class="op">10_000</span>,
+    <span class="cm">// Timeout for individual actions: click, fill, etc.</span>
+    <span class="cm">// If element not interactable in 10s → fail</span>
+
+    navigationTimeout: <span class="op">30_000</span>,
+    <span class="cm">// Timeout for page.goto(), page.waitForURL() etc.</span>
+
+    <span class="cm">// On failure artifacts</span>
+    screenshot: <span class="str">'only-on-failure'</span>,
+    <span class="cm">// 'always' | 'never' | 'only-on-failure'</span>
+    <span class="cm">// Like ExtentReports addScreenCaptureFromPath() on failure</span>
+
+    video: <span class="str">'on-first-retry'</span>,
+    <span class="cm">// Record browser video</span>
+    <span class="cm">// 'always' | 'never' | 'on-first-retry' | 'retain-on-failure'</span>
+
+    trace: <span class="str">'on-first-retry'</span>,
+    <span class="cm">// Capture Playwright trace (DOM, network, screenshots timeline)</span>
+    <span class="cm">// 'always' | 'never' | 'on-first-retry' | 'retain-on-failure'</span>
+    <span class="cm">// View with: npx playwright show-trace trace.zip</span>
+
+    <span class="cm">// HTTP / network</span>
+    ignoreHTTPSErrors: <span class="kw">true</span>,
+    <span class="cm">// Ignore SSL certificate errors — common in staging environments</span>
+
+    extraHTTPHeaders: {
+      <span class="str">'x-api-key'</span>: process.env.<span class="ty">API_KEY</span> ?? <span class="str">''</span>,
+    },
+    <span class="cm">// Add headers to every request made by this browser context</span>
+    <span class="cm">// Useful for API key / tenant header in every call</span>
+
+    <span class="cm">// Auth state</span>
+    storageState: <span class="str">'playwright/.auth/user.json'</span>,
+    <span class="cm">// Load pre-saved login state (cookies + localStorage) before each test</span>
+    <span class="cm">// Generated by: page.context().storageState({ path: '...' })</span>
+    <span class="cm">// Skips login form entirely — like session reuse in RestAssured</span>
+
+    <span class="cm">// Locale / timezone</span>
+    locale: <span class="str">'en-IN'</span>,
+    timezoneId: <span class="str">'Asia/Kolkata'</span>,
+    <span class="cm">// Set browser locale and timezone — affects date formatting, language</span>
+
+    <span class="cm">// Geolocation</span>
+    geolocation: { latitude: <span class="op">21.1458</span>, longitude: <span class="op">79.0882</span> },
+    <span class="cm">// Nagpur coordinates — for location-aware app testing</span>
+
+    permissions: [<span class="str">'geolocation'</span>, <span class="str">'notifications'</span>],
+    <span class="cm">// Browser permissions to grant automatically</span>
+
+    <span class="cm">// Proxy</span>
+    proxy: { server: <span class="str">'http://proxy.corp.com:8080'</span> },
+    <span class="cm">// Route all browser traffic through proxy</span>
+
+    <span class="cm">// Colour scheme</span>
+    colorScheme: <span class="str">'light'</span>,
+    <span class="cm">// 'light' | 'dark' | 'no-preference'</span>
+    <span class="cm">// Affects CSS @media (prefers-color-scheme)</span>
+
+    <span class="cm">// Downloads</span>
+    acceptDownloads: <span class="kw">true</span>,
+    <span class="cm">// Whether to automatically accept file download dialogs</span>
+  },
+
+  <span class="cm">// ── PROJECTS (multi-browser / multi-env) ─────────────────────────</span>
+  projects: [
+
+    <span class="cm">// ── Desktop browsers ──</span>
+    {
+      name: <span class="str">'chromium'</span>,
+      use: { ...devices[<span class="str">'Desktop Chrome'</span>] },
+    },
+    {
+      name: <span class="str">'firefox'</span>,
+      use: { ...devices[<span class="str">'Desktop Firefox'</span>] },
+    },
+    {
+      name: <span class="str">'webkit'</span>,
+      use: { ...devices[<span class="str">'Desktop Safari'</span>] },
+    },
+
+    <span class="cm">// ── Mobile emulation ──</span>
+    {
+      name: <span class="str">'mobile-chrome'</span>,
+      use: { ...devices[<span class="str">'Pixel 5'</span>] },
+      <span class="cm">// Emulates Pixel 5: viewport, userAgent, touch, deviceScaleFactor</span>
+    },
+    {
+      name: <span class="str">'mobile-safari'</span>,
+      use: { ...devices[<span class="str">'iPhone 13'</span>] },
+    },
+
+    <span class="cm">// ── API-only project (no browser) ──</span>
+    {
+      name: <span class="str">'api-tests'</span>,
+      testDir: <span class="str">'./tests/api'</span>,
+      use: { baseURL: <span class="str">'https://reqres.in'</span> },
+      <span class="cm">// API tests don't need browser settings</span>
+    },
+
+    <span class="cm">// ── Environment-based projects ──</span>
+    {
+      name: <span class="str">'uat-chrome'</span>,
+      use: {
+        ...devices[<span class="str">'Desktop Chrome'</span>],
+        baseURL: <span class="str">'https://uat.saucedemo.com'</span>,
+      },
+    },
+
+    <span class="cm">// ── Setup project: runs before others ──</span>
+    {
+      name: <span class="str">'setup'</span>,
+      testMatch: <span class="str">'**/auth.setup.ts'</span>,
+      <span class="cm">// Runs auth.setup.ts first to generate storageState</span>
+    },
+    {
+      name: <span class="str">'chromium-auth'</span>,
+      use: {
+        ...devices[<span class="str">'Desktop Chrome'</span>],
+        storageState: <span class="str">'playwright/.auth/user.json'</span>,
+      },
+      dependencies: [<span class="str">'setup'</span>],
+      <span class="cm">// This project only runs AFTER 'setup' completes</span>
+      <span class="cm">// Like @BeforeSuite → @Test chain in TestNG</span>
+    },
+  ],
+
+  <span class="cm">// ── GLOBAL SETUP / TEARDOWN ──────────────────────────────────────</span>
+  globalSetup:    <span class="str">'./global-setup.ts'</span>,
+  <span class="cm">// Runs once before ALL tests — like @BeforeSuite in TestNG</span>
+  <span class="cm">// Use for: starting test servers, seeding databases, creating auth tokens</span>
+
+  globalTeardown: <span class="str">'./global-teardown.ts'</span>,
+  <span class="cm">// Runs once after ALL tests — like @AfterSuite in TestNG</span>
+  <span class="cm">// Use for: cleanup, sending summary emails, resetting DB</span>
+
+});</pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🔐</span>
+      <span class="section-title">Auth Setup — storageState (skip login in every test)</span>
+      <span class="section-tag tag-adv">Advanced</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="section-body">
+      <div class="callout callout-tip"><span class="callout-icon">🚀</span><span>The most powerful config trick. Log in once, save browser state, reuse in every test. Massive speed boost — no login form on every test.</span></div>
+<pre><span class="cm">// auth.setup.ts — runs once before all tests</span>
+<span class="kw">import</span> { test <span class="kw">as</span> setup } from <span class="str">'@playwright/test'</span>;
+<span class="kw">import</span> path from <span class="str">'path'</span>;
+
+<span class="kw">const</span> authFile = path.<span class="fn">join</span>(__dirname, <span class="str">'playwright/.auth/user.json'</span>);
+
+setup(<span class="str">'authenticate'</span>, <span class="kw">async</span> ({ page }) => {
+  <span class="kw">await</span> page.<span class="fn">goto</span>(<span class="str">'https://www.saucedemo.com'</span>);
+  <span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'#user-name'</span>, <span class="str">'standard_user'</span>);
+  <span class="kw">await</span> page.<span class="fn">fill</span>(<span class="str">'#password'</span>,  <span class="str">'secret_sauce'</span>);
+  <span class="kw">await</span> page.<span class="fn">click</span>(<span class="str">'#login-button'</span>);
+  <span class="kw">await</span> page.<span class="fn">waitForURL</span>(<span class="str">'**/inventory.html'</span>);
+
+  <span class="cm">// Save cookies + localStorage to file</span>
+  <span class="kw">await</span> page.context().<span class="fn">storageState</span>({ path: authFile });
+});
+
+<span class="cm">// Now all tests in 'chromium-auth' project start already logged in</span>
+<span class="cm">// No need to call loginPage.login() in every @BeforeMethod</span></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🌍</span>
+      <span class="section-title">globalSetup.ts — run code once before entire suite</span>
+      <span class="section-tag tag-adv">Advanced</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="section-body">
+<pre><span class="cm">// global-setup.ts</span>
+<span class="kw">import</span> { FullConfig } from <span class="str">'@playwright/test'</span>;
+
+<span class="kw">async function</span> <span class="fn">globalSetup</span>(config: <span class="ty">FullConfig</span>) {
+  console.<span class="fn">log</span>(<span class="str">'🚀 Starting test suite...'</span>);
+
+  <span class="cm">// Example: seed test database</span>
+  <span class="cm">// await db.migrate();</span>
+
+  <span class="cm">// Example: generate an API token and store in env</span>
+  <span class="cm">// const token = await getApiToken();</span>
+  <span class="cm">// process.env.API_TOKEN = token;</span>
+
+  <span class="cm">// Example: start a local mock server</span>
+  <span class="cm">// server = await startMockServer(3001);</span>
+}
+
+<span class="kw">export default</span> globalSetup;
+
+<span class="cm">// global-teardown.ts</span>
+<span class="kw">async function</span> <span class="fn">globalTeardown</span>() {
+  console.<span class="fn">log</span>(<span class="str">'✅ Suite complete. Cleaning up...'</span>);
+  <span class="cm">// await server.close();</span>
+  <span class="cm">// await db.rollback();</span>
+}
+<span class="kw">export default</span> globalTeardown;</pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">📋</span>
+      <span class="section-title">Config Options Quick Reference</span>
+      <span class="section-tag tag-basics">Cheat Sheet</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="section-body">
+      <table class="cmd-table">
+        <thead><tr><th>Config Key</th><th>Default</th><th>What it controls</th></tr></thead>
+        <tbody>
+          <tr class="cmd-section-row"><td colspan="3">TOP LEVEL</td></tr>
+          <tr><td>testDir</td><td>'.'</td><td>Root folder for test discovery</td></tr>
+          <tr><td>testMatch</td><td>**/*.spec.{ts,js}</td><td>File glob pattern to identify test files</td></tr>
+          <tr><td>timeout</td><td>30000</td><td>Per-test timeout in ms</td></tr>
+          <tr><td>retries</td><td>0</td><td>Auto-retry failed tests N times</td></tr>
+          <tr><td>workers</td><td>50% CPU</td><td>Number of parallel worker processes</td></tr>
+          <tr><td>fullyParallel</td><td>false</td><td>Parallel within a file (not just across files)</td></tr>
+          <tr><td>forbidOnly</td><td>false</td><td>Fail if test.only() found (use in CI)</td></tr>
+          <tr><td>outputDir</td><td>test-results/</td><td>Where screenshots/videos/traces are saved</td></tr>
+          <tr><td>globalSetup</td><td>undefined</td><td>File to run once before all tests</td></tr>
+          <tr><td>globalTeardown</td><td>undefined</td><td>File to run once after all tests</td></tr>
+          <tr class="cmd-section-row"><td colspan="3">use: { } — BROWSER CONTEXT</td></tr>
+          <tr><td>baseURL</td><td>undefined</td><td>Prepended to relative page.goto() paths</td></tr>
+          <tr><td>headless</td><td>true</td><td>Show/hide browser window</td></tr>
+          <tr><td>viewport</td><td>{w:1280,h:720}</td><td>Browser window size</td></tr>
+          <tr><td>actionTimeout</td><td>0 (inherit)</td><td>Timeout for each action (click, fill)</td></tr>
+          <tr><td>navigationTimeout</td><td>0 (inherit)</td><td>Timeout for page.goto / waitForURL</td></tr>
+          <tr><td>screenshot</td><td>'off'</td><td>When to capture screenshots</td></tr>
+          <tr><td>video</td><td>'off'</td><td>When to record video</td></tr>
+          <tr><td>trace</td><td>'off'</td><td>When to capture trace</td></tr>
+          <tr><td>storageState</td><td>undefined</td><td>Pre-load auth cookies/storage for every test</td></tr>
+          <tr><td>ignoreHTTPSErrors</td><td>false</td><td>Allow self-signed SSL certificates</td></tr>
+          <tr><td>extraHTTPHeaders</td><td>{}</td><td>Extra headers on every request</td></tr>
+          <tr><td>locale</td><td>system</td><td>Browser locale (en-IN, en-US, de-DE)</td></tr>
+          <tr><td>timezoneId</td><td>system</td><td>Browser timezone (Asia/Kolkata)</td></tr>
+          <tr><td>colorScheme</td><td>'light'</td><td>CSS media prefers-color-scheme value</td></tr>
+          <tr><td>permissions</td><td>[]</td><td>Browser permissions (geolocation, camera)</td></tr>
+          <tr><td>acceptDownloads</td><td>true</td><td>Auto-accept file download dialogs</td></tr>
+          <tr><td>proxy</td><td>undefined</td><td>HTTP proxy for all browser traffic</td></tr>
+          <tr class="cmd-section-row"><td colspan="3">expect: { } — ASSERTION BEHAVIOUR</td></tr>
+          <tr><td>timeout</td><td>5000</td><td>How long expect() retries before failing</td></tr>
+          <tr><td>toMatchSnapshot.maxDiffPixels</td><td>undefined</td><td>Pixel tolerance for visual comparisons</td></tr>
+          <tr class="cmd-section-row"><td colspan="3">reporter OPTIONS</td></tr>
+          <tr><td>html</td><td>built-in</td><td>Rich HTML report with attachments, filters, retry info</td></tr>
+          <tr><td>list</td><td>built-in</td><td>Console: one line per test as it runs</td></tr>
+          <tr><td>dot</td><td>built-in</td><td>Console: one dot per test (compact CI output)</td></tr>
+          <tr><td>junit</td><td>built-in</td><td>JUnit XML (Jenkins / GitHub Actions test reporter)</td></tr>
+          <tr><td>json</td><td>built-in</td><td>Machine-readable JSON output file</td></tr>
+          <tr><td>github</td><td>built-in</td><td>GitHub Actions annotations on PR diffs</td></tr>
+          <tr><td>blob</td><td>built-in</td><td>Binary format used to merge sharded reports</td></tr>
+          <tr><td>allure-playwright</td><td>npm install</td><td>Allure report (like ExtentReports)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🔀</span>
+      <span class="section-title">Multiple Config Files — QA vs UAT vs Prod</span>
+      <span class="section-tag tag-inter">Intermediate</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="section-body">
+<pre><span class="cm">// playwright.config.qa.ts</span>
+<span class="kw">import</span> base from <span class="str">'./playwright.config'</span>;
+<span class="kw">import</span> { defineConfig } from <span class="str">'@playwright/test'</span>;
+
+<span class="kw">export default</span> <span class="fn">defineConfig</span>({
+  ...base,
+  use: {
+    ...base.use,
+    baseURL: <span class="str">'https://qa.saucedemo.com'</span>,
+  },
+});
+
+<span class="cm">// Run with specific config:</span>
+npx playwright test --config=playwright.config.qa.ts
+npx playwright test --config=playwright.config.uat.ts
+
+<span class="cm">// Or set in package.json scripts:</span>
+<span class="str">"test:qa"</span>:  <span class="str">"npx playwright test --config=playwright.config.qa.ts"</span>,
+<span class="str">"test:uat"</span>: <span class="str">"npx playwright test --config=playwright.config.uat.ts"</span></pre>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    el.classList.add('active');
+  }
+  function toggleSection(header) {
+    const body    = header.nextElementSibling;
+    const chevron = header.querySelector('.chevron');
+    const isOpen  = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    chevron.classList.toggle('open', !isOpen);
+  }
+  function toggle(check) {
+    check.classList.toggle('done');
+    check.nextElementSibling.classList.toggle('done');
+    updateProgress();
+  }
+  function updateProgress() {
+    const total = document.querySelectorAll('#checklist .check').length;
+    const done  = document.querySelectorAll('#checklist .check.done').length;
+    document.getElementById('prog').style.width = (done / total * 100) + '%';
+    document.getElementById('progress-label').textContent = done + ' of ' + total + ' completed';
+  }
+</script>
+</body>
+</html>
