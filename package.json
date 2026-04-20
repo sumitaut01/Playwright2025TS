@@ -9,7 +9,8 @@
     "test:debug": "npx playwright test --debug",
     "codegen": "npx playwright codegen",
     "install-deps": "npx playwright install-deps",
-    "install-browsers": "npx playwright install"
+    "install-browsers": "npx playwright install",
+    "testrough": "npx playwright test --headed 01rough.spec.ts"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,2446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playwright Learning Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #0f0f1a;
+    --bg3: #141428;
+    --surface: #1a1a2e;
+    --surface2: #16213e;
+    --accent: #00d9ff;
+    --accent2: #7c3aed;
+    --accent3: #f59e0b;
+    --accent4: #10b981;
+    --red: #ef4444;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --border: rgba(0,217,255,0.15);
+    --glow: 0 0 20px rgba(0,217,255,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(0,217,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,217,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* LAYOUT */
+  .shell { display: flex; min-height: 100vh; position: relative; z-index: 1; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    flex-shrink: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent2) transparent;
+  }
+
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .sidebar-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .sidebar-sub {
+    font-size: 11px;
+    color: var(--text3);
+    font-family: 'Space Mono', monospace;
+    margin-top: 4px;
+  }
+
+  .sidebar-section {
+    padding: 16px 12px 8px;
+  }
+
+  .sidebar-section-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text3);
+    font-family: 'Space Mono', monospace;
+    padding: 0 8px;
+    margin-bottom: 6px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text2);
+    border: 1px solid transparent;
+    margin-bottom: 2px;
+  }
+
+  .nav-item:hover {
+    background: var(--surface);
+    color: var(--accent);
+    border-color: var(--border);
+  }
+
+  .nav-item.active {
+    background: rgba(0,217,255,0.08);
+    color: var(--accent);
+    border-color: rgba(0,217,255,0.25);
+    box-shadow: inset 3px 0 0 var(--accent);
+  }
+
+  .nav-icon { font-size: 16px; width: 20px; text-align: center; }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--accent2);
+    color: #fff;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* MAIN CONTENT */
+  .main { flex: 1; padding: 0; overflow: hidden; }
+
+  /* SECTIONS */
+  .section { display: none; height: 100vh; overflow-y: auto; }
+  .section.active { display: block; }
+
+  /* HERO SECTION */
+  .hero {
+    padding: 60px 48px 40px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero::before {
+    content: 'PW';
+    position: absolute;
+    right: -20px;
+    top: -30px;
+    font-size: 220px;
+    font-weight: 800;
+    color: rgba(0,217,255,0.03);
+    font-family: 'Syne', sans-serif;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,217,255,0.08);
+    border: 1px solid rgba(0,217,255,0.2);
+    color: var(--accent);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  .hero-tag::before { content: '▶'; font-size: 8px; }
+
+  .hero h1 {
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 60%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    color: var(--text2);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .stat-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* CONTENT AREA */
+  .content-area { padding: 40px 48px; }
+
+  /* CARDS */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.25s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .card:hover { border-color: rgba(0,217,255,0.35); transform: translateY(-2px); box-shadow: var(--glow); }
+  .card:hover::before { opacity: 1; }
+
+  .card-icon { font-size: 28px; margin-bottom: 12px; }
+  .card-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .card-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+  /* CODE BLOCKS */
+  .code-block {
+    background: #080810;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .code-filename {
+    font-size: 11px;
+    color: var(--text3);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .code-lang {
+    font-size: 10px;
+    background: rgba(0,217,255,0.1);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+  }
+
+  .code-copy {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text3);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 10px;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    transition: all 0.2s;
+  }
+
+  .code-copy:hover { border-color: var(--accent); color: var(--accent); }
+
+  pre {
+    padding: 20px;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-x: auto;
+    color: #cdd6f4;
+  }
+
+  /* SYNTAX COLORS */
+  .kw { color: #cba6f7; } /* keyword */
+  .fn { color: #89b4fa; } /* function */
+  .str { color: #a6e3a1; } /* string */
+  .cm { color: #585b70; font-style: italic; } /* comment */
+  .num { color: #fab387; } /* number */
+  .var { color: #cdd6f4; } /* variable */
+  .op { color: #89dceb; } /* operator/method */
+  .cls { color: #f9e2af; } /* class */
+  .dec { color: #89dceb; } /* decorator */
+
+  /* SECTION TITLES */
+  .section-heading {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  .section-sub {
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 32px;
+  }
+
+  /* COMPARISON TABLE */
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 13px;
+  }
+
+  .comparison-table th {
+    background: rgba(0,217,255,0.08);
+    color: var(--accent);
+    padding: 12px 16px;
+    text-align: left;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comparison-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--text2);
+    vertical-align: top;
+  }
+
+  .comparison-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .comparison-table td:first-child {
+    color: var(--accent3);
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+  }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    margin: 2px;
+  }
+
+  .tag-green { background: rgba(16,185,129,0.15); color: var(--accent4); border: 1px solid rgba(16,185,129,0.3); }
+  .tag-blue { background: rgba(0,217,255,0.1); color: var(--accent); border: 1px solid rgba(0,217,255,0.25); }
+  .tag-purple { background: rgba(124,58,237,0.15); color: #a78bfa; border: 1px solid rgba(124,58,237,0.3); }
+  .tag-yellow { background: rgba(245,158,11,0.1); color: var(--accent3); border: 1px solid rgba(245,158,11,0.25); }
+  .tag-red { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.25); }
+
+  /* FLOW DIAGRAMS */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin: 20px 0;
+  }
+
+  .flow-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 18px;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .flow-step-icon { font-size: 20px; margin-bottom: 4px; }
+  .flow-step-label { font-size: 12px; font-weight: 700; color: var(--text); }
+  .flow-step-sub { font-size: 10px; color: var(--text3); font-family: 'Space Mono', monospace; }
+
+  .flow-arrow {
+    color: var(--accent);
+    font-size: 20px;
+    padding: 0 8px;
+    flex-shrink: 0;
+  }
+
+  /* CALLOUT BOXES */
+  .callout {
+    border-left: 3px solid;
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .callout-tip { border-color: var(--accent4); background: rgba(16,185,129,0.07); color: var(--text2); }
+  .callout-warn { border-color: var(--accent3); background: rgba(245,158,11,0.07); color: var(--text2); }
+  .callout-info { border-color: var(--accent); background: rgba(0,217,255,0.06); color: var(--text2); }
+
+  .callout strong { color: var(--text); }
+
+  /* PROGRESS TRACKER */
+  .progress-track {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+  }
+
+  .progress-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .progress-item:hover { border-color: rgba(0,217,255,0.3); }
+
+  .progress-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-done { background: var(--accent4); box-shadow: 0 0 8px rgba(16,185,129,0.5); }
+  .dot-active { background: var(--accent); box-shadow: 0 0 8px rgba(0,217,255,0.5); animation: pulse 1.5s infinite; }
+  .dot-todo { background: var(--text3); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .progress-label { font-size: 14px; font-weight: 600; color: var(--text); flex: 1; }
+  .progress-meta { font-size: 11px; color: var(--text3); font-family: 'Space Mono', monospace; }
+
+  /* TABS inside sections */
+  .inner-tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+    padding-bottom: 0;
+  }
+
+  .inner-tab {
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text3);
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    border-bottom: none;
+    margin-bottom: -1px;
+  }
+
+  .inner-tab:hover { color: var(--text2); }
+  .inner-tab.active {
+    color: var(--accent);
+    background: var(--surface);
+    border-color: var(--border);
+    border-bottom-color: var(--surface);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* CHEATSHEET GRID */
+  .cheat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .cheat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .cheat-card-header {
+    background: rgba(255,255,255,0.03);
+    padding: 10px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--border);
+    text-transform: uppercase;
+  }
+
+  .cheat-rows { padding: 8px; }
+
+  .cheat-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 8px;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+
+  .cheat-row:hover { background: rgba(255,255,255,0.03); }
+
+  .cheat-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(0,217,255,0.08);
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .cheat-desc {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.4;
+    padding-top: 2px;
+  }
+
+  /* ARCHITECTURE VISUAL */
+  .arch-visual {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 30px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .arch-layer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0;
+    position: relative;
+  }
+
+  .arch-box {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+    text-align: center;
+    border: 1px solid;
+  }
+
+  .arch-box-blue { background: rgba(0,217,255,0.08); border-color: rgba(0,217,255,0.3); color: var(--accent); }
+  .arch-box-purple { background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.35); color: #a78bfa; }
+  .arch-box-green { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.3); color: var(--accent4); }
+  .arch-box-yellow { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.25); color: var(--accent3); }
+
+  .arch-label { font-size: 11px; color: var(--text3); font-family: 'Space Mono', monospace; }
+
+  /* SCROLLBAR */
+  .section::-webkit-scrollbar { width: 6px; }
+  .section::-webkit-scrollbar-track { background: transparent; }
+  .section::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 3px; }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 2px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .sidebar { width: 220px; }
+    .hero { padding: 30px 24px; }
+    .hero h1 { font-size: 36px; }
+    .content-area { padding: 24px; }
+    .cheat-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 20px; }
+  }
+
+  @media (max-width: 600px) {
+    .sidebar { position: fixed; transform: translateX(-100%); z-index: 100; transition: transform 0.3s; }
+    .sidebar.open { transform: translateX(0); }
+    .main { width: 100%; }
+  }
+
+  /* QUIZ */
+  .quiz-q {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin: 16px 0;
+  }
+
+  .quiz-q-text { font-size: 15px; font-weight: 600; margin-bottom: 16px; }
+
+  .quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 7px;
+    margin: 8px 0;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 13px;
+    color: var(--text2);
+  }
+
+  .quiz-option:hover { border-color: var(--accent); color: var(--text); }
+  .quiz-option.correct { border-color: var(--accent4); background: rgba(16,185,129,0.1); color: var(--accent4); }
+  .quiz-option.wrong { border-color: var(--red); background: rgba(239,68,68,0.1); color: var(--red); }
+  .quiz-option.disabled { pointer-events: none; }
+
+  .quiz-opt-key {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section.active .hero,
+  .section.active .content-area {
+    animation: fadeIn 0.4s ease;
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-badge">🎭 PLAYWRIGHT</div>
+      <div class="sidebar-title">Learning Guide</div>
+      <div class="sidebar-sub">// from zero to pro</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Getting Started</div>
+      <div class="nav-item active" onclick="showSection('intro')">
+        <span class="nav-icon">🏠</span> Introduction
+      </div>
+      <div class="nav-item" onclick="showSection('setup')">
+        <span class="nav-icon">⚙️</span> Setup & Config
+      </div>
+      <div class="nav-item" onclick="showSection('architecture')">
+        <span class="nav-icon">🏗️</span> Architecture
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Core Concepts</div>
+      <div class="nav-item" onclick="showSection('locators')">
+        <span class="nav-icon">🎯</span> Locators
+      </div>
+      <div class="nav-item" onclick="showSection('actions')">
+        <span class="nav-icon">⚡</span> Actions & Events
+      </div>
+      <div class="nav-item" onclick="showSection('assertions')">
+        <span class="nav-icon">✅</span> Assertions
+        <span class="nav-badge">NEW</span>
+      </div>
+      <div class="nav-item" onclick="showSection('waits')">
+        <span class="nav-icon">⏱️</span> Waits & Auto-wait
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Advanced</div>
+      <div class="nav-item" onclick="showSection('api')">
+        <span class="nav-icon">🌐</span> API Testing
+      </div>
+      <div class="nav-item" onclick="showSection('fixtures')">
+        <span class="nav-icon">🔧</span> Fixtures & Hooks
+      </div>
+      <div class="nav-item" onclick="showSection('pom')">
+        <span class="nav-icon">📐</span> Page Object Model
+      </div>
+      <div class="nav-item" onclick="showSection('spread')">
+        <span class="nav-icon">✳️</span> <code style="font-size:12px">...</code> Spread Operator
+        <span class="nav-badge">NEW</span>
+      </div>
+      <div class="nav-item" onclick="showSection('extend')">
+        <span class="nav-icon">🧩</span> base.extend&lt;&gt;
+        <span class="nav-badge">NEW</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Reference</div>
+      <div class="nav-item" onclick="showSection('cheatsheet')">
+        <span class="nav-icon">📋</span> Cheat Sheet
+      </div>
+      <div class="nav-item" onclick="showSection('vsselenium')">
+        <span class="nav-icon">⚖️</span> vs Selenium
+      </div>
+      <div class="nav-item" onclick="showSection('coursenotes')">
+        <span class="nav-icon">📖</span> Course Notes
+        <span class="nav-badge">PDF</span>
+      </div>
+      <div class="nav-item" onclick="showSection('quiz')">
+        <span class="nav-icon">🧠</span> Quiz
+        <span class="nav-badge">5 Qs</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- ==================== INTRO ==================== -->
+    <div class="section active" id="sec-intro">
+      <div class="hero">
+        <div class="hero-tag">Microsoft Open Source · v1.44+</div>
+        <h1>Master Playwright<br>Test Automation</h1>
+        <p class="hero-desc">A modern end-to-end testing framework built for the real web — cross-browser, auto-waiting, and TypeScript-first. Your complete reference guide from install to CI/CD.</p>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-num">3</div><div class="stat-label">Browsers</div></div>
+          <div class="stat"><div class="stat-num">0</div><div class="stat-label">Flaky Tests</div></div>
+          <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Possibilities</div></div>
+        </div>
+      </div>
+      <div class="content-area">
+        <h2 class="section-heading">Why Playwright?</h2>
+        <p class="section-sub">Playwright was built from scratch to support modern web apps — no Selenium inheritance, no hacks.</p>
+
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-icon">🔄</div>
+            <div class="card-title">Auto-waiting</div>
+            <div class="card-desc">Automatically waits for elements to be actionable before performing any action. No more <code>Thread.sleep()</code>.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🌐</div>
+            <div class="card-title">Cross-Browser</div>
+            <div class="card-desc">Chromium, Firefox, and WebKit with a single API. One test, three engines.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📸</div>
+            <div class="card-title">Visual Testing</div>
+            <div class="card-desc">Built-in screenshot and pixel-by-pixel visual comparison with <code>expect(page).toHaveScreenshot()</code>.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔗</div>
+            <div class="card-title">API + UI Combined</div>
+            <div class="card-desc">Test REST APIs and UI in the same test. Set up state via API, verify via browser.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📦</div>
+            <div class="card-title">Zero Config</div>
+            <div class="card-desc">Comes with built-in test runner, assertions, reporters, and browser downloads.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">⚡</div>
+            <div class="card-title">Parallel by Default</div>
+            <div class="card-desc">Tests run in parallel across workers. Isolated browser contexts for each test.</div>
+          </div>
+        </div>
+
+        <h2 class="section-heading">Learning Roadmap</h2>
+        <div class="progress-track">
+          <div class="progress-item">
+            <div class="progress-dot dot-done"></div>
+            <div class="progress-label">Install & first test</div>
+            <div class="progress-meta">DONE ✓</div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-dot dot-active"></div>
+            <div class="progress-label">Locators · Actions · Assertions</div>
+            <div class="progress-meta">IN PROGRESS</div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-dot dot-todo"></div>
+            <div class="progress-label">Page Object Model</div>
+            <div class="progress-meta">TODO</div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-dot dot-todo"></div>
+            <div class="progress-label">API Testing + Fixtures</div>
+            <div class="progress-meta">TODO</div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-dot dot-todo"></div>
+            <div class="progress-label">CI/CD Integration</div>
+            <div class="progress-meta">TODO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SETUP ==================== -->
+    <div class="section" id="sec-setup">
+      <div class="hero">
+        <div class="hero-tag">Node.js 18+ Required</div>
+        <h1>Setup & Config</h1>
+        <p class="hero-desc">Install Playwright, configure browsers, and wire up <code>playwright.config.ts</code> for multi-environment runs.</p>
+      </div>
+      <div class="content-area">
+        <h2 class="section-heading">Installation</h2>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-filename">terminal</span>
+            <span class="code-lang">BASH</span>
+            <button class="code-copy" onclick="copyCode(this)">copy</button>
+          </div>
+          <pre><span class="cm"># Initialize new Playwright project</span>
+<span class="fn">npm</span> init playwright@latest
+
+<span class="cm"># Or add to existing project</span>
+<span class="fn">npm</span> install -D @playwright/test
+<span class="fn">npx</span> playwright install        <span class="cm"># Downloads browsers</span>
+<span class="fn">npx</span> playwright install-deps  <span class="cm"># Linux system deps</span></pre>
+        </div>
+
+        <h2 class="section-heading">playwright.config.ts</h2>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-filename">playwright.config.ts</span>
+            <span class="code-lang">TS</span>
+            <button class="code-copy" onclick="copyCode(this)">copy</button>
+          </div>
+          <pre><span class="kw">import</span> { <span class="cls">defineConfig</span>, <span class="cls">devices</span> } <span class="kw">from</span> <span class="str">'@playwright/test'</span>;
+
+<span class="kw">export default</span> <span class="fn">defineConfig</span>({
+  testDir: <span class="str">'./tests'</span>,
+  fullyParallel: <span class="kw">true</span>,
+  forbidOnly: !!process.env.<span class="var">CI</span>,
+  retries: process.env.<span class="var">CI</span> ? <span class="num">2</span> : <span class="num">0</span>,
+  workers: process.env.<span class="var">CI</span> ? <span class="num">1</span> : <span class="kw">undefined</span>,
+  reporter: <span class="str">'html'</span>,
+
+  use: {
+    baseURL: <span class="str">'http://localhost:4200'</span>,  <span class="cm">// Angular dev server</span>
+    trace: <span class="str">'on-first-retry'</span>,
+    screenshot: <span class="str">'only-on-failure'</span>,
+    video: <span class="str">'retain-on-failure'</span>,
+  },
+
+  projects: [
+    { name: <span class="str">'chromium'</span>, use: { ...devices[<span class="str">'Desktop Chrome'</span>] } },
+    { name: <span class="str">'firefox'</span>,  use: { ...devices[<span class="str">'Desktop Firefox'</span>] } },
+    { name: <span class="str">'webkit'</span>,   use: { ...devices[<span class="str">'Desktop Safari'</span>] } },
+    { name: <span class="str">'mobile-chrome'</span>, use: { ...devices[<span class="str">'Pixel 5'</span>] } },
+  ],
+
+  webServer: {  <span class="cm">// Start Angular before tests</span>
+    command: <span class="str">'ng serve'</span>,
+    url: <span class="str">'http://localhost:4200'</span>,
+    reuseExistingServer: !process.env.<span class="var">CI</span>,
+  },
+});</pre>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 Pro Tip:</strong> Use environment variables + <code>.env</code> files via <code>dotenv</code> for QA/UAT URL switching. Same pattern you already use in RestAssured configs!
+        </div>
+
+        <h2 class="section-heading">Run Commands</h2>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-filename">terminal</span>
+            <span class="code-lang">BASH</span>
+            <button class="code-copy" onclick="copyCode(this)">copy</button>
+          </div>
+          <pre><span class="fn">npx</span> playwright test                       <span class="cm"># All tests</span>
+<span class="fn">npx</span> playwright test --project=chromium    <span class="cm"># Single browser</span>
+<span class="fn">npx</span> playwright test --headed              <span class="cm"># Show browser</span>
+<span class="fn">npx</span> playwright test --debug               <span class="cm"># Pause on each step</span>
+<span class="fn">npx</span> playwright test login.spec.ts         <span class="cm"># Single file</span>
+<span class="fn">npx</span> playwright test -g "Login"            <span class="cm"># Test by name</span>
+<span class="fn">npx</span> playwright show-report                <span class="cm"># HTML report</span>
+<span class="fn">npx</span> playwright codegen http://localhost   <span class="cm"># Record test</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ARCHITECTURE ==================== -->
+    <div class="section" id="sec-architecture">
+      <div class="hero">
+        <div class="hero-tag">Core Concepts</div>
+        <h1>Architecture</h1>
+        <p class="hero-desc">Understand how Browser → BrowserContext → Page stack works — isolated, parallel, powerful.</p>
+      </div>
+      <div class="content-area">
+        <h2 class="section-heading">Object Hierarchy</h2>
+
+        <div class="arch-visual">
+          <div class="arch-layer">
+            <div class="arch-box arch-box-blue">Browser</div>
+            <div class="arch-label">← Chromium / Firefox / WebKit process</div>
+          </div>
+          <div style="padding-left:30px; border-left: 2px dashed rgba(0,217,255,0.2); margin: 4px 0 4px 40px;">
+            <div class="arch-layer">
+              <div class="arch-box arch-box-purple">BrowserContext</div>
+              <div class="arch-label">← Isolated session (cookies, storage). Like Incognito window.</div>
+            </div>
+            <div style="padding-left:30px; border-left: 2px dashed rgba(124,58,237,0.2); margin: 4px 0 4px 50px;">
+              <div class="arch-layer">
+                <div class="arch-box arch-box-green">Page</div>
+                <div class="arch-label">← Single browser tab. Has its own URL, DOM.</div>
+              </div>
+              <div style="padding-left:30px; border-left: 2px dashed rgba(16,185,129,0.2); margin: 4px 0 4px 50px;">
+                <div class="arch-layer">
+                  <div class="arch-box arch-box-yellow">Locator</div>
+                  <div class="arch-label">← Lazy element reference. Re-queried on every action.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <strong>📌 Key Insight:</strong> Each test automatically gets its own BrowserContext. This means tests are fully isolated — no shared cookies, localStorage, or state between tests. Perfect for parallel execution.
+        </div>
+
+        <h2 class="section-heading">Auto-Wait Lifecycle</h2>
+        <div class="flow">
+          <div class="flow-step">
+            <div class="flow-step-icon">🎯</div>
+            <div class="flow-step-label">Action called</div>
+            <div class="flow-step-sub">click(), fill(), etc.</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">
+            <div class="flow-step-icon">🔍</div>
+            <div class="flow-step-label">Find element</div>
+            <div class="flow-step-sub">query DOM</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">
+            <div class="flow-step-icon">⏳</div>
+            <div class="flow-step-label">Check actionable</div>
+            <div class="flow-step-sub">visible + enabled</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">
+            <div class="flow-step-icon">🖱️</div>
+            <div class="flow-step-label">Perform action</div>
+            <div class="flow-step-sub">real event dispatch</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">
+            <div class="flow-step-icon">✅</div>
+            <div class="flow-step-label">Done</div>
+            <div class="flow-step-sub">or retry loop</div>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-filename">architecture-demo.spec.ts</span>
+            <span class="code-lang">TS</span>
+            <button class="code-copy" onclick="copyCode(this)">copy</button>
+          </div>
+          <pre><span class="kw">import</span> { test, expect } <span class="kw">from</span> <span class="str">'@playwright/test'</span>;
+
+<span class="cm">// Each test() gets a fresh Page (and BrowserContext) automatically</span>
+test(<span class="str">'example'</span>, <span class="kw">async</span> ({ page }) => {
+  <span class="cm">// page = isolated tab in a fresh context</span>
+  <span class="kw">await</span> page.<span class="op">goto</span>(<span class="str">'/'</span>);
+});
+
+<span class="cm">// Creating contexts manually (for multi-user scenarios)</span>
+test(<span class="str">'two users'</span>, <span class="kw">async</span> ({ browser }) => {
+  <span class="kw">const</span> adminCtx = <span class="kw">await</span> browser.<span class="op">newContext</span>({
+    storageState: <span class="str">'auth/admin.json'</span>
+  });
+  <span class="kw">const</span> userCtx = <span class="kw">await</span> browser.<span class="op">newContext</span>({
+    storageState: <span class="str">'auth/user.json'</span>
+  });
+
+  <span class="kw">const</span> adminPage = <span class="kw">await</span> adminCtx.<span class="op">newPage</span>();
+  <span class="kw">const</span> userPage = <span class="kw">await</span> userCtx.<span class="op">newPage</span>();
+
+  <span class="cm">// Both running in parallel, completely isolated</span>
+  <span class="kw">await</span> adminPage.<span class="op">goto</span>(<span class="str">'/admin/dashboard'</span>);
+  <span class="kw">await</span> userPage.<span class="op">goto</span>(<span class="str">'/user/home'</span>);
+});</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== LOCATORS ==================== -->
+    <div class="section" id="sec-locators">
+      <div class="hero">
+        <div class="hero-tag">Element Selection</div>
+        <h1>Locators</h1>
+        <p class="hero-desc">Playwright's locators are lazy, auto-retrying, and strict by default. Forget stale element exceptions forever.</p>
+      </div>
+      <div class="content-area">
+        <div class="inner-tabs">
+          <div class="inner-tab active" onclick="switchTab(this,'loc-preferred')">Preferred</div>
+          <div class="inner-tab" onclick="switchTab(this,'loc-css')">CSS / XPath</div>
+          <div class="inner-tab" onclick="switchTab(this,'loc-filter')">Filtering</div>
+          <div class="inner-tab" onclick="switchTab(this,'loc-chain')">Chaining</div>
+        </div>
+
+        <div class="tab-content active" id="loc-preferred">
+          <div class="callout callout-tip"><strong>✅ Best Practice:</strong> Prefer these role-based & semantic locators. They match what users see, not implementation details.</div>
+          <div class="code-block">
+            <div class="code-header"><span class="code-filename">preferred-locators.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+            <pre><span class="cm">// By Role (best — uses ARIA roles)</span>
+page.<span class="op">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Submit'</span> })
+page.<span class="op">getByRole</span>(<span class="str">'textbox'</span>, { name: <span class="str">'Email'</span> })
+page.<span class="op">getByRole</span>(<span class="str">'link'</span>, { name: <span class="str">'Sign in'</span> })
+page.<span class="op">getByRole</span>(<span class="str">'heading'</span>, { level: <span class="num">1</span> })
+page.<span class="op">getByRole</span>(<span class="str">'checkbox'</span>, { name: <span class="str">'Remember me'</span> })
+
+<span class="cm">// By Label (great for form fields)</span>
+page.<span class="op">getByLabel</span>(<span class="str">'Username'</span>)
+page.<span class="op">getByLabel</span>(<span class="str">'Password'</span>)
+
+<span class="cm">// By Placeholder</span>
+page.<span class="op">getByPlaceholder</span>(<span class="str">'Enter your email'</span>)
+
+<span class="cm">// By Text</span>
+page.<span class="op">getByText</span>(<span class="str">'Welcome back'</span>)
+page.<span class="op">getByText</span>(<span class="str">/welcome/i</span>)   <span class="cm">// Regex</span>
+
+<span class="cm">// By Test ID (explicit, for when nothing else works)</span>
+page.<span class="op">getByTestId</span>(<span class="str">'submit-btn'</span>)  <span class="cm">// data-testid="submit-btn"</span>
+
+<span class="cm">// By Alt Text (images)</span>
+page.<span class="op">getByAltText</span>(<span class="str">'Company logo'</span>)
+
+<span class="cm">// By Title</span>
+page.<span class="op">getByTitle</span>(<span class="str">'Close dialog'</span>)</pre>
+          </div>
+        </div>
+
+        <div class="tab-content" id="loc-css">
+          <div class="callout callout-warn"><strong>⚠️ Use Sparingly:</strong> CSS/XPath work but are brittle. Prefer role-based locators above.</div>
+          <div class="code-block">
+            <div class="code-header"><span class="code-filename">css-xpath.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+            <pre><span class="cm">// CSS Selector</span>
+page.<span class="op">locator</span>(<span class="str">'button.primary'</span>)
+page.<span class="op">locator</span>(<span class="str">'#login-form input[type="email"]'</span>)
+page.<span class="op">locator</span>(<span class="str">'.pricing-table > .row:first-child'</span>)
+
+<span class="cm">// XPath</span>
+page.<span class="op">locator</span>(<span class="str">'xpath=//button[text()="Submit"]'</span>)
+page.<span class="op">locator</span>(<span class="str">'//table//tr[contains(@class,"active")]'</span>)
+
+<span class="cm">// data-testid (via CSS)</span>
+page.<span class="op">locator</span>(<span class="str">'[data-testid="submit-btn"]'</span>)
+
+<span class="cm">// nth element</span>
+page.<span class="op">locator</span>(<span class="str">'li.item'</span>).<span class="op">nth</span>(<span class="num">2</span>)   <span class="cm">// 0-indexed</span>
+page.<span class="op">locator</span>(<span class="str">'li.item'</span>).<span class="op">first</span>()
+page.<span class="op">locator</span>(<span class="str">'li.item'</span>).<span class="op">last</span>()</pre>
+          </div>
+        </div>
+
+        <div class="tab-content" id="loc-filter">
+          <div class="code-block">
+            <div class="code-header"><span class="code-filename">filtering.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+            <pre><span class="cm">// Filter by text content</span>
+page.<span class="op">getByRole</span>(<span class="str">'listitem'</span>)
+    .<span class="op">filter</span>({ hasText: <span class="str">'Active'</span> })
+
+<span class="cm">// Filter by child element</span>
+page.<span class="op">getByRole</span>(<span class="str">'listitem'</span>)
+    .<span class="op">filter</span>({ has: page.<span class="op">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Edit'</span> }) })
+
+<span class="cm">// Negate filter</span>
+page.<span class="op">getByRole</span>(<span class="str">'listitem'</span>)
+    .<span class="op">filter</span>({ hasNotText: <span class="str">'Deleted'</span> })
+
+<span class="cm">// Count matching elements</span>
+<span class="kw">const</span> rows = page.<span class="op">getByRole</span>(<span class="str">'row'</span>);
+<span class="kw">await</span> <span class="fn">expect</span>(rows).<span class="op">toHaveCount</span>(<span class="num">10</span>);
+
+<span class="cm">// Loop through all matching</span>
+<span class="kw">const</span> items = <span class="kw">await</span> page.<span class="op">getByRole</span>(<span class="str">'listitem'</span>).<span class="op">all</span>();
+<span class="kw">for</span> (<span class="kw">const</span> item <span class="kw">of</span> items) {
+  <span class="kw">await</span> <span class="fn">expect</span>(item).<span class="op">toBeVisible</span>();
+}</pre>
+          </div>
+        </div>
+
+        <div class="tab-content" id="loc-chain">
+          <div class="code-block">
+            <div class="code-header"><span class="code-filename">chaining.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+            <pre><span class="cm">// Scope locator to a container (very powerful!)</span>
+<span class="kw">const</span> userCard = page.<span class="op">getByTestId</span>(<span class="str">'user-card'</span>);
+<span class="kw">await</span> userCard.<span class="op">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Edit'</span> }).<span class="op">click</span>();
+<span class="kw">await</span> userCard.<span class="op">getByText</span>(<span class="str">'John Doe'</span>).<span class="op">isVisible</span>();
+
+<span class="cm">// Locator inside locator</span>
+<span class="kw">const</span> table = page.<span class="op">locator</span>(<span class="str">'table.pricing'</span>);
+<span class="kw">const</span> activeRow = table.<span class="op">locator</span>(<span class="str">'tr.active'</span>);
+<span class="kw">const</span> price = activeRow.<span class="op">getByTestId</span>(<span class="str">'price'</span>);
+
+<span class="cm">// Frame handling</span>
+<span class="kw">const</span> frame = page.<span class="op">frameLocator</span>(<span class="str">'iframe#payment'</span>);
+<span class="kw">await</span> frame.<span class="op">getByLabel</span>(<span class="str">'Card number'</span>).<span class="op">fill</span>(<span class="str">'4111111111111111'</span>);</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ACTIONS ==================== -->
+    <div class="section" id="sec-actions">
+      <div class="hero">
+        <div class="hero-tag">Interactions</div>
+        <h1>Actions & Events</h1>
+        <p class="hero-desc">Every action auto-waits for the element to be ready. Real browser events — not synthetic JS dispatches.</p>
+      </div>
+      <div class="content-area">
+        <h2 class="section-heading">Common Actions</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">actions.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="cm">// === NAVIGATION ===</span>
+<span class="kw">await</span> page.<span class="op">goto</span>(<span class="str">'https://example.com'</span>);
+<span class="kw">await</span> page.<span class="op">goto</span>(<span class="str">'/login'</span>);               <span class="cm">// Uses baseURL</span>
+<span class="kw">await</span> page.<span class="op">goBack</span>();
+<span class="kw">await</span> page.<span class="op">reload</span>();
+<span class="kw">await</span> page.<span class="op">waitForURL</span>(<span class="str">'**/dashboard'</span>);   <span class="cm">// Wait for navigation</span>
+
+<span class="cm">// === CLICK ===</span>
+<span class="kw">await</span> page.<span class="op">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Login'</span> }).<span class="op">click</span>();
+<span class="kw">await</span> page.<span class="op">getByText</span>(<span class="str">'Item'</span>).<span class="op">dblclick</span>();
+<span class="kw">await</span> page.<span class="op">getByText</span>(<span class="str">'Item'</span>).<span class="op">click</span>({ button: <span class="str">'right'</span> });
+<span class="kw">await</span> page.<span class="op">getByText</span>(<span class="str">'Item'</span>).<span class="op">click</span>({ modifiers: [<span class="str">'Shift'</span>] });
+
+<span class="cm">// === TYPE ===</span>
+<span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Email'</span>).<span class="op">fill</span>(<span class="str">'test@x4v.com'</span>);  <span class="cm">// Fast fill</span>
+<span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Search'</span>).<span class="op">type</span>(<span class="str">'query'</span>);       <span class="cm">// Simulates keypresses</span>
+<span class="kw">await</span> page.<span class="op">keyboard</span>.<span class="op">press</span>(<span class="str">'Enter'</span>);
+<span class="kw">await</span> page.<span class="op">keyboard</span>.<span class="op">press</span>(<span class="str">'Tab'</span>);
+
+<span class="cm">// === CLEAR ===</span>
+<span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Username'</span>).<span class="op">clear</span>();
+
+<span class="cm">// === SELECT ===</span>
+<span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Country'</span>).<span class="op">selectOption</span>(<span class="str">'India'</span>);
+<span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Tags'</span>).<span class="op">selectOption</span>([<span class="str">'A'</span>, <span class="str">'B'</span>]);  <span class="cm">// Multi-select</span>
+
+<span class="cm">// === CHECKBOX / RADIO ===</span>
+<span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Remember me'</span>).<span class="op">check</span>();
+<span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Auto-renew'</span>).<span class="op">uncheck</span>();
+<span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Monthly'</span>).<span class="op">setChecked</span>(<span class="kw">true</span>);
+
+<span class="cm">// === HOVER / FOCUS ===</span>
+<span class="kw">await</span> page.<span class="op">getByRole</span>(<span class="str">'button'</span>).<span class="op">hover</span>();
+<span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Email'</span>).<span class="op">focus</span>();
+<span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Email'</span>).<span class="op">blur</span>();
+
+<span class="cm">// === FILE UPLOAD ===</span>
+<span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Upload'</span>).<span class="op">setInputFiles</span>(<span class="str">'path/to/file.pdf'</span>);
+
+<span class="cm">// === DRAG AND DROP ===</span>
+<span class="kw">await</span> page.<span class="op">getByTestId</span>(<span class="str">'source'</span>).<span class="op">dragTo</span>(page.<span class="op">getByTestId</span>(<span class="str">'target'</span>));
+
+<span class="cm">// === DIALOGS ===</span>
+page.<span class="op">on</span>(<span class="str">'dialog'</span>, dialog => dialog.<span class="op">accept</span>());
+<span class="kw">await</span> page.<span class="op">getByText</span>(<span class="str">'Delete'</span>).<span class="op">click</span>();  <span class="cm">// Triggers dialog → auto-accepted</span></pre>
+        </div>
+
+        <h2 class="section-heading">Screenshots & Tracing</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">screenshots.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="cm">// Page screenshot</span>
+<span class="kw">await</span> page.<span class="op">screenshot</span>({ path: <span class="str">'screenshots/home.png'</span> });
+<span class="kw">await</span> page.<span class="op">screenshot</span>({ fullPage: <span class="kw">true</span> });
+
+<span class="cm">// Element screenshot</span>
+<span class="kw">await</span> page.<span class="op">getByTestId</span>(<span class="str">'chart'</span>).<span class="op">screenshot</span>({ path: <span class="str">'chart.png'</span> });
+
+<span class="cm">// Visual comparison (Golden screenshot)</span>
+<span class="kw">await</span> <span class="fn">expect</span>(page).<span class="op">toHaveScreenshot</span>(<span class="str">'home.png'</span>);
+
+<span class="cm">// Trace (Playwright Inspector-style recording)</span>
+<span class="kw">await</span> context.<span class="op">tracing</span>.<span class="op">start</span>({ screenshots: <span class="kw">true</span>, snapshots: <span class="kw">true</span> });
+<span class="cm">// ... test steps ...</span>
+<span class="kw">await</span> context.<span class="op">tracing</span>.<span class="op">stop</span>({ path: <span class="str">'trace.zip'</span> });
+<span class="cm">// View: npx playwright show-trace trace.zip</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ASSERTIONS ==================== -->
+    <div class="section" id="sec-assertions">
+      <div class="hero">
+        <div class="hero-tag">expect() API</div>
+        <h1>Assertions</h1>
+        <p class="hero-desc">Playwright assertions are async and auto-retrying. They poll until the condition is true or timeout expires.</p>
+      </div>
+      <div class="content-area">
+        <h2 class="section-heading">Locator Assertions</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">assertions.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">const</span> btn = page.<span class="op">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Submit'</span> });
+
+<span class="cm">// Visibility</span>
+<span class="kw">await</span> <span class="fn">expect</span>(btn).<span class="op">toBeVisible</span>();
+<span class="kw">await</span> <span class="fn">expect</span>(btn).<span class="op">toBeHidden</span>();
+
+<span class="cm">// State</span>
+<span class="kw">await</span> <span class="fn">expect</span>(btn).<span class="op">toBeEnabled</span>();
+<span class="kw">await</span> <span class="fn">expect</span>(btn).<span class="op">toBeDisabled</span>();
+<span class="kw">await</span> <span class="fn">expect</span>(page.<span class="op">getByLabel</span>(<span class="str">'Remember me'</span>)).<span class="op">toBeChecked</span>();
+
+<span class="cm">// Text Content</span>
+<span class="kw">await</span> <span class="fn">expect</span>(page.<span class="op">getByRole</span>(<span class="str">'heading'</span>)).<span class="op">toHaveText</span>(<span class="str">'Dashboard'</span>);
+<span class="kw">await</span> <span class="fn">expect</span>(page.<span class="op">getByRole</span>(<span class="str">'heading'</span>)).<span class="op">toContainText</span>(<span class="str">'Dash'</span>);
+<span class="kw">await</span> <span class="fn">expect</span>(page.<span class="op">getByRole</span>(<span class="str">'heading'</span>)).<span class="op">toHaveText</span>(<span class="str">/Dashboard/i</span>);
+
+<span class="cm">// Input value</span>
+<span class="kw">await</span> <span class="fn">expect</span>(page.<span class="op">getByLabel</span>(<span class="str">'Email'</span>)).<span class="op">toHaveValue</span>(<span class="str">'test@x4v.com'</span>);
+
+<span class="cm">// Attributes</span>
+<span class="kw">await</span> <span class="fn">expect</span>(btn).<span class="op">toHaveAttribute</span>(<span class="str">'type'</span>, <span class="str">'submit'</span>);
+<span class="kw">await</span> <span class="fn">expect</span>(btn).<span class="op">toHaveClass</span>(<span class="str">'primary-btn'</span>);
+<span class="kw">await</span> <span class="fn">expect</span>(page.<span class="op">getByRole</span>(<span class="str">'listitem'</span>)).<span class="op">toHaveCount</span>(<span class="num">5</span>);
+
+<span class="cm">// CSS</span>
+<span class="kw">await</span> <span class="fn">expect</span>(btn).<span class="op">toHaveCSS</span>(<span class="str">'background-color'</span>, <span class="str">'rgb(0, 123, 255)'</span>);</pre>
+        </div>
+
+        <h2 class="section-heading">Page Assertions</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">page-assertions.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="cm">// URL</span>
+<span class="kw">await</span> <span class="fn">expect</span>(page).<span class="op">toHaveURL</span>(<span class="str">'https://app.x4v.com/dashboard'</span>);
+<span class="kw">await</span> <span class="fn">expect</span>(page).<span class="op">toHaveURL</span>(<span class="str">/dashboard/</span>);
+
+<span class="cm">// Title</span>
+<span class="kw">await</span> <span class="fn">expect</span>(page).<span class="op">toHaveTitle</span>(<span class="str">'X4V Unite Dashboard'</span>);
+
+<span class="cm">// Visual regression</span>
+<span class="kw">await</span> <span class="fn">expect</span>(page).<span class="op">toHaveScreenshot</span>();
+<span class="kw">await</span> <span class="fn">expect</span>(page.<span class="op">getByTestId</span>(<span class="str">'chart'</span>)).<span class="op">toHaveScreenshot</span>();
+
+<span class="cm">// Soft assertions (don't stop on failure)</span>
+<span class="kw">await</span> <span class="fn">expect</span>.<span class="op">soft</span>(page.<span class="op">getByText</span>(<span class="str">'Error'</span>)).<span class="op">toBeVisible</span>();
+<span class="kw">await</span> <span class="fn">expect</span>.<span class="op">soft</span>(page.<span class="op">getByText</span>(<span class="str">'Retry'</span>)).<span class="op">toBeVisible</span>();
+<span class="cm">// Will report ALL failures at end</span></pre>
+        </div>
+
+        <div class="callout callout-info">
+          <strong>🔄 Auto-retry:</strong> Assertions retry for up to <code>expect.timeout</code> (default 5s). This is different from Jest — you don't need <code>waitFor</code> wrappers!
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== WAITS ==================== -->
+    <div class="section" id="sec-waits">
+      <div class="hero">
+        <div class="hero-tag">Timing</div>
+        <h1>Waits & Auto-wait</h1>
+        <p class="hero-desc">Playwright eliminates most explicit waits. But when you need them, here's the right way.</p>
+      </div>
+      <div class="content-area">
+        <div class="callout callout-tip">
+          <strong>Golden Rule:</strong> If you find yourself writing <code>page.waitForTimeout(3000)</code>, that's a smell. Use event-based waits instead.
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">waits.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="cm">// ✅ Wait for navigation</span>
+<span class="kw">await</span> page.<span class="op">waitForURL</span>(<span class="str">'**/dashboard'</span>);
+<span class="kw">await</span> page.<span class="op">waitForURL</span>(<span class="str">/dashboard/</span>);
+
+<span class="cm">// ✅ Wait for network</span>
+<span class="kw">await</span> page.<span class="op">waitForLoadState</span>(<span class="str">'networkidle'</span>);    <span class="cm">// No requests for 500ms</span>
+<span class="kw">await</span> page.<span class="op">waitForLoadState</span>(<span class="str">'domcontentloaded'</span>);
+
+<span class="cm">// ✅ Wait for element</span>
+<span class="kw">await</span> page.<span class="op">getByRole</span>(<span class="str">'dialog'</span>).<span class="op">waitFor</span>();
+<span class="kw">await</span> page.<span class="op">getByRole</span>(<span class="str">'dialog'</span>).<span class="op">waitFor</span>({ state: <span class="str">'visible'</span> });
+<span class="kw">await</span> page.<span class="op">getByRole</span>(<span class="str">'spinner'</span>).<span class="op">waitFor</span>({ state: <span class="str">'hidden'</span> });
+
+<span class="cm">// ✅ Wait for response (API call)</span>
+<span class="kw">const</span> responsePromise = page.<span class="op">waitForResponse</span>(<span class="str">'**/api/pricing/**'</span>);
+<span class="kw">await</span> page.<span class="op">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Calculate'</span> }).<span class="op">click</span>();
+<span class="kw">const</span> response = <span class="kw">await</span> responsePromise;
+<span class="fn">expect</span>(response.<span class="op">status</span>()).<span class="op">toBe</span>(<span class="num">200</span>);
+
+<span class="cm">// ✅ Wait for request</span>
+<span class="kw">const</span> reqPromise = page.<span class="op">waitForRequest</span>(<span class="str">'**/api/rules'</span>);
+<span class="kw">await</span> page.<span class="op">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Load Rules'</span> }).<span class="op">click</span>();
+<span class="kw">await</span> reqPromise;
+
+<span class="cm">// ✅ Wait for custom condition (function)</span>
+<span class="kw">await</span> page.<span class="op">waitForFunction</span>(() =>
+  document.<span class="op">querySelectorAll</span>(<span class="str">'.price-row'</span>).length > <span class="num">5</span>
+);
+
+<span class="cm">// ❌ Avoid (hides real issues)</span>
+<span class="kw">await</span> page.<span class="op">waitForTimeout</span>(<span class="num">3000</span>);  <span class="cm">// Never do this in real tests</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== API TESTING ==================== -->
+    <div class="section" id="sec-api">
+      <div class="hero">
+        <div class="hero-tag">APIRequestContext</div>
+        <h1>API Testing</h1>
+        <p class="hero-desc">Full REST API testing without a browser. Combine with UI for hybrid flows — just like your RestAssured + Selenium stack.</p>
+      </div>
+      <div class="content-area">
+        <h2 class="section-heading">Standalone API Tests</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">api.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">import</span> { test, expect } <span class="kw">from</span> <span class="str">'@playwright/test'</span>;
+
+test(<span class="str">'GET pricing rules'</span>, <span class="kw">async</span> ({ request }) => {
+  <span class="kw">const</span> res = <span class="kw">await</span> request.<span class="op">get</span>(<span class="str">'/api/v1/pricing/rules'</span>);
+
+  <span class="fn">expect</span>(res.<span class="op">status</span>()).<span class="op">toBe</span>(<span class="num">200</span>);
+  <span class="fn">expect</span>(res.<span class="op">ok</span>()).<span class="op">toBeTruthy</span>();
+
+  <span class="kw">const</span> body = <span class="kw">await</span> res.<span class="op">json</span>();
+  <span class="fn">expect</span>(body.rules).<span class="op">toHaveLength</span>(<span class="num">30</span>);    <span class="cm">// X4V has 30 rules!</span>
+  <span class="fn">expect</span>(body.rules[<span class="num">0</span>]).<span class="op">toHaveProperty</span>(<span class="str">'powerRank'</span>);
+});
+
+test(<span class="str">'POST create rule'</span>, <span class="kw">async</span> ({ request }) => {
+  <span class="kw">const</span> res = <span class="kw">await</span> request.<span class="op">post</span>(<span class="str">'/api/v1/pricing/rules'</span>, {
+    data: {
+      name: <span class="str">'New Rule'</span>,
+      powerRank: <span class="num">15</span>,
+      conditions: [{ field: <span class="str">'vehicleType'</span>, value: <span class="str">'EV'</span> }]
+    },
+    headers: { <span class="str">'Authorization'</span>: <span class="str">`Bearer ${process.env.TOKEN}`</span> }
+  });
+  <span class="fn">expect</span>(res.<span class="op">status</span>()).<span class="op">toBe</span>(<span class="num">201</span>);
+
+  <span class="kw">const</span> created = <span class="kw">await</span> res.<span class="op">json</span>();
+  <span class="fn">expect</span>(created.id).<span class="op">toBeDefined</span>();
+});
+
+test(<span class="str">'PUT / PATCH / DELETE'</span>, <span class="kw">async</span> ({ request }) => {
+  <span class="kw">await</span> request.<span class="op">put</span>(<span class="str">'/api/v1/rules/1'</span>, { data: { powerRank: <span class="num">5</span> } });
+  <span class="kw">await</span> request.<span class="op">patch</span>(<span class="str">'/api/v1/rules/1'</span>, { data: { active: <span class="kw">false</span> } });
+  <span class="kw">const</span> del = <span class="kw">await</span> request.<span class="op">delete</span>(<span class="str">'/api/v1/rules/1'</span>);
+  <span class="fn">expect</span>(del.<span class="op">status</span>()).<span class="op">toBe</span>(<span class="num">204</span>);
+});</pre>
+        </div>
+
+        <h2 class="section-heading">Hybrid: API Setup + UI Verify</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">hybrid.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="cm">// Create data via API, verify via UI — MUCH faster than all-UI</span>
+test(<span class="str">'created rule appears in UI'</span>, <span class="kw">async</span> ({ page, request }) => {
+  <span class="cm">// 1. Set up data via API (fast)</span>
+  <span class="kw">const</span> res = <span class="kw">await</span> request.<span class="op">post</span>(<span class="str">'/api/v1/pricing/rules'</span>, {
+    data: { name: <span class="str">'EV Discount Rule'</span>, powerRank: <span class="num">10</span> }
+  });
+  <span class="kw">const</span> { id } = <span class="kw">await</span> res.<span class="op">json</span>();
+
+  <span class="cm">// 2. Navigate to UI</span>
+  <span class="kw">await</span> page.<span class="op">goto</span>(<span class="str">`/pricing/rules/${id}`</span>);
+
+  <span class="cm">// 3. Assert UI shows the rule</span>
+  <span class="kw">await</span> <span class="fn">expect</span>(page.<span class="op">getByRole</span>(<span class="str">'heading'</span>)).<span class="op">toHaveText</span>(<span class="str">'EV Discount Rule'</span>);
+  <span class="kw">await</span> <span class="fn">expect</span>(page.<span class="op">getByTestId</span>(<span class="str">'power-rank'</span>)).<span class="op">toHaveText</span>(<span class="str">'10'</span>);
+});</pre>
+        </div>
+
+        <div class="callout callout-info">
+          <strong>💡 Auth via API:</strong> Log in via API request, save <code>storageState</code>, reuse in UI tests — skip the login UI entirely for 90% of your tests.
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== FIXTURES ==================== -->
+    <div class="section" id="sec-fixtures">
+      <div class="hero">
+        <div class="hero-tag">Test Lifecycle</div>
+        <h1>Fixtures & Hooks</h1>
+        <p class="hero-desc">Playwright fixtures are the evolution of TestNG @BeforeMethod. Typed, composable, and auto-scoped.</p>
+      </div>
+      <div class="content-area">
+        <h2 class="section-heading">Built-in Fixtures</h2>
+        <div class="cards-grid" style="margin-bottom:24px">
+          <div class="card"><div class="card-icon">📄</div><div class="card-title">page</div><div class="card-desc">Fresh browser page for each test. Auto-closes after test.</div></div>
+          <div class="card"><div class="card-icon">🌐</div><div class="card-title">browser</div><div class="card-desc">Shared browser instance across tests in the same worker.</div></div>
+          <div class="card"><div class="card-icon">📦</div><div class="card-title">context</div><div class="card-desc">Isolated browser context (fresh cookies/storage per test).</div></div>
+          <div class="card"><div class="card-icon">🔌</div><div class="card-title">request</div><div class="card-desc">API request context. No browser needed.</div></div>
+        </div>
+
+        <h2 class="section-heading">Custom Fixtures</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">fixtures/index.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">import</span> { test <span class="kw">as</span> base, expect } <span class="kw">from</span> <span class="str">'@playwright/test'</span>;
+<span class="kw">import</span> { <span class="cls">LoginPage</span> } <span class="kw">from</span> <span class="str">'../pages/LoginPage'</span>;
+<span class="kw">import</span> { <span class="cls">PricingPage</span> } <span class="kw">from</span> <span class="str">'../pages/PricingPage'</span>;
+
+<span class="kw">type</span> <span class="cls">Fixtures</span> = {
+  loginPage: <span class="cls">LoginPage</span>;
+  pricingPage: <span class="cls">PricingPage</span>;
+  authenticatedPage: <span class="cls">Page</span>;
+};
+
+<span class="kw">export const</span> test = base.<span class="op">extend</span>&lt;<span class="cls">Fixtures</span>&gt;({
+  <span class="cm">// Auto-instantiate Page Objects</span>
+  loginPage: <span class="kw">async</span> ({ page }, use) => {
+    <span class="kw">await</span> <span class="fn">use</span>(<span class="kw">new</span> <span class="cls">LoginPage</span>(page));
+  },
+
+  pricingPage: <span class="kw">async</span> ({ page }, use) => {
+    <span class="kw">await</span> <span class="fn">use</span>(<span class="kw">new</span> <span class="cls">PricingPage</span>(page));
+  },
+
+  <span class="cm">// Auto-login fixture</span>
+  authenticatedPage: <span class="kw">async</span> ({ page }, use) => {
+    <span class="kw">await</span> page.<span class="op">goto</span>(<span class="str">'/login'</span>);
+    <span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Email'</span>).<span class="op">fill</span>(process.env.<span class="var">TEST_USER</span>!);
+    <span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Password'</span>).<span class="op">fill</span>(process.env.<span class="var">TEST_PASS</span>!);
+    <span class="kw">await</span> page.<span class="op">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Login'</span> }).<span class="op">click</span>();
+    <span class="kw">await</span> page.<span class="op">waitForURL</span>(<span class="str">'**/dashboard'</span>);
+    <span class="kw">await</span> <span class="fn">use</span>(page);  <span class="cm">// ← Hand control to the test</span>
+    <span class="cm">// Cleanup after test: nothing needed, context is auto-destroyed</span>
+  },
+});
+
+<span class="kw">export</span> { expect };</pre>
+        </div>
+
+        <h2 class="section-heading">Using Custom Fixtures</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">pricing.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="cm">// Import from YOUR fixtures, not @playwright/test</span>
+<span class="kw">import</span> { test, expect } <span class="kw">from</span> <span class="str">'../fixtures'</span>;
+
+test(<span class="str">'rules are listed on dashboard'</span>, <span class="kw">async</span> ({ authenticatedPage, pricingPage }) => {
+  <span class="kw">await</span> pricingPage.<span class="op">navigateToRules</span>();
+  <span class="kw">await</span> <span class="fn">expect</span>(pricingPage.rulesList).<span class="op">toHaveCount</span>(<span class="num">30</span>);
+});</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== POM ==================== -->
+    <div class="section" id="sec-pom">
+      <div class="hero">
+        <div class="hero-tag">Design Pattern</div>
+        <h1>Page Object Model</h1>
+        <p class="hero-desc">Same POM you know from Selenium, but with Playwright's lazy locators and TypeScript power.</p>
+      </div>
+      <div class="content-area">
+        <h2 class="section-heading">Page Object Class</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">pages/LoginPage.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">import</span> { type <span class="cls">Page</span>, type <span class="cls">Locator</span> } <span class="kw">from</span> <span class="str">'@playwright/test'</span>;
+
+<span class="kw">export class</span> <span class="cls">LoginPage</span> {
+  <span class="kw">readonly</span> page: <span class="cls">Page</span>;
+
+  <span class="cm">// Locators defined as class properties (lazy — not queried until used)</span>
+  <span class="kw">readonly</span> emailInput: <span class="cls">Locator</span>;
+  <span class="kw">readonly</span> passwordInput: <span class="cls">Locator</span>;
+  <span class="kw">readonly</span> submitBtn: <span class="cls">Locator</span>;
+  <span class="kw">readonly</span> errorMsg: <span class="cls">Locator</span>;
+
+  <span class="fn">constructor</span>(page: <span class="cls">Page</span>) {
+    <span class="kw">this</span>.page = page;
+    <span class="kw">this</span>.emailInput    = page.<span class="op">getByLabel</span>(<span class="str">'Email'</span>);
+    <span class="kw">this</span>.passwordInput = page.<span class="op">getByLabel</span>(<span class="str">'Password'</span>);
+    <span class="kw">this</span>.submitBtn     = page.<span class="op">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Sign In'</span> });
+    <span class="kw">this</span>.errorMsg      = page.<span class="op">getByRole</span>(<span class="str">'alert'</span>);
+  }
+
+  <span class="kw">async</span> <span class="fn">goto</span>() {
+    <span class="kw">await</span> <span class="kw">this</span>.page.<span class="op">goto</span>(<span class="str">'/login'</span>);
+  }
+
+  <span class="kw">async</span> <span class="fn">login</span>(email: <span class="kw">string</span>, password: <span class="kw">string</span>) {
+    <span class="kw">await</span> <span class="kw">this</span>.emailInput.<span class="op">fill</span>(email);
+    <span class="kw">await</span> <span class="kw">this</span>.passwordInput.<span class="op">fill</span>(password);
+    <span class="kw">await</span> <span class="kw">this</span>.submitBtn.<span class="op">click</span>();
+  }
+
+  <span class="kw">async</span> <span class="fn">loginAndWait</span>(email: <span class="kw">string</span>, password: <span class="kw">string</span>) {
+    <span class="kw">await</span> <span class="kw">this</span>.<span class="op">login</span>(email, password);
+    <span class="kw">await</span> <span class="kw">this</span>.page.<span class="op">waitForURL</span>(<span class="str">'**/dashboard'</span>);
+  }
+}</pre>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 Key difference from Selenium:</strong> Locators in Playwright are <em>lazy</em> — assigning <code>this.submitBtn = page.getByRole(...)</code> does NOT touch the DOM. The DOM query only fires when you call <code>.click()</code>, <code>.fill()</code>, etc. No stale element exceptions!
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== CHEATSHEET ==================== -->
+    <div class="section" id="sec-cheatsheet">
+      <div class="hero">
+        <div class="hero-tag">Quick Reference</div>
+        <h1>Cheat Sheet</h1>
+        <p class="hero-desc">Everything in one place. Bookmark this page.</p>
+      </div>
+      <div class="content-area">
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <div class="cheat-card-header">🎯 Locators</div>
+            <div class="cheat-rows">
+              <div class="cheat-row"><div class="cheat-code">getByRole()</div><div class="cheat-desc">by ARIA role + name (BEST)</div></div>
+              <div class="cheat-row"><div class="cheat-code">getByLabel()</div><div class="cheat-desc">form field by label text</div></div>
+              <div class="cheat-row"><div class="cheat-code">getByText()</div><div class="cheat-desc">element by visible text</div></div>
+              <div class="cheat-row"><div class="cheat-code">getByTestId()</div><div class="cheat-desc">by data-testid attribute</div></div>
+              <div class="cheat-row"><div class="cheat-code">getByPlaceholder()</div><div class="cheat-desc">input by placeholder</div></div>
+              <div class="cheat-row"><div class="cheat-code">locator(css)</div><div class="cheat-desc">CSS selector</div></div>
+              <div class="cheat-row"><div class="cheat-code">.filter()</div><div class="cheat-desc">narrow locator set</div></div>
+              <div class="cheat-row"><div class="cheat-code">.nth(n)</div><div class="cheat-desc">pick by index (0-based)</div></div>
+            </div>
+          </div>
+          <div class="cheat-card">
+            <div class="cheat-card-header">⚡ Actions</div>
+            <div class="cheat-rows">
+              <div class="cheat-row"><div class="cheat-code">.click()</div><div class="cheat-desc">left click (auto-waits)</div></div>
+              <div class="cheat-row"><div class="cheat-code">.fill(text)</div><div class="cheat-desc">fast fill input</div></div>
+              <div class="cheat-row"><div class="cheat-code">.type(text)</div><div class="cheat-desc">simulates keystrokes</div></div>
+              <div class="cheat-row"><div class="cheat-code">.check()</div><div class="cheat-desc">check checkbox/radio</div></div>
+              <div class="cheat-row"><div class="cheat-code">.selectOption()</div><div class="cheat-desc">select &lt;option&gt;</div></div>
+              <div class="cheat-row"><div class="cheat-code">.hover()</div><div class="cheat-desc">mouse hover</div></div>
+              <div class="cheat-row"><div class="cheat-code">.press(key)</div><div class="cheat-desc">keyboard key</div></div>
+              <div class="cheat-row"><div class="cheat-code">.dragTo(target)</div><div class="cheat-desc">drag and drop</div></div>
+            </div>
+          </div>
+          <div class="cheat-card">
+            <div class="cheat-card-header">✅ Assertions (expect)</div>
+            <div class="cheat-rows">
+              <div class="cheat-row"><div class="cheat-code">toBeVisible()</div><div class="cheat-desc">element is in viewport</div></div>
+              <div class="cheat-row"><div class="cheat-code">toBeHidden()</div><div class="cheat-desc">not visible/in DOM</div></div>
+              <div class="cheat-row"><div class="cheat-code">toHaveText()</div><div class="cheat-desc">exact/regex text match</div></div>
+              <div class="cheat-row"><div class="cheat-code">toHaveValue()</div><div class="cheat-desc">input field value</div></div>
+              <div class="cheat-row"><div class="cheat-code">toHaveURL()</div><div class="cheat-desc">page URL</div></div>
+              <div class="cheat-row"><div class="cheat-code">toBeEnabled()</div><div class="cheat-desc">not disabled</div></div>
+              <div class="cheat-row"><div class="cheat-code">toHaveCount(n)</div><div class="cheat-desc">number of elements</div></div>
+              <div class="cheat-row"><div class="cheat-code">toHaveScreenshot()</div><div class="cheat-desc">visual regression</div></div>
+            </div>
+          </div>
+          <div class="cheat-card">
+            <div class="cheat-card-header">⏱️ Waits</div>
+            <div class="cheat-rows">
+              <div class="cheat-row"><div class="cheat-code">waitForURL()</div><div class="cheat-desc">wait for navigation</div></div>
+              <div class="cheat-row"><div class="cheat-code">waitForLoadState()</div><div class="cheat-desc">networkidle / domcontentloaded</div></div>
+              <div class="cheat-row"><div class="cheat-code">.waitFor()</div><div class="cheat-desc">locator state change</div></div>
+              <div class="cheat-row"><div class="cheat-code">waitForResponse()</div><div class="cheat-desc">intercept API call</div></div>
+              <div class="cheat-row"><div class="cheat-code">waitForFunction()</div><div class="cheat-desc">custom JS predicate</div></div>
+            </div>
+          </div>
+          <div class="cheat-card">
+            <div class="cheat-card-header">🌐 API Request</div>
+            <div class="cheat-rows">
+              <div class="cheat-row"><div class="cheat-code">request.get(url)</div><div class="cheat-desc">HTTP GET</div></div>
+              <div class="cheat-row"><div class="cheat-code">request.post(url,{data})</div><div class="cheat-desc">HTTP POST with body</div></div>
+              <div class="cheat-row"><div class="cheat-code">request.put(url,{data})</div><div class="cheat-desc">HTTP PUT</div></div>
+              <div class="cheat-row"><div class="cheat-code">request.patch(url,{data})</div><div class="cheat-desc">HTTP PATCH</div></div>
+              <div class="cheat-row"><div class="cheat-code">request.delete(url)</div><div class="cheat-desc">HTTP DELETE</div></div>
+              <div class="cheat-row"><div class="cheat-code">res.json()</div><div class="cheat-desc">parse JSON body</div></div>
+              <div class="cheat-row"><div class="cheat-code">res.status()</div><div class="cheat-desc">HTTP status code</div></div>
+            </div>
+          </div>
+          <div class="cheat-card">
+            <div class="cheat-card-header">🚀 CLI Commands</div>
+            <div class="cheat-rows">
+              <div class="cheat-row"><div class="cheat-code">npx playwright test</div><div class="cheat-desc">run all tests</div></div>
+              <div class="cheat-row"><div class="cheat-code">--headed</div><div class="cheat-desc">show browser window</div></div>
+              <div class="cheat-row"><div class="cheat-code">--debug</div><div class="cheat-desc">step through test</div></div>
+              <div class="cheat-row"><div class="cheat-code">--project=chrome</div><div class="cheat-desc">single browser</div></div>
+              <div class="cheat-row"><div class="cheat-code">codegen &lt;url&gt;</div><div class="cheat-desc">record test actions</div></div>
+              <div class="cheat-row"><div class="cheat-code">show-report</div><div class="cheat-desc">open HTML report</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== VS SELENIUM ==================== -->
+    <div class="section" id="sec-vsselenium">
+      <div class="hero">
+        <div class="hero-tag">Migration Guide</div>
+        <h1>Playwright vs Selenium</h1>
+        <p class="hero-desc">You know Selenium deeply. Here's exactly how concepts map — and where Playwright wins.</p>
+      </div>
+      <div class="content-area">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Concept</th>
+              <th>Selenium + Java</th>
+              <th>Playwright + TypeScript</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Find element</td>
+              <td><code>driver.findElement(By.id("x"))</code></td>
+              <td><code>page.getByRole('button')</code></td>
+            </tr>
+            <tr>
+              <td>Click</td>
+              <td><code>element.click()</code></td>
+              <td><code>await locator.click()</code></td>
+            </tr>
+            <tr>
+              <td>Type text</td>
+              <td><code>element.sendKeys("text")</code></td>
+              <td><code>await locator.fill("text")</code></td>
+            </tr>
+            <tr>
+              <td>Explicit wait</td>
+              <td><code>WebDriverWait(driver, 10)</code></td>
+              <td>Not needed — auto-wait built in</td>
+            </tr>
+            <tr>
+              <td>Implicit wait</td>
+              <td><code>driver.manage().timeouts()</code></td>
+              <td>Auto-wait on every action</td>
+            </tr>
+            <tr>
+              <td>Select dropdown</td>
+              <td><code>new Select(el).selectByText()</code></td>
+              <td><code>await locator.selectOption()</code></td>
+            </tr>
+            <tr>
+              <td>Assert</td>
+              <td>TestNG <code>Assert.assertEquals()</code></td>
+              <td><code>await expect(locator).toHaveText()</code></td>
+            </tr>
+            <tr>
+              <td>Before/After</td>
+              <td>@BeforeMethod / @AfterMethod</td>
+              <td>Fixtures (beforeEach implicit)</td>
+            </tr>
+            <tr>
+              <td>Parallel</td>
+              <td>TestNG XML suites + threadLocal</td>
+              <td>Workers auto-parallel (built-in)</td>
+            </tr>
+            <tr>
+              <td>Screenshot</td>
+              <td><code>TakesScreenshot ts = ...</code></td>
+              <td><code>await page.screenshot()</code></td>
+            </tr>
+            <tr>
+              <td>API testing</td>
+              <td>RestAssured (separate library)</td>
+              <td>Built-in via <code>request</code> fixture</td>
+            </tr>
+            <tr>
+              <td>Report</td>
+              <td>Extent Reports / Allure</td>
+              <td>Built-in HTML reporter</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 class="section-heading" style="margin-top:32px">Key Advantages</h2>
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-icon">🚫</div>
+            <div class="card-title">No StaleElementException</div>
+            <div class="card-desc">Locators re-query the DOM on every action. Detached elements are automatically refetched.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔐</div>
+            <div class="card-title">No WebDriver Protocol</div>
+            <div class="card-desc">Communicates directly with browsers via CDP (Chrome) and remote protocols — faster and more reliable.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📦</div>
+            <div class="card-title">Batteries Included</div>
+            <div class="card-desc">No separate RestAssured, Extent Reports, or parallel setup. One <code>npm install</code>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== QUIZ ==================== -->
+    <div class="section" id="sec-quiz">
+      <div class="hero">
+        <div class="hero-tag">Test Your Knowledge</div>
+        <h1>Quiz</h1>
+        <p class="hero-desc">5 questions. Click to reveal answers. No pressure!</p>
+      </div>
+      <div class="content-area" id="quiz-container">
+
+        <div class="quiz-q">
+          <div class="quiz-q-text">1. Which locator strategy is most recommended by Playwright best practices?</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">A</span> locator('#submit-btn')</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">B</span> locator('xpath=//button')</div>
+          <div class="quiz-option" onclick="answer(this, true)"><span class="quiz-opt-key">C</span> getByRole('button', { name: 'Submit' })</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">D</span> locator('[data-testid="submit"]')</div>
+        </div>
+
+        <div class="quiz-q">
+          <div class="quiz-q-text">2. What happens when you write <code>const btn = page.getByRole('button')</code> ?</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">A</span> Playwright immediately queries the DOM</div>
+          <div class="quiz-option" onclick="answer(this, true)"><span class="quiz-opt-key">B</span> Creates a lazy locator — DOM is queried only when an action is called</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">C</span> Throws an error if the button doesn't exist</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">D</span> Returns a WebElement like Selenium</div>
+        </div>
+
+        <div class="quiz-q">
+          <div class="quiz-q-text">3. How do you wait for a loading spinner to disappear?</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">A</span> page.waitForTimeout(3000)</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">B</span> await expect(spinner).toBeHidden({ timeout: 10000 })</div>
+          <div class="quiz-option" onclick="answer(this, true)"><span class="quiz-opt-key">C</span> await page.getByTestId('spinner').waitFor({ state: 'hidden' })</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">D</span> spinner.waitForInvisibility()</div>
+        </div>
+
+        <div class="quiz-q">
+          <div class="quiz-q-text">4. Each test automatically gets its own...</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">A</span> Browser process</div>
+          <div class="quiz-option" onclick="answer(this, true)"><span class="quiz-opt-key">B</span> BrowserContext (isolated cookies, storage, session)</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">C</span> Operating system process</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">D</span> Node.js instance</div>
+        </div>
+
+        <div class="quiz-q">
+          <div class="quiz-q-text">5. Which assertion retries automatically until passing (up to the timeout)?</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">A</span> expect(text).toEqual('Dashboard')</div>
+          <div class="quiz-option" onclick="answer(this, true)"><span class="quiz-opt-key">B</span> await expect(heading).toHaveText('Dashboard')</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">C</span> assert.equal(text, 'Dashboard')</div>
+          <div class="quiz-option" onclick="answer(this, false)"><span class="quiz-opt-key">D</span> expect(text === 'Dashboard').toBeTruthy()</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== SPREAD OPERATOR ==================== -->
+    <div class="section" id="sec-spread">
+      <div class="hero">
+        <div class="hero-tag">TypeScript / JavaScript Concept</div>
+        <h1>The <code style="-webkit-text-fill-color:var(--accent);font-size:52px">...</code> Spread Operator</h1>
+        <p class="hero-desc">Used heavily in Playwright configs, fixtures, and POM. Understand it once and configs become obvious.</p>
+      </div>
+      <div class="content-area">
+
+        <h2 class="section-heading">What does <code>...</code> do?</h2>
+        <p class="section-sub">The spread operator <strong>expands</strong> an object or array into individual pieces — like pouring a glass of water into a larger container.</p>
+
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-icon">📤</div>
+            <div class="card-title">Object Spread</div>
+            <div class="card-desc">Copies all key-value pairs from one object into another. <code>{...a, ...b}</code> merges both — <code>b</code> wins on conflicts.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📋</div>
+            <div class="card-title">Array Spread</div>
+            <div class="card-desc">Expands array items inline: <code>[...arr1, ...arr2]</code> concatenates. <code>[...arr]</code> shallow-clones.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📥</div>
+            <div class="card-title">Rest (opposite)</div>
+            <div class="card-desc">Same syntax in destructuring means "collect the rest": <code>const { a, ...rest } = obj</code> — <code>rest</code> has everything except <code>a</code>.</div>
+          </div>
+        </div>
+
+        <h2 class="section-heading">Core Mechanics</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">spread-basics.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="cm">// ── Object spread ───────────────────────────────────────────────</span>
+<span class="kw">const</span> base = { timeout: <span class="num">30000</span>, headless: <span class="kw">true</span> };
+<span class="kw">const</span> override = { headless: <span class="kw">false</span>, slowMo: <span class="num">200</span> };
+
+<span class="kw">const</span> merged = { ...base, ...override };
+<span class="cm">// → { timeout: 30000, headless: false, slowMo: 200 }</span>
+<span class="cm">//   ↑ base props copied    ↑ override wins on 'headless'</span>
+
+<span class="cm">// ── Shallow clone (no mutation) ──────────────────────────────────</span>
+<span class="kw">const</span> original = { user: <span class="str">'sumit'</span>, role: <span class="str">'qa'</span> };
+<span class="kw">const</span> clone = { ...original };        <span class="cm">// new object, same values</span>
+clone.role = <span class="str">'admin'</span>;               <span class="cm">// original.role is still 'qa'</span>
+
+<span class="cm">// ── Add/override single property ────────────────────────────────</span>
+<span class="kw">const</span> withExtra = { ...original, role: <span class="str">'admin'</span>, verified: <span class="kw">true</span> };
+<span class="cm">// → { user: 'sumit', role: 'admin', verified: true }</span>
+
+<span class="cm">// ── Array spread ─────────────────────────────────────────────────</span>
+<span class="kw">const</span> browsers = [<span class="str">'chromium'</span>, <span class="str">'firefox'</span>];
+<span class="kw">const</span> all = [...browsers, <span class="str">'webkit'</span>];   <span class="cm">// ['chromium', 'firefox', 'webkit']</span>
+
+<span class="cm">// ── Rest (collecting remaining props) ───────────────────────────</span>
+<span class="kw">const</span> config = { baseURL: <span class="str">'http://localhost'</span>, timeout: <span class="num">5000</span>, headless: <span class="kw">true</span> };
+<span class="kw">const</span> { baseURL, ...rest } = config;
+<span class="cm">// baseURL = 'http://localhost'</span>
+<span class="cm">// rest    = { timeout: 5000, headless: true }</span></pre>
+        </div>
+
+        <h2 class="section-heading">In playwright.config.ts — devices spread</h2>
+        <div class="callout callout-info"><strong>Context:</strong> <code>devices['Desktop Chrome']</code> is a plain object with ~8 properties (viewport, userAgent, isMobile, etc.). The <code>...</code> copies all of them into your project config, so you only override what you need.</div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">playwright.config.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">import</span> { <span class="cls">defineConfig</span>, <span class="cls">devices</span> } <span class="kw">from</span> <span class="str">'@playwright/test'</span>;
+
+<span class="cm">// devices['Desktop Chrome'] expands to something like:</span>
+<span class="cm">// {</span>
+<span class="cm">//   viewport: { width: 1280, height: 720 },</span>
+<span class="cm">//   userAgent: 'Mozilla/5.0 ...',</span>
+<span class="cm">//   deviceScaleFactor: 1,</span>
+<span class="cm">//   isMobile: false,</span>
+<span class="cm">//   hasTouch: false,</span>
+<span class="cm">// }</span>
+
+<span class="kw">export default</span> <span class="fn">defineConfig</span>({
+  projects: [
+    {
+      name: <span class="str">'chromium'</span>,
+      use: {
+        ...devices[<span class="str">'Desktop Chrome'</span>],  <span class="cm">// ← spreads ALL device props</span>
+        baseURL: <span class="str">'http://localhost:4200'</span>, <span class="cm">// ← your override on top</span>
+      },
+    },
+    {
+      name: <span class="str">'mobile'</span>,
+      use: {
+        ...devices[<span class="str">'Pixel 5'</span>],           <span class="cm">// viewport 393×851, touch: true</span>
+        baseURL: <span class="str">'http://localhost:4200'</span>,
+      },
+    },
+  ],
+});</pre>
+        </div>
+
+        <h2 class="section-heading">In Fixtures — spreading fixture sets</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">fixtures/combined.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="cm">// Compose multiple fixture sets — spread merges the type definitions</span>
+<span class="kw">import</span> { test <span class="kw">as</span> base } <span class="kw">from</span> <span class="str">'@playwright/test'</span>;
+<span class="kw">import</span> { <span class="cls">AuthFixtures</span>, authFixtures } <span class="kw">from</span> <span class="str">'./auth'</span>;
+<span class="kw">import</span> { <span class="cls">PageFixtures</span>, pageFixtures } <span class="kw">from</span> <span class="str">'./pages'</span>;
+
+<span class="cm">// Spread merges two separate fixture type definitions into one</span>
+<span class="kw">export const</span> test = base.<span class="op">extend</span>&lt;<span class="cls">AuthFixtures</span> & <span class="cls">PageFixtures</span>&gt;({
+  ...authFixtures,   <span class="cm">// copies { authenticatedPage: ..., token: ... }</span>
+  ...pageFixtures,   <span class="cm">// copies { loginPage: ..., dashboardPage: ... }</span>
+});
+
+<span class="cm">// Now tests can destructure from either set:</span>
+test(<span class="str">'dashboard loads'</span>, <span class="kw">async</span> ({ authenticatedPage, dashboardPage }) => {
+  <span class="cm">// authenticatedPage from authFixtures</span>
+  <span class="cm">// dashboardPage     from pageFixtures</span>
+});</pre>
+        </div>
+
+        <h2 class="section-heading">Java vs TypeScript mental model</h2>
+        <table class="comparison-table">
+          <thead><tr><th>Java (what you know)</th><th>TypeScript <code>...</code> equivalent</th></tr></thead>
+          <tbody>
+            <tr><td>new HashMap(existingMap)</td><td><code>{...existingObj}</code> — shallow copy</td></tr>
+            <tr><td>map.putAll(otherMap)</td><td><code>{...map1, ...map2}</code> — merge, last wins</td></tr>
+            <tr><td>new ArrayList(list)</td><td><code>[...list]</code> — array copy</td></tr>
+            <tr><td>Collections.addAll(a, b)</td><td><code>[...a, ...b]</code> — concatenate</td></tr>
+            <tr><td>No direct equivalent</td><td><code>const {x, ...rest} = obj</code> — destructure + collect rest</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-tip">
+          <strong>💡 Key rule:</strong> Later properties win. <code>{ timeout: 5000, ...override }</code> — override can change timeout. <code>{ ...override, timeout: 5000 }</code> — your literal <code>5000</code> always wins regardless of override.
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== BASE.EXTEND ==================== -->
+    <div class="section" id="sec-extend">
+      <div class="hero">
+        <div class="hero-tag">Fixture System Deep Dive</div>
+        <h1>base.extend&lt;T&gt;</h1>
+        <p class="hero-desc">The engine behind all custom fixtures. Understand this pattern and you can build any test infrastructure Playwright is capable of.</p>
+      </div>
+      <div class="content-area">
+
+        <h2 class="section-heading">The Signature Explained</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">anatomy.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="cm">// Full signature:</span>
+<span class="kw">const</span> test = base.<span class="op">extend</span>&lt;<span class="cls">YourFixtureTypes</span>&gt;({
+  fixtureName: <span class="kw">async</span> ({ <span class="cm">/* other fixtures to inject */</span> }, use) => {
+    <span class="cm">// SETUP: runs before the test (like @BeforeMethod in TestNG)</span>
+    <span class="kw">const</span> value = <span class="kw">await</span> <span class="fn">setupSomething</span>();
+
+    <span class="kw">await</span> <span class="fn">use</span>(value);  <span class="cm">// ← HAND CONTROL to the test</span>
+
+    <span class="cm">// TEARDOWN: runs after the test (like @AfterMethod)</span>
+    <span class="kw">await</span> <span class="fn">cleanupSomething</span>(value);
+  },
+});</span></pre>
+        </div>
+
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-icon">🔤</div>
+            <div class="card-title"><code>&lt;T&gt;</code> Generic Type</div>
+            <div class="card-desc">Tells TypeScript what custom fixtures you're adding. Autocomplete in tests works because of this. <code>T</code> is a plain object type with fixture names as keys.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📌</div>
+            <div class="card-title"><code>base</code> Parameter</div>
+            <div class="card-desc"><code>base</code> is the imported <code>test</code> renamed. It carries all built-in fixtures. Your extension <em>wraps</em> it — you get <code>page</code>, <code>request</code>, etc. for free.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔁</div>
+            <div class="card-title"><code>use(value)</code> Pivot</div>
+            <div class="card-desc">Everything <em>before</em> <code>await use()</code> is setup. Everything <em>after</em> is teardown. Playwright guarantees teardown runs even if the test throws.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔗</div>
+            <div class="card-title">DI / Injection</div>
+            <div class="card-desc">Fixtures can depend on other fixtures. Playwright resolves the dependency graph automatically — just declare what you need in the destructured argument.</div>
+          </div>
+        </div>
+
+        <h2 class="section-heading">Step-by-step: Building Real Fixtures</h2>
+        <div class="inner-tabs">
+          <div class="inner-tab active" onclick="switchTab(this,'ext-simple')">Simple Value</div>
+          <div class="inner-tab" onclick="switchTab(this,'ext-page')">Page Object</div>
+          <div class="inner-tab" onclick="switchTab(this,'ext-auth')">Auth + storageState</div>
+          <div class="inner-tab" onclick="switchTab(this,'ext-scope')">Worker Scope</div>
+          <div class="inner-tab" onclick="switchTab(this,'ext-chain')">Chaining Fixtures</div>
+        </div>
+
+        <div class="tab-content active" id="ext-simple">
+          <div class="code-block">
+            <div class="code-header"><span class="code-filename">fixtures/simple.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+            <pre><span class="kw">import</span> { test <span class="kw">as</span> base } <span class="kw">from</span> <span class="str">'@playwright/test'</span>;
+
+<span class="cm">// Step 1: Declare the shape of YOUR fixtures as a TypeScript type</span>
+<span class="kw">type</span> <span class="cls">MyFixtures</span> = {
+  baseURL: <span class="kw">string</span>;
+  authToken: <span class="kw">string</span>;
+};
+
+<span class="cm">// Step 2: extend base with that type</span>
+<span class="kw">export const</span> test = base.<span class="op">extend</span>&lt;<span class="cls">MyFixtures</span>&gt;({
+
+  <span class="cm">// Simple string fixture — no setup/teardown needed</span>
+  baseURL: <span class="kw">async</span> ({}, use) => {
+    <span class="kw">await</span> <span class="fn">use</span>(process.env.<span class="var">BASE_URL</span> ?? <span class="str">'http://localhost:4200'</span>);
+  },
+
+  <span class="cm">// Token fetched once and passed in</span>
+  authToken: <span class="kw">async</span> ({ request }, use) => {
+    <span class="kw">const</span> res = <span class="kw">await</span> request.<span class="op">post</span>(<span class="str">'/api/auth/login'</span>, {
+      data: { email: process.env.<span class="var">TEST_USER</span>, password: process.env.<span class="var">TEST_PASS</span> }
+    });
+    <span class="kw">const</span> { token } = <span class="kw">await</span> res.<span class="op">json</span>();
+    <span class="kw">await</span> <span class="fn">use</span>(token);
+    <span class="cm">// No teardown needed — token just goes out of scope</span>
+  },
+});
+
+<span class="cm">// Usage in test:</span>
+test(<span class="str">'uses token'</span>, <span class="kw">async</span> ({ authToken, request }) => {
+  <span class="kw">await</span> request.<span class="op">get</span>(<span class="str">'/api/protected'</span>, {
+    headers: { Authorization: <span class="str">`Bearer ${authToken}`</span> }
+  });
+});</pre>
+          </div>
+        </div>
+
+        <div class="tab-content" id="ext-page">
+          <div class="code-block">
+            <div class="code-header"><span class="code-filename">fixtures/pages.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+            <pre><span class="kw">import</span> { test <span class="kw">as</span> base } <span class="kw">from</span> <span class="str">'@playwright/test'</span>;
+<span class="kw">import</span> { <span class="cls">LoginPage</span> } <span class="kw">from</span> <span class="str">'../pages/LoginPage'</span>;
+<span class="kw">import</span> { <span class="cls">PricingPage</span> } <span class="kw">from</span> <span class="str">'../pages/PricingPage'</span>;
+
+<span class="kw">type</span> <span class="cls">PageFixtures</span> = {
+  loginPage: <span class="cls">LoginPage</span>;
+  pricingPage: <span class="cls">PricingPage</span>;
+};
+
+<span class="kw">export const</span> test = base.<span class="op">extend</span>&lt;<span class="cls">PageFixtures</span>&gt;({
+
+  loginPage: <span class="kw">async</span> ({ page }, use) => {
+    <span class="cm">// 'page' is a built-in fixture — injected automatically by Playwright</span>
+    <span class="kw">await</span> <span class="fn">use</span>(<span class="kw">new</span> <span class="cls">LoginPage</span>(page));
+    <span class="cm">// No teardown — page cleanup handled by Playwright</span>
+  },
+
+  pricingPage: <span class="kw">async</span> ({ page }, use) => {
+    <span class="kw">await</span> <span class="fn">use</span>(<span class="kw">new</span> <span class="cls">PricingPage</span>(page));
+  },
+});
+
+<span class="cm">// Test gets POMs directly — no 'new' anywhere in spec files!</span>
+test(<span class="str">'login flow'</span>, <span class="kw">async</span> ({ loginPage, pricingPage }) => {
+  <span class="kw">await</span> loginPage.<span class="op">goto</span>();
+  <span class="kw">await</span> loginPage.<span class="op">login</span>(<span class="str">'test@x4v.com'</span>, <span class="str">'pass'</span>);
+  <span class="kw">await</span> pricingPage.<span class="op">navigateToRules</span>();
+});</pre>
+          </div>
+        </div>
+
+        <div class="tab-content" id="ext-auth">
+          <div class="code-block">
+            <div class="code-header"><span class="code-filename">fixtures/auth.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+            <pre><span class="kw">import</span> { test <span class="kw">as</span> base, <span class="kw">type</span> <span class="cls">Page</span> } <span class="kw">from</span> <span class="str">'@playwright/test'</span>;
+
+<span class="kw">type</span> <span class="cls">AuthFixtures</span> = { authenticatedPage: <span class="cls">Page</span> };
+
+<span class="kw">export const</span> test = base.<span class="op">extend</span>&lt;<span class="cls">AuthFixtures</span>&gt;({
+
+  authenticatedPage: <span class="kw">async</span> ({ page }, use) => {
+    <span class="cm">// SETUP: log in before every test that requests this fixture</span>
+    <span class="kw">await</span> page.<span class="op">goto</span>(<span class="str">'/login'</span>);
+    <span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Email'</span>).<span class="op">fill</span>(process.env.<span class="var">TEST_USER</span>!);
+    <span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Password'</span>).<span class="op">fill</span>(process.env.<span class="var">TEST_PASS</span>!);
+    <span class="kw">await</span> page.<span class="op">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Sign In'</span> }).<span class="op">click</span>();
+    <span class="kw">await</span> page.<span class="op">waitForURL</span>(<span class="str">'**/dashboard'</span>);
+
+    <span class="kw">await</span> <span class="fn">use</span>(page);   <span class="cm">// ← TEST RUNS HERE</span>
+
+    <span class="cm">// TEARDOWN: optional - e.g. clear localStorage or save storage state</span>
+    <span class="kw">await</span> page.context().<span class="op">storageState</span>({ path: <span class="str">'auth/state.json'</span> });
+  },
+});
+
+<span class="cm">// Pro tip: Skip the UI login entirely by reusing saved storageState:</span>
+<span class="kw">export const</span> fastTest = base.<span class="op">extend</span>&lt;<span class="cls">AuthFixtures</span>&gt;({
+  authenticatedPage: <span class="kw">async</span> ({ browser }, use) => {
+    <span class="kw">const</span> ctx = <span class="kw">await</span> browser.<span class="op">newContext</span>({
+      storageState: <span class="str">'auth/state.json'</span>   <span class="cm">// pre-saved cookies + localStorage</span>
+    });
+    <span class="kw">const</span> page = <span class="kw">await</span> ctx.<span class="op">newPage</span>();
+    <span class="kw">await</span> <span class="fn">use</span>(page);
+    <span class="kw">await</span> ctx.<span class="op">close</span>();
+  },
+});</pre>
+          </div>
+        </div>
+
+        <div class="tab-content" id="ext-scope">
+          <div class="code-block">
+            <div class="code-header"><span class="code-filename">fixtures/worker-scope.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+            <pre><span class="cm">// Default scope: 'test' — re-created for every test</span>
+<span class="cm">// Worker scope: created ONCE per worker process, shared across tests</span>
+<span class="cm">// Use worker scope for expensive operations like: DB connections, auth token fetch</span>
+
+<span class="kw">type</span> <span class="cls">WorkerFixtures</span> = { dbConnection: <span class="cls">DbClient</span> };
+<span class="cm">// Worker fixtures are declared in the SECOND generic argument of extend&lt;&gt;</span>
+
+<span class="kw">export const</span> test = base.<span class="op">extend</span>&lt;{}, <span class="cls">WorkerFixtures</span>&gt;({
+  dbConnection: [<span class="kw">async</span> ({}, use) => {
+    <span class="kw">const</span> client = <span class="kw">await</span> <span class="cls">DbClient</span>.<span class="op">connect</span>({
+      host: process.env.<span class="var">DB_HOST</span>,
+      database: <span class="str">'x4v_test'</span>
+    });
+
+    <span class="kw">await</span> <span class="fn">use</span>(client);   <span class="cm">// All tests in this worker share this connection</span>
+
+    <span class="kw">await</span> client.<span class="op">disconnect</span>();  <span class="cm">// Runs once when worker shuts down</span>
+  }, { scope: <span class="str">'worker'</span> }],  <span class="cm">// ← this options object sets the scope</span>
+});
+
+<span class="cm">// Analogy: like HikariCP pooling in your Java framework —</span>
+<span class="cm">// one connection shared per thread instead of per test</span></pre>
+          </div>
+        </div>
+
+        <div class="tab-content" id="ext-chain">
+          <div class="code-block">
+            <div class="code-header"><span class="code-filename">fixtures/chained.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+            <pre><span class="cm">// Fixture A depends on Fixture B — Playwright resolves the chain</span>
+<span class="kw">type</span> <span class="cls">ChainedFixtures</span> = {
+  authToken: <span class="kw">string</span>;
+  apiClient: <span class="cls">ApiClient</span>;
+  loggedInPage: <span class="cls">Page</span>;
+};
+
+<span class="kw">export const</span> test = base.<span class="op">extend</span>&lt;<span class="cls">ChainedFixtures</span>&gt;({
+
+  <span class="cm">// Level 1: Fetch token</span>
+  authToken: <span class="kw">async</span> ({ request }, use) => {
+    <span class="kw">const</span> res = <span class="kw">await</span> request.<span class="op">post</span>(<span class="str">'/api/auth/token'</span>, {
+      data: { grant_type: <span class="str">'client_credentials'</span> }
+    });
+    <span class="kw">await</span> <span class="fn">use</span>((<span class="kw">await</span> res.<span class="op">json</span>()).access_token);
+  },
+
+  <span class="cm">// Level 2: Uses authToken fixture (injected automatically)</span>
+  apiClient: <span class="kw">async</span> ({ authToken, request }, use) => {
+    <span class="kw">const</span> client = <span class="kw">new</span> <span class="cls">ApiClient</span>(request, authToken);
+    <span class="kw">await</span> <span class="fn">use</span>(client);
+  },
+
+  <span class="cm">// Level 3: Uses apiClient to seed data, then returns a page</span>
+  loggedInPage: <span class="kw">async</span> ({ apiClient, page }, use) => {
+    <span class="kw">await</span> apiClient.<span class="op">seedTestData</span>();    <span class="cm">// set up via API</span>
+    <span class="kw">await</span> page.<span class="op">goto</span>(<span class="str">'/dashboard'</span>);
+    <span class="kw">await</span> <span class="fn">use</span>(page);
+    <span class="kw">await</span> apiClient.<span class="op">cleanupTestData</span>(); <span class="cm">// teardown</span>
+  },
+});
+
+<span class="cm">// Playwright builds the dependency graph:</span>
+<span class="cm">// request → authToken → apiClient → loggedInPage</span>
+<span class="cm">// Each is set up in order, torn down in reverse</span></pre>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>🔑 Mental model for Java devs:</strong> Think of <code>base.extend&lt;T&gt;</code> as building a typed DI container (like Spring context). The generic <code>T</code> is your bean definitions, each fixture implementation is a <code>@Bean</code> method, and <code>await use(value)</code> is the point where the test "runs" inside the container's lifecycle.
+        </div>
+
+        <h2 class="section-heading">base.extend&lt;&gt; vs TestNG Annotations</h2>
+        <table class="comparison-table">
+          <thead><tr><th>TestNG (Java)</th><th>Playwright base.extend&lt;&gt;</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>@BeforeMethod</td><td>Code before <code>await use()</code></td><td>Runs per test</td></tr>
+            <tr><td>@AfterMethod</td><td>Code after <code>await use()</code></td><td>Always runs, even on failure</td></tr>
+            <tr><td>@BeforeClass</td><td><code>scope: 'worker'</code> setup</td><td>Once per worker process</td></tr>
+            <tr><td>@AfterClass</td><td><code>scope: 'worker'</code> teardown</td><td>Worker shutdown</td></tr>
+            <tr><td>@DataProvider</td><td>Parametrize via <code>test.for()</code></td><td>Different pattern</td></tr>
+            <tr><td>ThreadLocal&lt;T&gt;</td><td>Each test gets own fixture instance</td><td>Playwright handles isolation</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ==================== COURSE NOTES ==================== -->
+    <div class="section" id="sec-coursenotes">
+      <div class="hero">
+        <div class="hero-tag">Playwright E2E Automation · Cope Automation</div>
+        <h1>Course Notes</h1>
+        <p class="hero-desc">Key takeaways distilled from the <em>Playwright E2E Test Automation v3</em> course deck — organized as a scannable reference.</p>
+      </div>
+      <div class="content-area">
+
+        <h2 class="section-heading">Core Framework Components</h2>
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-icon">🏃</div>
+            <div class="card-title">Built-in Test Runner</div>
+            <div class="card-desc">No external runners needed (no Mocha, Jest, Jasmine). Powerful config file controls browsers, reporters, parallel runs, retries.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🌐</div>
+            <div class="card-title">Cross-Platform</div>
+            <div class="card-desc">3× cross: Platform (Win/Mac/Linux), Browsers (Chromium/Firefox/WebKit), Language (TS/JS/Python/Java/C#).</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">⚡</div>
+            <div class="card-title">Auto-waiting + Rich Features</div>
+            <div class="card-desc">Code-gen, annotations, tags, multiple reporters, integrated API testing — all in one package.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🤖</div>
+            <div class="card-title">MCP Server</div>
+            <div class="card-desc">Playwright ships a powerful MCP server backed by Microsoft — enabling AI-native test tooling and agents.</div>
+          </div>
+        </div>
+
+        <h2 class="section-heading">test() Function Anatomy</h2>
+        <div class="callout callout-info">The <code>test()</code> function has three parts: <strong>title</strong> (string), optional <strong>details</strong> (annotations/tags), and <strong>body</strong> (async callback receiving fixtures + testInfo).</div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">test-anatomy.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">import</span> { test, expect } <span class="kw">from</span> <span class="str">'@playwright/test'</span>;
+
+<span class="cm">// Basic signature</span>
+test(<span class="str">'title string'</span>, <span class="kw">async</span> ({ page, request }) => { <span class="cm">/* body */</span> });
+
+<span class="cm">// With details (tags, annotations)</span>
+test(<span class="str">'login flow'</span>,
+  { tag: [<span class="str">'@smoke'</span>, <span class="str">'@regression'</span>], annotation: { type: <span class="str">'issue'</span>, description: <span class="str">'X4V-123'</span> } },
+  <span class="kw">async</span> ({ page }, testInfo) => {
+    testInfo.<span class="op">setTimeout</span>(<span class="num">60000</span>);  <span class="cm">// override timeout for this test</span>
+    <span class="kw">await</span> page.<span class="op">goto</span>(<span class="str">'/'</span>);
+  }
+);
+
+<span class="cm">// Most common fixture args:</span>
+<span class="cm">// { page }           → UI testing</span>
+<span class="cm">// { request }        → API testing</span>
+<span class="cm">// { page, request }  → Hybrid</span>
+<span class="cm">// { browser }        → Manual context creation</span>
+<span class="cm">// { context }        → Access current BrowserContext</span></pre>
+        </div>
+
+        <h2 class="section-heading">Locator Objects — Key Takeaways</h2>
+        <div class="callout callout-tip">
+          <strong>Locators are LAZY:</strong> <code>page.getBy*()</code> and <code>page.locator()</code> return Locator objects — they do NOT touch the DOM. Do not <code>await</code> the locator itself; only <code>await</code> the action (<code>.click()</code>, <code>.fill()</code>) or assertion on it.
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">lazy-locators.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="cm">// ✅ Correct — locator is not awaited, only the action is</span>
+<span class="kw">const</span> btn = page.<span class="op">getByRole</span>(<span class="str">'button'</span>, { name: <span class="str">'Submit'</span> });  <span class="cm">// no await</span>
+<span class="kw">await</span> btn.<span class="op">click</span>();                                            <span class="cm">// await here</span>
+
+<span class="cm">// ❌ Wrong — locator is NOT a Promise, await does nothing useful</span>
+<span class="kw">const</span> btn2 = <span class="kw">await</span> page.<span class="op">getByRole</span>(<span class="str">'button'</span>);  <span class="cm">// pointless await</span></pre>
+        </div>
+
+        <h2 class="section-heading">Debugging Options</h2>
+        <div class="cards-grid">
+          <div class="card"><div class="card-icon">🧪</div><div class="card-title">VS Code Test Explorer</div><div class="card-desc">Run/debug individual tests with breakpoints directly in VS Code via the Playwright extension.</div></div>
+          <div class="card"><div class="card-icon">🖥️</div><div class="card-title">UI Mode (<code>--ui</code>)</div><div class="card-desc">Interactive watch mode with timeline, DOM snapshots, and network inspector. Best debugging experience.</div></div>
+          <div class="card"><div class="card-icon">🐛</div><div class="card-title">PWDEBUG=1</div><div class="card-desc"><code>PWDEBUG=1 npx playwright test</code> — opens Playwright Inspector. Step through actions, inspect locators live.</div></div>
+          <div class="card"><div class="card-icon">🎬</div><div class="card-title">Trace Viewer</div><div class="card-desc">Full recording of test run: actions, screenshots, network, console. Open with <code>npx playwright show-trace trace.zip</code>.</div></div>
+        </div>
+
+        <h2 class="section-heading">Data Organization Strategy</h2>
+        <table class="comparison-table">
+          <thead><tr><th>Data Type</th><th>Where to Store</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>Static / Constants</td><td><code>constants.json</code></td><td>App URL, SQL query templates</td></tr>
+            <tr><td>Test Data (parameterized)</td><td>CSV files or JSON arrays</td><td>User inputs, form values</td></tr>
+            <tr><td>Dynamic / Generated</td><td>Global setup output</td><td>Auth tokens, created IDs</td></tr>
+            <tr><td>Env Config</td><td><code>config.ts</code> per environment</td><td>API base URL per env</td></tr>
+            <tr><td>Sensitive</td><td><code>.env</code> + dotenv</td><td>Passwords, API keys</td></tr>
+          </tbody>
+        </table>
+
+        <h2 class="section-heading">Hooks Summary</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">hooks-pattern.spec.ts</span><span class="code-lang">TS</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="kw">import</span> { test, expect } <span class="kw">from</span> <span class="str">'@playwright/test'</span>;
+
+<span class="cm">// Hooks at file level → apply to ALL tests in the file</span>
+test.<span class="op">beforeAll</span>(<span class="kw">async</span> ({ browser }) => { <span class="cm">/* one-off setup */</span> });
+test.<span class="op">afterAll</span>(<span class="kw">async</span> () => { <span class="cm">/* one-off teardown */</span> });
+test.<span class="op">beforeEach</span>(<span class="kw">async</span> ({ page }) => { <span class="kw">await</span> page.<span class="op">goto</span>(<span class="str">'/'</span>); });
+test.<span class="op">afterEach</span>(<span class="kw">async</span> ({ page }) => { <span class="cm">/* cleanup */</span> });
+
+<span class="cm">// Most common pattern (from course): describe → beforeEach → test</span>
+test.<span class="op">describe</span>(<span class="str">'Pricing Rules'</span>, () => {
+  test.<span class="op">beforeEach</span>(<span class="kw">async</span> ({ page }) => {
+    <span class="kw">await</span> page.<span class="op">goto</span>(<span class="str">'/pricing/rules'</span>);
+  });
+
+  test(<span class="str">'list shows 30 rules'</span>, <span class="kw">async</span> ({ page }) => {
+    <span class="kw">await</span> <span class="fn">expect</span>(page.<span class="op">getByRole</span>(<span class="str">'row'</span>)).<span class="op">toHaveCount</span>(<span class="num">30</span>);
+  });
+
+  test(<span class="str">'can filter by powerRank'</span>, <span class="kw">async</span> ({ page }) => {
+    <span class="kw">await</span> page.<span class="op">getByLabel</span>(<span class="str">'Power Rank'</span>).<span class="op">fill</span>(<span class="str">'5'</span>);
+  });
+});</pre>
+        </div>
+
+        <h2 class="section-heading">AI Agents (Playwright Test Agents)</h2>
+        <div class="callout callout-info"><strong>Three agents:</strong> Use them sequentially for best results. Planner → Generator → Healer is the recommended flow.</div>
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-icon">🗺️</div>
+            <div class="card-title">Planner</div>
+            <div class="card-desc"><strong>In:</strong> seed test / PRD. <strong>Out:</strong> <code>.md</code> test plan file. Explores the application and generates a comprehensive test coverage plan.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">⚙️</div>
+            <div class="card-title">Generator</div>
+            <div class="card-desc"><strong>In:</strong> test plan <code>.md</code>. <strong>Out:</strong> <code>*.spec.ts</code>. Converts the plan into executable Playwright tests with boilerplate code.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🩹</div>
+            <div class="card-title">Healer</div>
+            <div class="card-desc"><strong>In:</strong> failing spec file. <strong>Out:</strong> error-free spec. Fixes failing tests — can be used in isolation without running full pipeline.</div>
+          </div>
+        </div>
+
+        <div class="callout callout-warn">
+          <strong>⚠️ AI Agent Caveats (from course):</strong> Generated code needs manual review. Assertions may only check visibility, not business rules. Sensitive credentials/API keys must be reviewed. Framework compliance may need adjustment for your project structure.
+        </div>
+
+        <h2 class="section-heading">GitHub Copilot Chat Modes in VS Code</h2>
+        <table class="comparison-table">
+          <thead><tr><th>Mode</th><th>Best For</th><th>Example Prompt</th></tr></thead>
+          <tbody>
+            <tr><td>Inline (<code>Ctrl+I</code>)</td><td>Quick edits in current file</td><td>"Add a variable to this class"</td></tr>
+            <tr><td>Ask</td><td>Questions about codebase/concepts</td><td>"How to add a new test to this spec file?"</td></tr>
+            <tr><td>Edit</td><td>Multi-file code changes</td><td>"Based on given selectors, add page objects"</td></tr>
+            <tr><td>Agent</td><td>High-level complex tasks</td><td>"Refactor the codebase so I can use Cucumber BDD"</td></tr>
+          </tbody>
+        </table>
+        <div class="callout callout-tip"><strong>3s Principle for prompts:</strong> Simple · Specific · Short</div>
+
+        <h2 class="section-heading">CI/CD Integration</h2>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">.github/workflows/playwright.yml</span><span class="code-lang">YAML</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre>name: Playwright Tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - run: npx playwright test
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          TEST_USER: ${{ secrets.TEST_USER }}
+          TEST_PASS: ${{ secrets.TEST_PASS }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30</pre>
+        </div>
+
+        <h2 class="section-heading">Codegen Tips</h2>
+        <div class="cards-grid">
+          <div class="card"><div class="card-icon">⏺️</div><div class="card-title">Records test flows</div><div class="card-desc">Generates best locators automatically. Drastically reduces test writing time — no brittle selectors.</div></div>
+          <div class="card"><div class="card-icon">📍</div><div class="card-title">Record at cursor</div><div class="card-desc">Enables adding locators in the <em>middle</em> of an existing test flow — not just from scratch.</div></div>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-filename">terminal</span><span class="code-lang">BASH</span><button class="code-copy" onclick="copyCode(this)">copy</button></div>
+          <pre><span class="fn">npx</span> playwright codegen http://localhost:4200
+<span class="fn">npx</span> playwright codegen --save-storage=auth.json http://localhost:4200  <span class="cm"># save auth</span>
+<span class="fn">npx</span> playwright codegen --load-storage=auth.json http://localhost:4200  <span class="cm"># reuse auth</span></pre>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('sec-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  function switchTab(el, contentId) {
+    const parent = el.closest('.content-area, .section');
+    parent.querySelectorAll('.inner-tab').forEach(t => t.classList.remove('active'));
+    parent.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById(contentId).classList.add('active');
+  }
+
+  function copyCode(btn) {
+    const pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.innerText).then(() => {
+      btn.textContent = 'copied!';
+      btn.style.color = '#10b981';
+      setTimeout(() => { btn.textContent = 'copy'; btn.style.color = ''; }, 2000);
+    });
+  }
+
+  function answer(el, correct) {
+    const group = el.closest('.quiz-q');
+    if (group.querySelector('.correct') || group.querySelector('.wrong')) return; // already answered
+    group.querySelectorAll('.quiz-option').forEach(o => o.classList.add('disabled'));
+    el.classList.add(correct ? 'correct' : 'wrong');
+    if (!correct) {
+      group.querySelectorAll('.quiz-option').forEach(o => {
+        if (o.getAttribute('onclick').includes('true')) o.classList.add('correct');
+      });
+    }
+  }
+</script>
+</body>
+</html>

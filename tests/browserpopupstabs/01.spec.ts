@@ -4,7 +4,7 @@
 
 //browser context page
 
-import { test, expect ,chromium} from '@playwright/test';
+import { test, chromium} from '@playwright/test';
 test('BigBasket menu test', async ({ browser }) => {
 //browser taken from config 
     const context = await browser.newContext();
