@@ -1,0 +1,2 @@
+[dotenv@17.2.3] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+{"parsed":{},"error":{"errno":-4058,"code":"ENOENT","syscall":"open","path":"D:\\SeleniumFrameWorks\\GitHubSumitraut01\\Playright2025TS\\.env"}}
