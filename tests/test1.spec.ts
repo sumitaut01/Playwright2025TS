@@ -21,3 +21,20 @@ test("myfunction", async () => {
   await context.close();
   await browser.close();
 });
+
+
+
+
+test('with page fixture',{}, async({page})=>{
+
+  await page.goto("http://www.rediff.com")
+  await page.pause();
+ 
+  console.log(page.title);
+
+console.log("done")
+
+
+})
+
+

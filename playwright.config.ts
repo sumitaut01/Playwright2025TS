@@ -13,8 +13,8 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
 
-    // globalSetup: "./global-setup.ts",
-	  // globalTeardown: './global-teardown.ts',
+    globalSetup: "./global-setup.ts",
+	  globalTeardown: './global-teardown.ts',
 	
   //testDir: './tests/testing',
     testDir: './tests',

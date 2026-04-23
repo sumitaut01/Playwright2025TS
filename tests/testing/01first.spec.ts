@@ -4,7 +4,7 @@ import { test,expect } from "@playwright/test";
 
 //fixture page ,browser
 
-test("01_first test",async({page})=>{
+test("01_first test",{ tag:['@first']},async({page})=>{
 
 await page.goto("https://naveenautomationlabs.com/opencart/")
 console.log('title is '+await page.title())
