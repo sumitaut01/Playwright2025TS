@@ -1,0 +1,24 @@
+200
+object
+{
+  date: 'Fri, 24 Apr 2026 13:43:06 GMT',
+  'content-type': 'application/json',
+  'transfer-encoding': 'chunked',
+  connection: 'keep-alive',
+  'access-control-allow-origin': '*',
+  'access-control-allow-credentials': 'true',
+  'access-control-allow-headers': 'Content-Type, Authorization, X-API-Key, X-Request-Id, X-Client-Id, Accept, Accept-Language, Origin',
+  'access-control-allow-methods': 'GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS',
+  'access-control-expose-headers': 'X-Request-Id, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After, Content-Length',
+  'access-control-max-age': '86400',
+  'x-ratelimit-limit': '100',
+  'x-ratelimit-remaining': '99',
+  'x-ratelimit-reset': '1777038245',
+  'x-request-id': '144d4fca-b9b3-4288-9830-b239146f7015',
+  'report-to': '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=%2F2Z7ksQph8drYaBnNRUUTHtFOALto9FIAmNXxPA1Nc6XazJyWjJwaT8ETci0YRfTGaP%2B9bqvi9FBxHcCXu%2B%2F%2Ff4a4cuoZ2z4bhIFQ1b3i7aYiAgn8kwj2IBJGSheKe%2FK0giEbh4TKufFExfhECnbDwmhnPxvvf%2FDeJPEb1CFtho7cKrobw%3D%3D"}]}',
+  nel: '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}',
+  'content-encoding': 'br',
+  server: 'cloudflare',
+  'cf-ray': '9f1588f2588eff73-BOM',
+  'alt-svc': 'h3=":443"; ma=86400'
+}

@@ -1,0 +1,14 @@
+{
+  success: true,
+  data: {
+    status: 'healthy',
+    service: 'billpay-api',
+    version: 'v1',
+    timestamp: '2026-04-24T13:44:38.782Z'
+  },
+  meta: {
+    requestId: 'b68a6b79-99fe-4175-8893-d0af31b29fbc',
+    timestamp: '2026-04-24T13:44:38.782Z',
+    version: 'v1'
+  }
+}

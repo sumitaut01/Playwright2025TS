@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
+import type {myConfig } from './tests/testzzmyextravariableinconfig.ts';
+
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -11,8 +14,10 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig({
+export default defineConfig<myConfig>({
+  //export default defineConfig({   //original code without extra variable in config
 
+   
     globalSetup: "./global-setup.ts",
 	  globalTeardown: './global-teardown.ts',
 	
@@ -47,6 +52,7 @@ export default defineConfig({
 //outputfolder is also there         ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    myExtraVariable: 'This is my extra variable in config',
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
 
@@ -63,6 +69,24 @@ export default defineConfig({
       //fullyParallel: true,    this means tests will run in parallel mode for chromium only
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      dependencies: ['dependencychromium'],  // this will run the dependencychromium project before running the chromium project. This is useful when we have some setup or teardown steps that need to be run before or after the tests in the chromium project. For example, we can use the dependencychromium project to set up a test environment or to perform some actions that are required for the tests in the chromium project. By defining dependencies between projects, we can ensure that the necessary setup and teardown steps are executed in the correct order, which can help to improve the reliability and maintainability of our test suite.
+    }
+    ,
+    {
+      
+      name: 'api-tests',
+        testDir: 'tests/testing/apitesting',
+      use: {
+      baseURL: 'https://billpay-api.gauravkhurana-practice-api.workers.dev',
+    
+        }
+      
+    },
+
+     {
+      //fullyParallel: true,    this means tests will run in parallel mode for chromium only
+      name: 'dependencychromium',
+      testMatch: 'tests/testing/testdependencyspec.spec.ts',
     }
     // ,
 
