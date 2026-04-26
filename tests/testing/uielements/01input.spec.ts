@@ -5,7 +5,7 @@ import {test,expect} from '@playwright/test'
 test('handling input',async({page})=>{
 
 await page.goto('https://testautomationpractice.blogspot.com/')
-await page.waitForLoadState('networkidle');
+await page.waitForLoadState('networkidle'); //this is not required in most cases as this is automatically handled by playwright. But in some cases where there are lot of network calls, we can use this to make sure that all the network calls are completed before we interact with the page. This is a good practice to avoid flaky tests.
 
 const inputvalue="this is it";
 await page.getByRole('textbox',{name:'Enter Name'}).fill(inputvalue);
