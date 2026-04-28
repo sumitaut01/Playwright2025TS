@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Playwright Run Modes & Recording Guide</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      background: #f5f7fa;
+      color: #333;
+    }
+    header {
+      background: #0b5ed7;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #0b5ed7;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 5px;
+    }
+    code {
+      background: #eee;
+      padding: 3px 6px;
+      border-radius: 4px;
+    }
+    pre {
+      background: #1e1e1e;
+      color: #dcdcdc;
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    ul {
+      margin-left: 20px;
+    }
+    .highlight {
+      background: #e7f1ff;
+      padding: 10px;
+      border-left: 4px solid #0b5ed7;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Playwright Run Modes & Recording Guide</h1>
+  <p>Understand how to run and record tests in Playwright</p>
+</header>
+
+<div class="container">
+
+  <h2>1. Headless vs Headed Mode</h2>
+  <p><strong>Headless:</strong> Runs without UI (fast, used in CI/CD)</p>
+  <pre>npx playwright test</pre>
+
+  <p><strong>Headed:</strong> Runs with visible browser</p>
+  <pre>npx playwright test --headed</pre>
+
+  <h2>2. UI Mode (Interactive)</h2>
+  <p>Graphical interface to run and debug tests.</p>
+  <pre>npx playwright test --ui</pre>
+
+  <h2>3. Debug Mode</h2>
+  <p>Step-by-step execution with inspector.</p>
+  <pre>npx playwright test --debug</pre>
+
+  <h2>4. Trace Mode</h2>
+  <p>Records execution for debugging later.</p>
+  <pre>npx playwright test --trace on</pre>
+
+  <h2>5. Parallel vs Serial</h2>
+  <p>Run tests concurrently or one by one.</p>
+  <pre>// Serial mode
+test.describe.configure({ mode: 'serial' });</pre>
+
+  <h2>6. Project Execution</h2>
+  <p>Run tests on different browsers.</p>
+  <pre>
+npx playwright test --project=chromium
+npx playwright test --project=firefox
+  </pre>
+
+  <h2>🎥 7. Recording Mode (Codegen)</h2>
+
+  <div class="highlight">
+    <strong>This is the mode used to record your actions and generate test code.</strong>
+  </div>
+
+  <p>Start recording:</p>
+  <pre>npx playwright codegen</pre>
+
+  <p>Open a specific website:</p>
+  <pre>npx playwright codegen https://example.com</pre>
+
+  <p>Save recorded script:</p>
+  <pre>npx playwright codegen -o test.spec.js</pre>
+
+  <h3>What Codegen Does:</h3>
+  <ul>
+    <li>Opens a browser window</li>
+    <li>Records clicks, typing, and navigation</li>
+    <li>Generates Playwright test code automatically</li>
+  </ul>
+
+  <h3>Best Use Cases:</h3>
+  <ul>
+    <li>Learning Playwright</li>
+    <li>Quick test creation</li>
+    <li>Finding selectors easily</li>
+  </ul>
+
+  <div class="highlight">
+    Tip: Always clean up generated code before using it in production tests.
+  </div>
+
+</div>
+
+</body>
+</html>
