@@ -1,0 +1,13 @@
+is locator case sensitive
+how about regular expression
+how to hanle find elements
+webtable handling
+screenshots
+trace viewer
+local browsers
+how to deal when multiple elements match with same locator 
+how has, hst text,
+how shadow dom works in playwright.. what code we need
+
+
+

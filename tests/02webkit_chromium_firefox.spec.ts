@@ -1,0 +1,39 @@
+
+import { expect,test, type Browser, type Page} from "@playwright/test";
+import { webkit,chromium,firefox } from "@playwright/test";
+
+
+
+test('first',async()=>{
+
+const browser:Browser= await chromium.launch({headless:false}) // notice type Browser  in import
+const page:Page=await browser.newPage()
+await page.goto("https://www.google.com");
+await expect(page).toHaveTitle("Google");
+await page.close();
+await browser.close
+});
+
+
+test('second',async()=>{
+
+const browser:Browser= await firefox.launch({headless:false})
+const page:Page=await browser.newPage()
+await page.goto("https://www.google.com");
+await expect(page).toHaveTitle("Google");
+await page.close();
+await browser.close
+});
+
+
+
+test('third',async()=>{
+
+const browser:Browser= await webkit.launch({headless:false})
+const page:Page=await browser.newPage()
+await page.goto("https://www.google.com");
+await expect(page).toHaveTitle("Google");
+await page.close();
+await browser.close
+});
+

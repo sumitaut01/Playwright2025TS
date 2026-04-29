@@ -7,9 +7,7 @@ import { test, expect } from '@playwright/test';
 
 test('screenshot, video and trace', async ({ page }) => {
     await page.goto('https://www.saucedemo.com/');  
-
     await expect(page.locator('text=Swag Labs')).toBeVisible();
-
     await page.screenshot({ path: 'screenshot.png' });
 });
 

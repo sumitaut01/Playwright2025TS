@@ -1,3 +1,0 @@
-I am a JS Confirm
-I am a JS prompt
-I am a JS prompt
