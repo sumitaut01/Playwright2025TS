@@ -21,8 +21,10 @@ import type {myConfig } from './tests/testzzmyextravariableinconfig.ts';
     globalSetup: "./global-setup.ts",
 	  globalTeardown: './global-teardown.ts',
 	
-  //testDir: './tests/testing',
-    testDir: './tests',
+  //testDir: './tests/testing',  // this will run all the spec.ts files in the tests folder and its subfolders. This is useful when we have a large number of tests and we want to organize them in different folders based on their functionality or type. By using a glob pattern like this, we can easily include all the relevant test files without having to specify each one individually.
+   testDir: './tests/',  // this will run all the spec.ts files in the tests folder and its subfolders. This is useful when we have a large number of tests and we want to organize them in different folders based on their functionality or type. By using a glob pattern like this, we can easily include all the relevant test files without having to specify each one individually.
+
+   //testMatch: '**/*.spec.ts',
 
     // grep: /@smoke/,  indicates that run only smoke tests
     // grepInvert: /@smoke/,  indicates that run all except smoke tests

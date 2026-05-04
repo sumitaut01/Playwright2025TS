@@ -15,14 +15,9 @@ console.log(browserName.toString())
 
 
 test('browse fixture', async ({browser})=>{
-
 const context=await browser.newContext();
-
 const page=   await context.newPage();
-
-
 page.goto("rediff.com")
-
 });
 
 

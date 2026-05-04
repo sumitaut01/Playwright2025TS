@@ -4,6 +4,8 @@ import { webkit,chromium,firefox } from "@playwright/test";
 
 
 
+test.describe('this is my first test suite',()=>{
+
 test('first',async()=>{
 
 const browser:Browser= await chromium.launch({headless:false}) // notice type Browser  in import
@@ -37,3 +39,6 @@ await page.close();
 await browser.close
 });
 
+
+//group ends
+});
