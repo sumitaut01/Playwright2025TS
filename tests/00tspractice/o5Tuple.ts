@@ -1,5 +1,10 @@
 
 
+//below is the example of tuple in typescript which is a fixed length array where each element can have a different type.
+//useful    for representing a collection of values of different types, such as a pair of coordinates (x, y) or
+//  a person's name and age.
+
+    
 let x:[number, string];
 x = [1, 'hello'];
 

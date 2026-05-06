@@ -1,4 +1,12 @@
 
+//unline java interface in typescript is more like a blueprint for an object which defines the structure of the object
+//  and the types of the properties and methods that the object should have.
+
+// you might think that types and interfaces are same but there are some differences between them which we will see in the next file
+//key difference is that interfaces can be extended and implemented by classes while types cannot be extended or implemented.
+// interfaces are more flexible and can be used to define the shape of an object, while types are more rigid and are used to define a specific type of value.
+    
+
 interface myobject {
     name: String,
     age: Number,

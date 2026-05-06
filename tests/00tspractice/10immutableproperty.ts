@@ -1,4 +1,7 @@
 
+//IMMUTABLE PROPERTY example is shown below where we have defined an interface with a 
+// readonly property and then we are trying to change the value of that property which will give us an error as 
+// it is read-only and cannot be modified after it has been initialized.
 
 interface dd{
     readonly dept:Number,

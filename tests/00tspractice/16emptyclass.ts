@@ -1,6 +1,8 @@
 
 
-class Empty{}
+class Empty{} //this is an empty class with no properties or methods. its allowed in typescript and it can be used as a 
+//    type for variables or function parameters. it is also compatible with any other type because it has no requirements.
+  
 
 
 function myfunction( arg:Empty){

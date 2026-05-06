@@ -1,5 +1,7 @@
 
-//1 Optional Parameter
+//1 Optional Parameter is denoted by ? and it means that the parameter is not required and can be omitted when calling 
+// the function.
+        
 
 //Normal
 function getInfo(firstname:String,age:number):String{

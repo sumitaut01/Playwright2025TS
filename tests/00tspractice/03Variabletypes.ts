@@ -1,4 +1,9 @@
 
+// varibale type in typescript CAN be explicitly defined by the developer or can be inferred by the compiler based on the assigned value.
+// Type annotations are used to explicitly specify the type of a variable, function parameter, or function return value. 
+// This helps catch type-related errors during development and provides better code readability and maintainability.    
+
+
 //Use lowercase types (string, number, boolean) instead of their object wrappers (String, Number, Boolean).
 let x:number=20;
 

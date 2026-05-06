@@ -1,3 +1,8 @@
+//tuples vs arrays in typescript
+//so mostly we use arrays to store a collection of values of the same type but sometimes we need to store a 
+//  collection of values of different types and for that we can use tuples in typescript which is a fixed length array 
+// where each element can have a different type.
+
 
 
 

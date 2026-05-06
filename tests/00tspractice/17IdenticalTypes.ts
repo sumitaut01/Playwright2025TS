@@ -11,4 +11,5 @@ class Golfer {
 // No error?
 let w: Car = new Golfer();
 
-//Again, this isn’t an error because the structures of these classes are the same. While this may seem like a potential source of confusion, in practice, identical classes that shouldn’t be related are not common.
+//Again, this isn’t an error because the structures of these classes are the same. While this may seem like a potential 
+// source of confusion, in practice, identical classes that shouldn’t be related are not common.
