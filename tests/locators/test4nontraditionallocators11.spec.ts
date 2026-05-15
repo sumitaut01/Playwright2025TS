@@ -1,4 +1,4 @@
-import { test, Locator, expect } from "@playwright/test";
+import { test, type Locator, expect } from "@playwright/test";
 
 test("myfunction", async ({page}) => {
 

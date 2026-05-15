@@ -1,0 +1,25 @@
+Printing
+{
+  totvs: 6,
+  HrqvcZBiHd: 1,
+  sold: 194,
+  tjr_available: 1,
+  string: 127,
+  pending: 9,
+  born: 1,
+  available: 602,
+  aivailable: 1,
+  Soldout: 1,
+  good: 1,
+  unknown: 2,
+  CwAMgbjBkz: 1,
+  gFZYUqUuDv: 1,
+  Sell: 1,
+  '\x94\t󞝡1\r\x02\x7F': 1,
+  'not-existing-status': 2,
+  amitesh: 1,
+  '-􀱷?򡭂򢕎·\x91': 3,
+  adopted: 1,
+  avaible: 1,
+  Invalid: 1
+}

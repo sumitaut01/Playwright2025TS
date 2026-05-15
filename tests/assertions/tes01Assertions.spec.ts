@@ -1,4 +1,4 @@
-import { test, expect, Locator } from "@playwright/test"
+import { test, expect, type Locator } from "@playwright/test"
 import { execPath } from "process";
 
 test('tobeAssertions', async ({ page }) => {
@@ -6,8 +6,7 @@ test('tobeAssertions', async ({ page }) => {
     await page.goto("https://testautomationpractice.blogspot.com/")
 
     const nameInput: Locator = page.getByPlaceholder('Enter Name');
-
-    expect(await page.title()).toEqual('Automation Testing Practice');
+   expect(await page.title()).toEqual('Automation Testing Practice');
     expect(await nameInput).toBeVisible();
 
     await nameInput.fill('sumit');
@@ -18,6 +17,8 @@ test('tobeAssertions', async ({ page }) => {
     const homelink1 = await linkHome.innerText();
     const homelink2 = await linkHome.textContent();
     console.log(`innertext is ${homelink1} and textContent is ${homelink2}`);
+
+    test.step(`innertext is ${homelink1} and textContent is ${homelink2}`,()=>{})
 
     expect(homelink1).toBe('Home');
     expect(homelink2).toContain('ome');

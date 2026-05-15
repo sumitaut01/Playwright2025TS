@@ -3,10 +3,7 @@
 
 import { expect, test, request } from "@playwright/test";
 
-
-
 const url = "https://rahulshettyacademy.com/client";
-
 const payLoad = { userEmail: '', userPassword: '' }
 let token = '';
 test.beforeAll('testing to get the token in beforeAll', async ({ page }) => {

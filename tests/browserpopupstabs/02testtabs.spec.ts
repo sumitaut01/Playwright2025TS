@@ -13,7 +13,13 @@ test('BigBasket menu test', async ({ browser }) => {
   page.locator("button:has-text('New Tab')").click();
 
 
-  const [childpage]=await Promise.all([context.waitForEvent('page'), page.locator("button:has-text('New Tab')").click()]);
+  const [childpage]=await Promise.all(
+    [
+      context.waitForEvent('page'), 
+      page.locator("button:has-text('New Tab')").click()
+
+    ]
+  );
     
 
   //switching between pages

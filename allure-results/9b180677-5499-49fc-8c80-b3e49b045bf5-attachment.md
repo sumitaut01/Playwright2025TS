@@ -1,0 +1,142 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: noautotimeout\01rahulshetty.spec.ts >> logging in 
+- Location: tests\noautotimeout\01rahulshetty.spec.ts:4:5
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+```
+Error: page.waitForURL: Test timeout of 30000ms exceeded.
+=========================== logs ===========================
+waiting for navigation to "https://rahulshettyacademy.com/client/#/dashboard/dash" until "load"
+============================================================
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e7]: Ecom
+      - generic [ref=e9]:
+        - link " dummywebsite@rahulshettyacademy.com" [ref=e11] [cursor=pointer]:
+          - /url: emailto:dummywebsite@rahulshettyacademy.com
+          - generic [ref=e12]: 
+          - text: dummywebsite@rahulshettyacademy.com
+        - generic [ref=e13]:
+          - link "" [ref=e14] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e15]: 
+          - link "" [ref=e16] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e17]: 
+          - link "" [ref=e18] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e19]: 
+          - link "" [ref=e20] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e21]: 
+  - generic [ref=e22]:
+    - generic [ref=e23]:
+      - heading "We Make Your Shopping Simple" [level=3]
+      - heading "Practice Website for Rahul Shetty Academy Students" [level=1] [ref=e24]:
+        - text: Practice Website for
+        - emphasis [ref=e25]: Rahul Shetty Academy
+        - text: Students
+      - link "Register" [ref=e26] [cursor=pointer]:
+        - /url: "#/auth/register"
+    - generic [ref=e28]:
+      - paragraph [ref=e29]:
+        - generic [ref=e30]: Register to sign in with your personal account
+      - generic [ref=e31]:
+        - heading "Log in" [level=1] [ref=e32]
+        - generic [ref=e33]:
+          - generic [ref=e34]:
+            - generic [ref=e35]: Email
+            - textbox "email@example.com" [ref=e36]: sumitraut01@gmail.com
+          - generic [ref=e37]:
+            - generic [ref=e38]: Password
+            - textbox "enter your passsword" [ref=e39]: testing1234
+          - button "Login" [active] [ref=e40] [cursor=pointer]
+        - link "Forgot password?" [ref=e41] [cursor=pointer]:
+          - /url: "#/auth/password-new"
+        - paragraph [ref=e42] [cursor=pointer]: Don't have an account? Register here
+  - generic [ref=e43]:
+    - heading "Why People Choose Us?" [level=1] [ref=e46]
+    - generic [ref=e47]:
+      - generic [ref=e48]:
+        - generic [ref=e50]: 
+        - generic [ref=e51]:
+          - heading "3546540" [level=1]
+          - paragraph [ref=e52]: Successfull Orders
+      - generic [ref=e53]:
+        - generic [ref=e55]: 
+        - generic [ref=e56]:
+          - heading "37653" [level=1]
+          - paragraph [ref=e57]: Customers
+      - generic [ref=e58]:
+        - generic [ref=e60]: 
+        - generic [ref=e61]:
+          - heading "3243" [level=1]
+          - paragraph [ref=e62]: Sellers
+    - generic [ref=e63]:
+      - generic [ref=e64]:
+        - generic [ref=e66]: 
+        - generic [ref=e67]:
+          - heading "4500+" [level=1]
+          - paragraph [ref=e68]: Daily Orders
+      - generic [ref=e69]:
+        - generic [ref=e71]: 
+        - generic [ref=e72]:
+          - heading "500+" [level=1]
+          - paragraph [ref=e73]: Daily New Customer Joining
+```
+
+# Test source
+
+```ts
+  1  | 
+  2  | import {test,expect} from '@playwright/test'
+  3  | 
+  4  | test('logging in ',async({page})=>{
+  5  | 
+  6  | 
+  7  |     await page.goto('https://rahulshettyacademy.com/client/#/auth/login')
+  8  | 
+  9  |     await page.getByPlaceholder('email@example.com').fill('sumitraut01@gmail.com')
+  10 |     await page.locator('[formcontrolname="userPassword"]').fill('testing1234')
+  11 | 
+  12 |     await page.getByRole('button',{ name:'Login'}).click()
+> 13 |     await page.waitForURL('https://rahulshettyacademy.com/client/#/dashboard/dash');
+     |                ^ Error: page.waitForURL: Test timeout of 30000ms exceeded.
+  14 | 
+  15 |     //.card-body b   prod title
+  16 | 
+  17 |      const prodTitles=page.locator('.card-body b');
+  18 | 
+  19 |      console.log(await prodTitles.count());
+  20 | 
+  21 |       const data=await prodTitles.allTextContents()
+  22 | 
+  23 |       console.log(data)
+  24 | 
+  25 | 
+  26 | 
+  27 | 
+  28 | 
+  29 | 
+  30 | 
+  31 | 
+  32 | })
+```
